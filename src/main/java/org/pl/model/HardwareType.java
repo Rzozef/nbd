@@ -8,8 +8,7 @@ import org.pl.exceptions.HardwareException;
 
 @Data
 @Entity
-@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING,
-        name = "name")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Access(AccessType.FIELD)
 public abstract class HardwareType {
     @Id
@@ -17,6 +16,8 @@ public abstract class HardwareType {
     private int id;
     @NotNull
     private Condition condition;
+    @NotNull
+    protected String name;
 
     public abstract double calculateRepairCost(int price) throws HardwareException;
 }

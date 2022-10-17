@@ -1,21 +1,22 @@
 package org.pl.model;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.MappedSuperclass;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+import jakarta.persistence.Entity;
+import lombok.*;
 import org.pl.exceptions.HardwareException;
 
 @Data
 @Builder
-@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@MappedSuperclass
-@DiscriminatorValue("Phone")
+@Entity
 public class Phone extends HardwareType {
     private Condition condition;
+
+    public Phone(Condition condition) {
+        this.condition = condition;
+        this.name = "Phone";
+    }
 
     public double calculateRepairCost(int price) throws HardwareException {
         if (price < 0) {
