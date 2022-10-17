@@ -1,5 +1,7 @@
 package org.pl.model;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +12,8 @@ import org.pl.exceptions.HardwareException;
 @Builder
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@MappedSuperclass
+@DiscriminatorValue("Phone")
 public class Phone extends HardwareType {
     private Condition condition;
 
