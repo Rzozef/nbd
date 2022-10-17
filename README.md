@@ -1,8 +1,6 @@
-# pobi-java
-Migration of c++ pobi project to java
+# NBD
+Project for subject Nierelacyjne Bazy Danych
 
-## Changes
-Here are list of changes which are handled differently in the java implementation:
-- getInfo methods are just toString().
-- managers name does not describe well what it exactly does, now it's just services.
-- all functions that returns float should return double instead
+## Participants
+236533 Piotr Gągorowski
+236502 Kacper Bednarski
