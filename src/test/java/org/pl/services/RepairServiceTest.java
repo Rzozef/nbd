@@ -34,7 +34,8 @@ class RepairServiceTest {
                 .number("23")
                 .build();
         client1 = Client.builder()
-                .personalId(1)
+                .id(0)
+                .personalId("10987654321")
                 .firstName("Szymon")
                 .lastName("Kowalski")
                 .phoneNumber("123456789")
@@ -42,7 +43,8 @@ class RepairServiceTest {
                 .clientType(new Premium())
                 .build();
         client2 = Client.builder()
-                .personalId(2)
+                .id(2)
+                .personalId("10987654321")
                 .firstName("Kacper")
                 .lastName("Jackowski")
                 .phoneNumber("987654321")
@@ -87,7 +89,7 @@ class RepairServiceTest {
     @Test
     void repairServiceGetInfoTest() throws RepositoryException, RepairException {
         repairService.add(client1, hardware1);
-        String expectedInfo = "Repair(id=0, archive=false, client=Client(archive=false, balance=0.0, firstName=Szymon, lastName=Kowalski, personalId=1, phoneNumber=123456789, clientType=Premium(), address=Address(city=Warszawa, number=34, street=Uliczna)), hardware=Hardware(id=1, archive=false, price=2000, hardwareType=Computer(condition=DUSTY)))";
+        String expectedInfo = "Repair(id=0, archive=false, client=Client(id=0, archive=false, balance=0.0, firstName=Szymon, lastName=Kowalski, personalId=10987654321, phoneNumber=123456789, clientType=Premium(), address=Address(city=Warszawa, number=34, street=Uliczna)), hardware=Hardware(id=1, archive=false, price=2000, hardwareType=Computer(condition=DUSTY)))";
         assertEquals(expectedInfo, repairService.getInfo(0));
     }
 

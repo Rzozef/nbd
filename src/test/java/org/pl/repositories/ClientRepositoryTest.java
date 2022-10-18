@@ -26,23 +26,25 @@ public class ClientRepositoryTest {
                 .city("Lodz")
                 .build();
         client = Client.builder()
+                .id(0)
                 .archive(true)
                 .clientType(new Basic())
                 .phoneNumber("535-535-535")
                 .balance(100)
                 .firstName("John")
                 .lastName("Doe")
-                .personalId(0)
+                .personalId("10987654321")
                 .address(address)
                 .build();
         client1 = Client.builder()
+                .id(1)
                 .archive(false)
                 .clientType(new Basic())
                 .phoneNumber("535-535-535")
                 .balance(100)
                 .firstName("John")
                 .lastName("Doe")
-                .personalId(1)
+                .personalId("10987654321")
                 .address(address)
                 .build();
         list = new ArrayList<>();

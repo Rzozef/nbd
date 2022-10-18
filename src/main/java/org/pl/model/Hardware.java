@@ -15,7 +15,7 @@ import static org.pl.model.Condition.FINE;
 @AllArgsConstructor
 @jakarta.persistence.Entity
 @Access(AccessType.FIELD)
-public class Hardware implements Entity {
+public class Hardware extends AbstractEntity implements Entity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

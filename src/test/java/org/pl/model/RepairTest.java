@@ -19,12 +19,13 @@ class RepairTest {
        address = new Address("Warsaw", "123", "White");
 
         client = Client.builder()
+                .id(0)
                 .clientType(new Premium())
                 .address(address)
                 .balance(300.0)
                 .firstName("John")
                 .lastName("Doe")
-                .personalId(12345)
+                .personalId("10987654321")
                 .phoneNumber("123-123-123")
                 .archive(false)
                 .build();
@@ -82,12 +83,13 @@ class RepairTest {
     @Test
     void setClient() {
         Client newClient = Client.builder()
+                .id(0)
                 .clientType(new Vip())
                 .address(address)
                 .balance(300.0)
                 .firstName("John")
                 .lastName("Doe")
-                .personalId(1234)
+                .personalId("10987654321")
                 .phoneNumber("123-123-123")
                 .archive(false)
                 .build();
@@ -107,12 +109,13 @@ class RepairTest {
     @Test
     void testEquals() {
         Client newClient = Client.builder()
+                .id(0)
                 .clientType(new Premium())
                 .address(address)
                 .balance(300.0)
                 .firstName("John")
                 .lastName("Doe")
-                .personalId(12345)
+                .personalId("10987654321")
                 .phoneNumber("123-123-123")
                 .archive(false)
                 .build();

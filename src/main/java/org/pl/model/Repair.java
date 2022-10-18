@@ -14,18 +14,18 @@ import org.pl.exceptions.HardwareException;
 @AllArgsConstructor
 @jakarta.persistence.Entity
 @Access(AccessType.FIELD)
-public class Repair implements Entity {
+public class Repair extends AbstractEntity implements Entity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @NotNull
     private boolean archive;
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "client_id")
     @NotNull
     Client client;
     @NotNull
-    @JoinColumn
+    @JoinColumn(name = "hardware_id")
     @ManyToOne
     Hardware hardware;
 

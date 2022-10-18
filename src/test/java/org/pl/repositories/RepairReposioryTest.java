@@ -29,12 +29,13 @@ class RepairReposioryTest {
                 .build();
 
         client = Client.builder()
+                .id(0)
                 .clientType(new Premium())
                 .address(address)
                 .balance(300.0)
                 .firstName("John")
                 .lastName("Doe")
-                .personalId(0)
+                .personalId("10987654321")
                 .phoneNumber("123-123-123")
                 .archive(false)
                 .build();

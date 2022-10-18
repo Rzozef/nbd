@@ -15,19 +15,22 @@ public class ClientService {
         this.clientRepository = clientRepository;
     }
 
-    public Client add(String firstName, String lastName, String phoneNumber, Address address) throws RepositoryException, ClientException {
+    public Client add(String firstName, String lastName, String personalId, String phoneNumber, Address address) throws RepositoryException, ClientException {
         if (Objects.equals(firstName, ""))
             throw new ClientException(ClientException.CLIENT_FIRST_NAME_EXCEPTION);
         if (Objects.equals(lastName, ""))
             throw new ClientException(ClientException.CLIENT_LAST_NAME_EXCEPTION);
+        if (Objects.equals(personalId, ""))
+            throw new ClientException(ClientException.CLIENT_PID_EXCEPTION);
         if (Objects.equals(phoneNumber, ""))
             throw new ClientException(ClientException.CLIENT_PHONE_NUMBER_EXCEPTION);
         if (Objects.isNull(address))
             throw new ClientException(ClientException.CLIENT_ADDRESS_EXCEPTION);
         Client client = Client.builder()
-                .personalId(clientRepository.getElements().size())
+                .id(clientRepository.getElements().size())
                 .firstName(firstName)
                 .lastName(lastName)
+                .personalId(personalId)
                 .phoneNumber(phoneNumber)
                 .address(address)
                 .build();
@@ -35,18 +38,19 @@ public class ClientService {
         return client;
     }
 
-    public Client add(String firstName, String lastName, String phoneNumber, String city, String number, String street) throws RepositoryException {
+    public Client add(String firstName, String lastName, String personalId, String phoneNumber, String city, String number, String street) throws RepositoryException {
         Address address = Address.builder()
                 .city(city)
                 .number(number)
                 .street(street)
                 .build();
         Client client = Client.builder()
+                .id(clientRepository.getElements().size())
                 .firstName(firstName)
                 .lastName(lastName)
                 .phoneNumber(phoneNumber)
                 .address(address)
-                .personalId(clientRepository.getElements().size())
+                .personalId(personalId)
                 .build();
         clientRepository.add(client);
         return client;

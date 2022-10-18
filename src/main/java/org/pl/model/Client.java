@@ -15,7 +15,12 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @jakarta.persistence.Entity
-public class Client implements Entity, Serializable {
+@Table(name = "Client")
+@Access(AccessType.FIELD)
+public class Client extends AbstractEntity implements Entity, Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     @NotNull
     private boolean archive;
     @NotNull
@@ -24,9 +29,9 @@ public class Client implements Entity, Serializable {
     private String firstName;
     @NotNull
     private String lastName;
-    @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
-    private int personalId;
+    @NotNull
+    @AttributeOverride(name = "id", column = @Column(name = "pesel", unique = true))
+    private String personalId;
     @NotNull
     private String phoneNumber;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
@@ -51,6 +56,6 @@ public class Client implements Entity, Serializable {
 
     @Override
     public int getID() {
-        return personalId;
+        return id;
     }
 }
