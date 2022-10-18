@@ -30,7 +30,7 @@ public class DatabaseTest {
 
     @Test
     void testConnectivity() {
-        Client client = em.find(Client.class, 1L);
+        Client client = em.find(Client.class, 1);
         assertThat(client, is(nullValue()));
     }
 }
