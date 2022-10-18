@@ -3,6 +3,7 @@ package org.pl.model;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.pl.exceptions.HardwareException;
 
@@ -14,6 +15,7 @@ import org.pl.exceptions.HardwareException;
 @Entity
 @DiscriminatorValue("console")
 public class Console extends HardwareType {
+    @NotNull
     public Condition condition;
 
     public double calculateRepairCost(int price) throws HardwareException {

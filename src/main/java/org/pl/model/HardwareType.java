@@ -17,8 +17,6 @@ public abstract class HardwareType {
     private int id;
     @Transient
     private Condition condition;
-    @NotNull
-    protected String name;
 
     public abstract double calculateRepairCost(int price) throws HardwareException;
 }

@@ -15,7 +15,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @jakarta.persistence.Entity
-@Table(name = "Client")
 @Access(AccessType.FIELD)
 public class Client extends AbstractEntity implements Entity, Serializable {
     @Id
