@@ -1,6 +1,7 @@
 package org.pl.model;
 
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.*;
 import org.pl.exceptions.HardwareException;
@@ -8,15 +9,12 @@ import org.pl.exceptions.HardwareException;
 @Data
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
+@DiscriminatorValue("computer")
 public class Computer extends HardwareType {
     private Condition condition;
-
-    public Computer(Condition condition) {
-        this.condition = condition;
-        this.name = "Computer";
-    }
 
     public double calculateRepairCost(int price) throws HardwareException {
         if (price < 0) {

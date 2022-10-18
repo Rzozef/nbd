@@ -1,22 +1,20 @@
 package org.pl.model;
 
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.*;
 import org.pl.exceptions.HardwareException;
 
 @Data
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
+@DiscriminatorValue("console")
 public class Console extends HardwareType {
     public Condition condition;
-
-    public Console(Condition condition) {
-        this.condition = condition;
-        this.name = "Console";
-    }
 
     public double calculateRepairCost(int price) throws HardwareException {
         if (price < 0) {

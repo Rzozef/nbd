@@ -10,11 +10,12 @@ import org.pl.exceptions.HardwareException;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Access(AccessType.FIELD)
+@DiscriminatorColumn(name = "type")
 public abstract class HardwareType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @NotNull
+    @Transient
     private Condition condition;
     @NotNull
     protected String name;
