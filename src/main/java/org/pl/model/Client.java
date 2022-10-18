@@ -33,7 +33,7 @@ public class Client extends AbstractEntity implements Entity, Serializable {
     private String personalId;
     @NotNull
     private String phoneNumber;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @NotNull
     private ClientType clientType;
     @Embedded
