@@ -10,7 +10,7 @@ public class ClientMgd {
                      @BsonProperty("balance") double balance,
                      @BsonProperty("firstName") String firstName,
                      @BsonProperty("lastName") String lastName,
-                     @BsonProperty("personalId") int personalId,
+                     @BsonProperty("_id") int personalId,
                      @BsonProperty("phoneNumber") String phoneNumber,
                      @BsonProperty("clientType") ClientTypeMgd clientType) {
         this.archive = archive;
@@ -21,7 +21,6 @@ public class ClientMgd {
         this.phoneNumber = phoneNumber;
         this.clientType = clientType;
     }
-
     @BsonProperty("archive")
     private boolean archive;
 
@@ -34,7 +33,7 @@ public class ClientMgd {
     @BsonProperty("lastName")
     private String lastName;
 
-    @BsonProperty("personalId")
+    @BsonProperty("_id")
     private int personalId;
 
     @BsonProperty("phoneNumber")
@@ -42,4 +41,32 @@ public class ClientMgd {
 
     @BsonProperty("clientType")
     private ClientTypeMgd clientType;
+
+    public boolean isArchive() {
+        return archive;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public int getPersonalId() {
+        return personalId;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public ClientTypeMgd getClientType() {
+        return clientType;
+    }
 }

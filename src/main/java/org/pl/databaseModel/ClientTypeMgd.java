@@ -14,11 +14,23 @@ public class ClientTypeMgd {
     }
 
     @BsonProperty("factor")
-    protected float factor;
+    private float factor;
 
     @BsonProperty("maxRepairs")
-    protected int maxRepairs;
+    private int maxRepairs;
 
     @BsonProperty("typeName")
-    protected String typeName;
+    private String typeName;
+
+    public float getFactor() {
+        return factor;
+    }
+
+    public int getMaxRepairs() {
+        return maxRepairs;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
 }

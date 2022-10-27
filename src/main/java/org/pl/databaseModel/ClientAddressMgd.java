@@ -57,4 +57,44 @@ public class ClientAddressMgd {
 
     @BsonProperty("street")
     private String street;
+
+    public boolean isArchive() {
+        return archive;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public int getPersonalId() {
+        return personalId;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public ClientTypeMgd getClientType() {
+        return clientType;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public String getStreet() {
+        return street;
+    }
 }
