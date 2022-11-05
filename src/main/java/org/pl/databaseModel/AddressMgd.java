@@ -2,7 +2,6 @@ package org.pl.databaseModel;
 
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import org.pl.model.ClientType;
 
 public class AddressMgd {
     @BsonCreator

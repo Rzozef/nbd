@@ -26,6 +26,7 @@ public class ClientRepositoryTest {
                 .city("Lodz")
                 .build();
         client = Client.builder()
+                .entityId(0)
                 .archive(true)
                 .clientType(new Basic())
                 .phoneNumber("535-535-535")
@@ -36,6 +37,7 @@ public class ClientRepositoryTest {
                 .address(address)
                 .build();
         client1 = Client.builder()
+                .entityId(1)
                 .archive(false)
                 .clientType(new Basic())
                 .phoneNumber("535-535-535")

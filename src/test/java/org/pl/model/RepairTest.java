@@ -34,7 +34,7 @@ class RepairTest {
                 .client(client)
                 .hardware(hardware)
                 .archive(false)
-                .id(1)
+                .entityId(1)
                 .build();
     }
 
@@ -69,14 +69,6 @@ class RepairTest {
     @Test
     void getHardware() {
         assertEquals(hardware, repair.getHardware());
-    }
-
-    @Test
-    void setId() {
-       repair.setId(12);
-       assertEquals(12, repair.getID());
-       repair.setId(0);
-       assertEquals(0, repair.getID());
     }
 
     @Test
@@ -122,7 +114,7 @@ class RepairTest {
                 .client(newClient)
                 .hardware(newHardware)
                 .archive(false)
-                .id(1)
+                .entityId(1)
                 .build();
         assertEquals(newRepair, repair);
         newRepair.setArchive(true);

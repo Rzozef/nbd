@@ -42,19 +42,19 @@ class RepairReposioryTest {
                 .archive(false)
                 .hardwareType(new Computer(DUSTY))
                 .price(100)
-                .id(1)
+                .entityId(1)
                 .build();
         repair = Repair.builder()
                 .client(client)
                 .hardware(hardware)
                 .archive(true)
-                .id(0)
+                .entityId(0)
                 .build();
         repair1 = Repair.builder()
                 .client(client)
                 .hardware(hardware)
                 .archive(false)
-                .id(1)
+                .entityId(1)
                 .build();
         list = new ArrayList<>();
         repository = new RepairRepository(list);

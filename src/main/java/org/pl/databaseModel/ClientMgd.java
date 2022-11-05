@@ -1,18 +1,20 @@
 package org.pl.databaseModel;
 
 import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import org.pl.model.ClientType;
 
-public class ClientMgd {
+public class ClientMgd extends AbstractEntityMgd{
     @BsonCreator
-    public ClientMgd(@BsonProperty("archive") boolean archive,
+    public ClientMgd(@BsonId int entityId,
+                     @BsonProperty("archive") boolean archive,
                      @BsonProperty("balance") double balance,
                      @BsonProperty("firstName") String firstName,
                      @BsonProperty("lastName") String lastName,
-                     @BsonProperty("_id") int personalId,
+                     @BsonProperty("personalId") int personalId,
                      @BsonProperty("phoneNumber") String phoneNumber,
                      @BsonProperty("clientType") ClientTypeMgd clientType) {
+        super(entityId);
         this.archive = archive;
         this.balance = balance;
         this.firstName = firstName;
@@ -33,7 +35,7 @@ public class ClientMgd {
     @BsonProperty("lastName")
     private String lastName;
 
-    @BsonProperty("_id")
+    @BsonProperty("personalId")
     private int personalId;
 
     @BsonProperty("phoneNumber")

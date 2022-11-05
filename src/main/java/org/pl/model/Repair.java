@@ -1,16 +1,24 @@
 package org.pl.model;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.pl.exceptions.HardwareException;
 
-@Data
-@Builder
-public class Repair implements Entity {
-    private int id;
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(callSuper = true)
+public class Repair extends AbstractEntity implements Entity {
     private boolean archive;
     Client client;
     Hardware hardware;
+
+    @Builder
+    public Repair(int entityId, boolean archive, Client client, Hardware hardware) {
+        super(entityId);
+        this.archive = archive;
+        this.client = client;
+        this.hardware = hardware;
+    }
 
     public double calculateRepairCost() throws HardwareException {
         return getHardware().getHardwareType().calculateRepairCost(getHardware().getPrice());
@@ -23,6 +31,6 @@ public class Repair implements Entity {
 
     @Override
     public int getID() {
-        return id;
+        return getEntityId();
     }
 }

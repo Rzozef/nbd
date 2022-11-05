@@ -32,32 +32,34 @@ public class ClientServiceTest {
 
     @Test
     void clientServiceAddPositiveTest() throws RepositoryException, ClientException {
-        clientService.add("Andrzej", "Niesapkowski", "603462321", address);
+        clientService.add("Andrzej", "Niesapkowski", "603462321",10, address);
         assertNotNull(clientService.get(0));
-        clientService.add("Anna", "Annowska", "124464322", address);
+        clientService.add("Anna", "Annowska", "124464322", 10, address);
         assertNotNull(clientService.get(1));
-        clientService.add("Jaskier", "Uzdolniony", "222222222", address);
+        clientService.add("Jaskier", "Uzdolniony", "222222222", 10, address);
         assertNotNull(clientService.get(2));
-        clientService.add("Pepe", "Monocyklowy", "121424622", address);
+        clientService.add("Pepe", "Monocyklowy", "121424622", 10, address);
         assertNotNull(clientService.get(3));
     }
 
     @Test
     void clientServiceAddNegativeTest() {
         assertThrows(ClientException.class,
-                ()-> clientService.add("", "Niesapkowski", "603462321", address));
+                ()-> clientService.add("", "Niesapkowski", "603462321", 10, address));
         assertThrows(ClientException.class,
-                ()-> clientService.add("Anna", "", "603462321", address));
+                ()-> clientService.add("Anna", "", "603462321", 10, address));
         assertThrows(ClientException.class,
-                ()-> clientService.add("Andrzej", "Niesapkowski", "", address));
+                ()-> clientService.add("Andrzej", "Niesapkowski", "", 10, address));
         assertThrows(ClientException.class,
-                ()-> clientService.add("Andrzej", "Niesapkowski", "603462321", null));
+                ()-> clientService.add("Andrzej", "Niesapkowski", "111111111", 0, address));
+        assertThrows(ClientException.class,
+                ()-> clientService.add("Andrzej", "Niesapkowski", "603462321", 10, null));
     }
 
     @Test
     void clientServiceToStringTest() throws RepositoryException, ClientException {
-        clientService.add("Pan", "Tadeusz", "280618349", address);
-        String expectedInfo = "Client(archive=false, balance=0.0, firstName=Pan, lastName=Tadeusz, personalId=0, phoneNumber=280618349, clientType=null, address=Address(city=Lodz, number=123, street=White))";
+        clientService.add("Pan", "Tadeusz", "280618349", 10, address);
+        String expectedInfo = "Client(archive=false, balance=0.0, firstName=Pan, lastName=Tadeusz, personalId=10, phoneNumber=280618349, clientType=null, address=Address(city=Lodz, number=123, street=White))";
         assertEquals(expectedInfo, clientService.getInfo(0));
     }
 
@@ -68,9 +70,9 @@ public class ClientServiceTest {
                          .street("Porajska")
                          .number("34")
                          .build();
-        clientService.add("Jakub", "Stokrotka", "5876321210", address);
+        clientService.add("Jakub", "Stokrotka", "5876321210", 10, address);
         assertEquals(1, clientService.getPresentSize());
-        clientService.add("Marcin", "Steczkowski", "8765432109", address2);
+        clientService.add("Marcin", "Steczkowski", "8765432109", 10, address2);
         assertEquals(2, clientService.getPresentSize());
         clientService.remove(1);
         assertEquals(1, clientService.getPresentSize());
@@ -87,8 +89,8 @@ public class ClientServiceTest {
                 .street("Porajska")
                 .number("34")
                 .build();
-        clientService.add("Jakub", "Stokrotka", "5876321210", address);
-        clientService.add("Marcin", "Steczkowski", "8765432109", address2);
+        clientService.add("Jakub", "Stokrotka", "5876321210", 10, address);
+        clientService.add("Marcin", "Steczkowski", "8765432109", 10, address2);
         clientService.remove(0);
         assertThrows(RepositoryException.class,
                 ()-> clientService.remove(0));
@@ -99,7 +101,7 @@ public class ClientServiceTest {
 
         assertEquals(0, clientService.getPresentSize());
         assertEquals(0, clientService.getArchiveSize());
-        clientService.add("Kuba", "Jakubowski", "1234567890", address);
+        clientService.add("Kuba", "Jakubowski", "1234567890", 10, address);
         assertEquals(1, clientService.getPresentSize());
         assertEquals(0, clientService.getArchiveSize());
         Address address2 = Address.builder()
@@ -107,7 +109,7 @@ public class ClientServiceTest {
                 .street("Porajska")
                 .number("34")
                 .build();
-        clientService.add("Piotr", "Piotrkowski", "0987654321", address2);
+        clientService.add("Piotr", "Piotrkowski", "0987654321", 10, address2);
         assertEquals(2, clientService.getPresentSize());
         assertEquals(0, clientService.getArchiveSize());
         clientService.remove(0);
@@ -120,7 +122,7 @@ public class ClientServiceTest {
 
     @Test
     void clientServiceGetClientBalanceTest() throws RepositoryException, ClientException {
-        clientService.add("Adam", "Adamowski", "1234565432", address);
+        clientService.add("Adam", "Adamowski", "1234565432", 10, address);
         assertEquals(0, clientService.getClientBalance(0));
         clientService.get(0).changeBalance(100);
         assertEquals(100, clientService.getClientBalance(0));

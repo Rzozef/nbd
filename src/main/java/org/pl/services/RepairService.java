@@ -25,7 +25,7 @@ public class RepairService {
             throw new RepairException(RepairException.REPAIR_HARDWARE_EXCEPTION);
 
         Repair repair = Repair.builder()
-                .id(repairRepository.getElements().size())
+                .entityId(repairRepository.getElements().size())
                 .client(client)
                 .hardware(hardware)
                 .build();

@@ -52,12 +52,12 @@ class RepairServiceTest {
         computer = new Computer(Condition.DUSTY);
         monitor = new Monitor(Condition.AVERAGE);
         hardware1 = Hardware.builder()
-                .id(1)
+                .entityId(1)
                 .price(2000)
                 .hardwareType(computer)
                 .build();
         hardware2 = Hardware.builder()
-                .id(2)
+                .entityId(2)
                 .price(3000)
                 .hardwareType(monitor)
                 .build();
@@ -87,7 +87,7 @@ class RepairServiceTest {
     @Test
     void repairServiceGetInfoTest() throws RepositoryException, RepairException {
         repairService.add(client1, hardware1);
-        String expectedInfo = "Repair(id=0, archive=false, client=Client(archive=false, balance=0.0, firstName=Szymon, lastName=Kowalski, personalId=1, phoneNumber=123456789, clientType=Premium(), address=Address(city=Warszawa, number=34, street=Uliczna)), hardware=Hardware(id=1, archive=false, price=2000, hardwareType=Computer(condition=DUSTY)))";
+        String expectedInfo = "Repair(archive=false, client=Client(archive=false, balance=0.0, firstName=Szymon, lastName=Kowalski, personalId=1, phoneNumber=123456789, clientType=Premium(), address=Address(city=Warszawa, number=34, street=Uliczna)), hardware=Hardware(archive=false, price=2000, hardwareType=Computer(condition=DUSTY)))";
         assertEquals(expectedInfo, repairService.getInfo(0));
     }
 

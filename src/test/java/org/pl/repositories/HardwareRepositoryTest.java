@@ -23,13 +23,13 @@ public class HardwareRepositoryTest {
                 .archive(true)
                 .hardwareType(new Computer(DUSTY))
                 .price(100)
-                .id(0)
+                .entityId(0)
                 .build();
         hardware1 = Hardware.builder()
                 .archive(false)
                 .hardwareType(new Computer(DUSTY))
                 .price(100)
-                .id(1)
+                .entityId(1)
                 .build();
         list = new ArrayList<>();
         repository = new HardwareRepository(list);

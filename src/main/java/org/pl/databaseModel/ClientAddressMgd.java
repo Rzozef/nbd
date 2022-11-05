@@ -1,12 +1,13 @@
 package org.pl.databaseModel;
 
 import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import org.pl.model.ClientType;
 
-public class ClientAddressMgd {
+public class ClientAddressMgd extends AbstractEntityMgd{
     @BsonCreator
-    public ClientAddressMgd(@BsonProperty("archive") boolean archive,
+    public ClientAddressMgd(@BsonId int entityId,
+                            @BsonProperty("archive") boolean archive,
                             @BsonProperty("balance") double balance,
                             @BsonProperty("firstName") String firstName,
                             @BsonProperty("lastName") String lastName,
@@ -16,6 +17,7 @@ public class ClientAddressMgd {
                             @BsonProperty("city") String city,
                             @BsonProperty("number") String number,
                             @BsonProperty("street") String street) {
+        super(entityId);
         this.archive = archive;
         this.balance = balance;
         this.firstName = firstName;

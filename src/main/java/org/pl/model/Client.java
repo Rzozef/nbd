@@ -1,12 +1,13 @@
 package org.pl.model;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.pl.exceptions.ClientException;
 
-@Data
-@Builder
-public class Client implements Entity {
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(callSuper = true)
+public class Client extends AbstractEntity implements Entity {
     private boolean archive;
     private double balance;
     private String firstName;
@@ -15,6 +16,19 @@ public class Client implements Entity {
     private String phoneNumber;
     private ClientType clientType;
     private Address address;
+
+    @Builder
+    public Client(int entityId, boolean archive, double balance, String firstName, String lastName, int personalId, String phoneNumber, ClientType clientType, Address address) {
+        super(entityId);
+        this.archive = archive;
+        this.balance = balance;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.personalId = personalId;
+        this.phoneNumber = phoneNumber;
+        this.clientType = clientType;
+        this.address = address;
+    }
 
     public double calculateDiscount(int price) throws ClientException {
         return getClientType().calculateDiscount(price);
@@ -31,6 +45,6 @@ public class Client implements Entity {
 
     @Override
     public int getID() {
-        return personalId;
+        return getEntityId();
     }
 }

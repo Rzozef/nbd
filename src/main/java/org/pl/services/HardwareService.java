@@ -18,7 +18,7 @@ public class HardwareService {
             throw new HardwareException(HardwareException.HARDWARE_PRICE_EXCEPTION);
 
         Hardware hardware = Hardware.builder()
-                .id(hardwareRepository.getElements().size())
+                .entityId(hardwareRepository.getElements().size())
                 .price(price)
                 .hardwareType(hardwareType)
                 .build();
@@ -53,7 +53,7 @@ public class HardwareService {
             throw new ServiceException(ServiceException.HARDWARE_SERVICE_INVALID_HARDWARE_EXCEPTION);
 
         Hardware hardware = Hardware.builder()
-                .id(hardwareRepository.getElements().size())
+                .entityId(hardwareRepository.getElements().size())
                 .price(price)
                 .hardwareType(hardwareType)
                 .build();

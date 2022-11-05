@@ -20,6 +20,7 @@ class ClientTest {
                 .build();
 
         client = Client.builder()
+                .entityId(0)
                 .personalId(0)
                 .clientType(new Basic())
                 .phoneNumber("535-535-535")
@@ -137,6 +138,7 @@ class ClientTest {
     @Test
     void testEquals() {
         Client sameClient = Client.builder()
+                .entityId(0)
                 .personalId(0)
                 .clientType(new Basic())
                 .phoneNumber("535-535-535")

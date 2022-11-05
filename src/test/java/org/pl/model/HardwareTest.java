@@ -15,7 +15,7 @@ class HardwareTest {
         hardware = Hardware.builder()
                 .hardwareType(new Computer(DUSTY))
                 .price(100)
-                .id(1)
+                .entityId(1)
                 .build();
     }
 
@@ -60,14 +60,6 @@ class HardwareTest {
     }
 
     @Test
-    void setId() {
-        hardware.setId(0);
-        assertEquals(0, hardware.getID());
-        hardware.setId(20);
-        assertEquals(20, hardware.getID());
-    }
-
-    @Test
     void setPrice() {
         hardware.setPrice(500);
         assertEquals(500, hardware.getPrice());
@@ -94,6 +86,6 @@ class HardwareTest {
 
     @Test
     void testToString() {
-        assertEquals("Hardware(id=1, archive=false, price=100, hardwareType=Computer(condition=DUSTY))", hardware.toString());
+        assertEquals("Hardware(archive=false, price=100, hardwareType=Computer(condition=DUSTY))", hardware.toString());
     }
 }

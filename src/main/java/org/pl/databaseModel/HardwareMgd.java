@@ -1,31 +1,26 @@
 package org.pl.databaseModel;
 
 import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
-public class HardwareMgd {
+public class HardwareMgd extends AbstractEntityMgd{
     @BsonCreator
-    public HardwareMgd(@BsonProperty("_id") int id,
+    public HardwareMgd(@BsonId int entityId,
                        @BsonProperty("archive") boolean archive,
                        @BsonProperty("price") int price,
                        @BsonProperty("hardwareType") HardwareTypeMgd hardwareType) {
-        this.id = id;
+        super(entityId);
         this.archive = archive;
         this.price = price;
         this.hardwareType = hardwareType;
     }
-    @BsonProperty("_id")
-    private int id;
     @BsonProperty("archive")
     private boolean archive;
     @BsonProperty("price")
     private int price;
     @BsonProperty("hardwareType")
     private HardwareTypeMgd hardwareType;
-
-    public int getId() {
-        return id;
-    }
 
     public boolean isArchive() {
         return archive;
