@@ -1,9 +1,11 @@
 package org.pl.databaseRepository;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.FindOneAndUpdateOptions;
+import com.mongodb.client.model.ReturnDocument;
 import com.mongodb.client.model.Updates;
 import org.bson.conversions.Bson;
-import org.pl.databaseModel.HardwareMgd;
+import org.pl.databaseModel.*;
 
 import java.util.ArrayList;
 
@@ -13,7 +15,7 @@ public class HardwareMongoRepository extends MongoRepository {
     private MongoCollection<HardwareMgd> hardwareCollection;
     public HardwareMongoRepository() {
         initConnection();
-        hardwareCollection = getMongoDB().getCollection("hardware", HardwareMgd.class);
+        hardwareCollection = getMongoDB().getCollection("hardwares", HardwareMgd.class);
     }
 
     public boolean add(HardwareMgd hardware) {
@@ -36,6 +38,23 @@ public class HardwareMongoRepository extends MongoRepository {
         return hardwareCollection.find().into(new ArrayList<>());
     }
 
+    public ArrayList<ComputerMgd> findAllComputers() {
+        return hardwareCollection.find(ComputerMgd.class).into(new ArrayList<>());
+    }
+
+    public ArrayList<ConsoleMgd> findAllConsoles() {
+        return hardwareCollection.find(ConsoleMgd.class).into(new ArrayList<>());
+    }
+
+    public ArrayList<PhoneMgd> findAllPhones() {
+        return hardwareCollection.find(PhoneMgd.class).into(new ArrayList<>());
+    }
+
+    public ArrayList<MonitorMgd> findAllMonitors() {
+        return hardwareCollection.find(MonitorMgd.class).into(new ArrayList<>());
+    }
+
+
     public ArrayList<HardwareMgd> find(int id) {
         Bson filter = eq("_id", id);
         return hardwareCollection.find(filter, HardwareMgd.class).into(new ArrayList<>());
@@ -49,14 +68,17 @@ public class HardwareMongoRepository extends MongoRepository {
     public HardwareMgd updateArchive(int id, boolean isArchive) {
         Bson filter = eq("_id", id);
         Bson setUpdate = Updates.set("archive", isArchive);
-        hardwareCollection.updateOne(filter, setUpdate);
-        return hardwareCollection.find(filter, HardwareMgd.class).first();
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
+        options.returnDocument(ReturnDocument.AFTER);
+        return hardwareCollection.findOneAndUpdate(filter, setUpdate, options);
     }
 
     public HardwareMgd updatePrice(int id, int price) {
         Bson filter = eq("_id", id);
         Bson setUpdate = Updates.set("price", price);
-        hardwareCollection.updateOne(filter, setUpdate);
-        return hardwareCollection.find(filter, HardwareMgd.class).first();
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
+        options.returnDocument(ReturnDocument.AFTER);
+        return hardwareCollection.findOneAndUpdate(filter, setUpdate, options);
     }
+
 }

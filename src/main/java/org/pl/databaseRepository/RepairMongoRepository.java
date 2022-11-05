@@ -1,6 +1,8 @@
 package org.pl.databaseRepository;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.FindOneAndUpdateOptions;
+import com.mongodb.client.model.ReturnDocument;
 import com.mongodb.client.model.Updates;
 import org.bson.conversions.Bson;
 import org.pl.databaseModel.RepairEmbeddedMgd;
@@ -13,7 +15,7 @@ public class RepairMongoRepository extends MongoRepository {
     private MongoCollection<RepairEmbeddedMgd> repairCollection;
     public RepairMongoRepository() {
         initConnection();
-        repairCollection = getMongoDB().getCollection("repair", RepairEmbeddedMgd.class);
+        repairCollection = getMongoDB().getCollection("repairs", RepairEmbeddedMgd.class);
     }
 
     public boolean add(RepairEmbeddedMgd repair) {
@@ -36,6 +38,11 @@ public class RepairMongoRepository extends MongoRepository {
         return repairCollection.find().into(new ArrayList<>());
     }
 
+    public ArrayList<RepairEmbeddedMgd> findAllRepairsByClientId(int clientId) {
+        Bson filter = eq("client._id", clientId);
+        return repairCollection.find(filter, RepairEmbeddedMgd.class).into(new ArrayList<>());
+    }
+
     public ArrayList<RepairEmbeddedMgd> find(int id) {
         Bson filter = eq("_id", id);
         return repairCollection.find(filter, RepairEmbeddedMgd.class).into(new ArrayList<>());
@@ -49,7 +56,8 @@ public class RepairMongoRepository extends MongoRepository {
     public RepairEmbeddedMgd updateArchive(int id, boolean isArchive) {
         Bson filter = eq("_id", id);
         Bson setUpdate = Updates.set("archive", isArchive);
-        repairCollection.updateOne(filter, setUpdate);
-        return repairCollection.find(filter, RepairEmbeddedMgd.class).first();
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
+        options.returnDocument(ReturnDocument.AFTER);
+        return repairCollection.findOneAndUpdate(filter, setUpdate, options);
     }
 }

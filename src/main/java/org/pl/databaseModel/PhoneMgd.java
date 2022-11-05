@@ -11,10 +11,18 @@ public class PhoneMgd extends HardwareTypeMgd {
     public PhoneMgd(@BsonProperty("condition") Condition condition) {
         this.condition = condition;
     }
+
+    public PhoneMgd() {
+    }
+
     @BsonProperty("condition")
     private Condition condition;
 
     public Condition getCondition() {
         return condition;
+    }
+
+    public void setCondition(Condition condition) {
+        this.condition = condition;
     }
 }

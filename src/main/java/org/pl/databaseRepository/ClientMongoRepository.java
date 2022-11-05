@@ -1,9 +1,14 @@
 package org.pl.databaseRepository;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.FindOneAndUpdateOptions;
+import com.mongodb.client.model.ReturnDocument;
 import com.mongodb.client.model.Updates;
 import org.bson.conversions.Bson;
+import org.pl.databaseModel.AddressMgd;
 import org.pl.databaseModel.ClientAddressMgd;
+import org.pl.databaseModel.ClientMgd;
+import org.pl.databaseModel.ClientTypeMgd;
 
 import java.util.ArrayList;
 
@@ -36,9 +41,27 @@ public class ClientMongoRepository extends MongoRepository {
         return clientsCollection.find().into(new ArrayList<>());
     }
 
-    public ArrayList<ClientAddressMgd> find(int id) {
+    public ArrayList<ClientMgd> findAllClients() {
+        return clientsCollection.find(ClientMgd.class).into(new ArrayList<>());
+    }
+
+    public ArrayList<AddressMgd> findAllAddresses() {
+        return clientsCollection.find(AddressMgd.class).into(new ArrayList<>());
+    }
+
+    public ArrayList<ClientMgd> find(int id) {
         Bson filter = eq("_id", id);
-        return clientsCollection.find(filter, ClientAddressMgd.class).into(new ArrayList<>());
+        return clientsCollection.find(filter, ClientMgd.class).into(new ArrayList<>());
+    }
+
+    public AddressMgd findAddressByClientId(int id) {
+        Bson filter = eq("_id", id);
+        return clientsCollection.find(filter, AddressMgd.class).first();
+    }
+
+    public ClientTypeMgd findClientTypeByClientId(int id) {
+        Bson filter = eq("_id", id);
+        return clientsCollection.find(filter, ClientTypeMgd.class).first();
     }
 
     public ClientAddressMgd remove(int id) {
@@ -49,9 +72,72 @@ public class ClientMongoRepository extends MongoRepository {
     public ClientAddressMgd updateArchive(int id, boolean isArchive) {
         Bson filter = eq("_id", id);
         Bson setUpdate = Updates.set("archive", isArchive);
-        clientsCollection.updateOne(filter, setUpdate);
-        return clientsCollection.find(filter, ClientAddressMgd.class).first();
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
+        options.returnDocument(ReturnDocument.AFTER);
+        return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
     }
 
+    public ClientAddressMgd updateBalance(int id, double newBalance) {
+        Bson filter = eq("_id", id);
+        Bson setUpdate = Updates.set("balance", newBalance);
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
+        options.returnDocument(ReturnDocument.AFTER);
+        return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
+    }
 
+    public ClientAddressMgd updateFirstName(int id, String newFirstName) {
+        Bson filter = eq("_id", id);
+        Bson setUpdate = Updates.set("firstName", newFirstName);
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
+        options.returnDocument(ReturnDocument.AFTER);
+        return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
+    }
+
+    public ClientAddressMgd updateLastName(int id, String newLastName) {
+        Bson filter = eq("_id", id);
+        Bson setUpdate = Updates.set("lastName", newLastName);
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
+        options.returnDocument(ReturnDocument.AFTER);
+        return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
+    }
+
+    public ClientAddressMgd updatePhoneNumber(int id, String newPhoneNumber) {
+        Bson filter = eq("_id", id);
+        Bson setUpdate = Updates.set("firstName", newPhoneNumber);
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
+        options.returnDocument(ReturnDocument.AFTER);
+        return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
+    }
+
+    public ClientAddressMgd updateClientType(int id, ClientTypeMgd newClientType) {
+        Bson filter = eq("_id", id);
+        Bson setUpdate = Updates.set("clientType", newClientType);
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
+        options.returnDocument(ReturnDocument.AFTER);
+        return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
+    }
+
+    public ClientAddressMgd updateCity(int id, String newCity) {
+        Bson filter = eq("_id", id);
+        Bson setUpdate = Updates.set("city", newCity);
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
+        options.returnDocument(ReturnDocument.AFTER);
+        return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
+    }
+
+    public ClientAddressMgd updateNumber(int id, String newNumber) {
+        Bson filter = eq("_id", id);
+        Bson setUpdate = Updates.set("number", newNumber);
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
+        options.returnDocument(ReturnDocument.AFTER);
+        return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
+    }
+
+    public ClientAddressMgd updateStreet(int id, String newStreet) {
+        Bson filter = eq("_id", id);
+        Bson setUpdate = Updates.set("street", newStreet);
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
+        options.returnDocument(ReturnDocument.AFTER);
+        return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
+    }
 }

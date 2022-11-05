@@ -11,10 +11,18 @@ public class ComputerMgd extends HardwareTypeMgd {
     public ComputerMgd(@BsonProperty("condition") Condition condition) {
         this.condition = condition;
     }
+
+    public ComputerMgd() {
+
+    }
     @BsonProperty("condition")
     private Condition condition;
 
     public Condition getCondition() {
         return condition;
+    }
+
+    public void setCondition(Condition condition) {
+        this.condition = condition;
     }
 }

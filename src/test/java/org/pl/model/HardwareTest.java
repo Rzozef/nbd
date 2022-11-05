@@ -62,6 +62,7 @@ class HardwareTest {
     @Test
     void setPrice() {
         hardware.setPrice(500);
+        System.out.println(hardware.getHardwareType().getCondition().toString());
         assertEquals(500, hardware.getPrice());
         hardware.setPrice(900);
         assertEquals(900, hardware.getPrice());

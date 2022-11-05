@@ -11,10 +11,18 @@ public class ConsoleMgd extends HardwareTypeMgd {
     public ConsoleMgd(@BsonProperty("condition") Condition condition) {
         this.condition = condition;
     }
+
+    public ConsoleMgd() {
+    }
+
     @BsonProperty("condition")
     private Condition condition;
 
     public Condition getCondition() {
         return condition;
+    }
+
+    public void setCondition(Condition condition) {
+        this.condition = condition;
     }
 }

@@ -11,10 +11,18 @@ public class MonitorMgd extends HardwareTypeMgd {
     public MonitorMgd(@BsonProperty("condition") Condition condition) {
         this.condition = condition;
     }
+
+    public MonitorMgd() {
+    }
+
     @BsonProperty("condition")
     private Condition condition;
 
     public Condition getCondition() {
         return condition;
+    }
+
+    public void setCondition(Condition condition) {
+        this.condition = condition;
     }
 }

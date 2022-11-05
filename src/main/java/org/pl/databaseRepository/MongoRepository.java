@@ -11,6 +11,8 @@ import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.Conventions;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.pl.codecs.ConditionCodec;
+import org.pl.codecs.HardwareTypeCodecProvider;
 
 import java.util.List;
 
@@ -29,7 +31,9 @@ public class MongoRepository {
         MongoClientSettings settings = MongoClientSettings.builder()
                 .credential(credential)
                 .applyConnectionString(connectionString)
-                .codecRegistry(CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
+                .codecRegistry(CodecRegistries.fromRegistries(CodecRegistries.fromCodecs(new ConditionCodec()),
+                        CodecRegistries.fromProviders(new HardwareTypeCodecProvider()),
+                        MongoClientSettings.getDefaultCodecRegistry(),
                         codecRegistry))
                 .build();
         mongoClient = MongoClients.create(settings);
