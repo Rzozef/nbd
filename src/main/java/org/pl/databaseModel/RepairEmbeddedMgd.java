@@ -8,7 +8,7 @@ public class RepairEmbeddedMgd extends AbstractEntityMgd {
     @BsonCreator
     public RepairEmbeddedMgd(@BsonId int entityId,
                              @BsonProperty("archive") boolean archive,
-                             @BsonProperty("client") ClientMgd client,
+                             @BsonProperty("client") ClientAddressMgd client,
                              @BsonProperty("hardware") HardwareMgd hardware) {
         super(entityId);
         this.archive = archive;
@@ -18,7 +18,7 @@ public class RepairEmbeddedMgd extends AbstractEntityMgd {
     @BsonProperty("archive")
     private boolean archive;
     @BsonProperty("client")
-    private ClientMgd client;
+    private ClientAddressMgd client;
     @BsonProperty("hardware")
     private HardwareMgd hardware;
 
@@ -26,7 +26,7 @@ public class RepairEmbeddedMgd extends AbstractEntityMgd {
         return archive;
     }
 
-    public ClientMgd getClient() {
+    public ClientAddressMgd getClient() {
         return client;
     }
 

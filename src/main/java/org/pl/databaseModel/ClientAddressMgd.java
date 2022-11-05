@@ -11,7 +11,7 @@ public class ClientAddressMgd extends AbstractEntityMgd{
                             @BsonProperty("balance") double balance,
                             @BsonProperty("firstName") String firstName,
                             @BsonProperty("lastName") String lastName,
-                            @BsonProperty("personalId") int personalId,
+                            @BsonProperty("personalId") String personalId,
                             @BsonProperty("phoneNumber") String phoneNumber,
                             @BsonProperty("clientType") ClientTypeMgd clientType,
                             @BsonProperty("city") String city,
@@ -43,7 +43,7 @@ public class ClientAddressMgd extends AbstractEntityMgd{
     private String lastName;
 
     @BsonProperty("personalId")
-    private int personalId;
+    private String personalId;
 
     @BsonProperty("phoneNumber")
     private String phoneNumber;
@@ -76,7 +76,7 @@ public class ClientAddressMgd extends AbstractEntityMgd{
         return lastName;
     }
 
-    public int getPersonalId() {
+    public String getPersonalId() {
         return personalId;
     }
 
