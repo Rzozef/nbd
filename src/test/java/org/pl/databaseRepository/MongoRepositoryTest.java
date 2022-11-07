@@ -18,14 +18,16 @@ public class MongoRepositoryTest {
         HardwareTypeMgd hardwareTypeMgd = new ComputerMgd(Condition.AVERAGE);
         HardwareMgd hardwareMgd = new HardwareMgd(0, false, 200, hardwareTypeMgd);
         HardwareMgd hardwareMgd2 = new HardwareMgd(1, false, 300, hardwareTypeMgd);
-        //hardwareMongoRepository.initConnection();
-        //hardwareMongoRepository.add(hardwareMgd);
+        hardwareMongoRepository.initConnection();
+        hardwareMongoRepository.add(hardwareMgd);
         RepairMongoRepository repairMongoRepository = new RepairMongoRepository();
         RepairEmbeddedMgd repairEmbeddedMgd = new RepairEmbeddedMgd(0, false, clientAddressMgd, hardwareMgd);
         RepairEmbeddedMgd repairEmbeddedMgd2 = new RepairEmbeddedMgd(1, false, clientAddressMgd, hardwareMgd2);
         //repairMongoRepository.add(repairEmbeddedMgd);
         //repairMongoRepository.add(repairEmbeddedMgd2);
-        repairMongoRepository.initConnection();
-        System.out.println(repairMongoRepository.findAllRepairsByClientId(0));
+        //repairMongoRepository.initConnection();
+        ClientAddressMgd clientAddressMgd2 = new ClientAddressMgd(1, false, 200, "Janek", "Kowalski", "12345678901", "123456789", clientTypeMgd, "Lodz", "17", "Zielona");
+        HardwareMgd hardwareMgd3 = new HardwareMgd(2, false, 300, hardwareTypeMgd);
+        //repairMongoRepository.updateHardware(0, hardwareMgd3);
     }
 }
