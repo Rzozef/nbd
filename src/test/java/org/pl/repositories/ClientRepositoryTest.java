@@ -33,7 +33,7 @@ public class ClientRepositoryTest {
                 .balance(100)
                 .firstName("John")
                 .lastName("Doe")
-                .personalId(0)
+                .personalId("0")
                 .address(address)
                 .build();
         client1 = Client.builder()
@@ -44,7 +44,7 @@ public class ClientRepositoryTest {
                 .balance(100)
                 .firstName("John")
                 .lastName("Doe")
-                .personalId(1)
+                .personalId("1")
                 .address(address)
                 .build();
         list = new ArrayList<>();

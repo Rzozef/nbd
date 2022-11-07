@@ -55,7 +55,7 @@ public class HardwareServiceTest {
     @Test
     void hardwareServiceGetInfoTest() throws ServiceException, HardwareException, RepositoryException {
         hardwareService.add(200, "monitor", "fine");
-        String expectedInfo = "Hardware(archive=false, price=200, hardwareType=Monitor(condition=FINE))";
+        String expectedInfo = "Hardware(archive=false, price=200, hardwareType=Monitor(condition=Condition.FINE))";
         assertEquals(expectedInfo, hardwareService.getInfo(0));
     }
 

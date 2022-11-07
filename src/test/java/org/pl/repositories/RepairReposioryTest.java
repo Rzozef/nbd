@@ -34,7 +34,7 @@ class RepairReposioryTest {
                 .balance(300.0)
                 .firstName("John")
                 .lastName("Doe")
-                .personalId(0)
+                .personalId("0")
                 .phoneNumber("123-123-123")
                 .archive(false)
                 .build();

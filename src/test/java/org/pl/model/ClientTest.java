@@ -21,7 +21,7 @@ class ClientTest {
 
         client = Client.builder()
                 .entityId(0)
-                .personalId(0)
+                .personalId("0")
                 .clientType(new Basic())
                 .phoneNumber("535-535-535")
                 .balance(100)
@@ -75,7 +75,7 @@ class ClientTest {
 
     @Test
     void getPersonalId() {
-        assertEquals(0, client.getPersonalId());
+        assertEquals("0", client.getPersonalId());
     }
 
     @Test
@@ -113,8 +113,8 @@ class ClientTest {
 
     @Test
     void setPersonalId() {
-        client.setPersonalId(1092);
-        assertEquals(1092, client.getPersonalId());
+        client.setPersonalId("1092");
+        assertEquals("1092", client.getPersonalId());
     }
 
     @Test
@@ -139,7 +139,7 @@ class ClientTest {
     void testEquals() {
         Client sameClient = Client.builder()
                 .entityId(0)
-                .personalId(0)
+                .personalId("0")
                 .clientType(new Basic())
                 .phoneNumber("535-535-535")
                 .balance(100)
@@ -148,7 +148,7 @@ class ClientTest {
                 .address(address)
                 .build();
         Client differentClient = Client.builder()
-                .personalId(2)
+                .personalId("2")
                 .clientType(new Basic())
                 .phoneNumber("111-111-111")
                 .balance(100)

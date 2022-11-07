@@ -12,13 +12,13 @@ public class Client extends AbstractEntity implements Entity {
     private double balance;
     private String firstName;
     private String lastName;
-    private int personalId;
+    private String personalId;
     private String phoneNumber;
     private ClientType clientType;
     private Address address;
 
     @Builder
-    public Client(int entityId, boolean archive, double balance, String firstName, String lastName, int personalId, String phoneNumber, ClientType clientType, Address address) {
+    public Client(int entityId, boolean archive, double balance, String firstName, String lastName, String personalId, String phoneNumber, ClientType clientType, Address address) {
         super(entityId);
         this.archive = archive;
         this.balance = balance;

@@ -87,6 +87,6 @@ class HardwareTest {
 
     @Test
     void testToString() {
-        assertEquals("Hardware(archive=false, price=100, hardwareType=Computer(condition=DUSTY))", hardware.toString());
+        assertEquals("Hardware(archive=false, price=100, hardwareType=Computer(condition=Condition.DUSTY))", hardware.toString());
     }
 }

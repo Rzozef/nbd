@@ -15,7 +15,7 @@ public class ClientService {
         this.clientRepository = clientRepository;
     }
 
-    public Client add(String firstName, String lastName, String phoneNumber, int personalId, Address address) throws RepositoryException, ClientException {
+    public Client add(String firstName, String lastName, String phoneNumber, String personalId, Address address) throws RepositoryException, ClientException {
         if (Objects.equals(firstName, ""))
             throw new ClientException(ClientException.CLIENT_FIRST_NAME_EXCEPTION);
         if (Objects.equals(lastName, ""))
@@ -24,7 +24,7 @@ public class ClientService {
             throw new ClientException(ClientException.CLIENT_PHONE_NUMBER_EXCEPTION);
         if (Objects.isNull(address))
             throw new ClientException(ClientException.CLIENT_ADDRESS_EXCEPTION);
-        if (Objects.equals(personalId, 0)) {
+        if (Objects.equals(personalId, "")) {
             throw new ClientException(ClientException.CLIENT_IDE_EXCEPTION);
         }
         Client client = Client.builder()
@@ -39,7 +39,7 @@ public class ClientService {
         return client;
     }
 
-    public Client add(String firstName, String lastName, String phoneNumber, int personalId, String city, String number, String street) throws RepositoryException {
+    public Client add(String firstName, String lastName, String phoneNumber, String personalId, String city, String number, String street) throws RepositoryException {
         Address address = Address.builder()
                 .city(city)
                 .number(number)
