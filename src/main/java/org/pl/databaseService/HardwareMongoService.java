@@ -79,6 +79,9 @@ public class HardwareMongoService {
     }
 
     public boolean delete(UUID id) {
-        return hardwareMongoRepository.remove(id).getClass() == HardwareMgd.class;
+        HardwareMgd hardware = hardwareMongoRepository.remove(id);
+        if(hardware == null)
+            return false;
+        else return hardware.getClass() == HardwareMgd.class;
     }
 }

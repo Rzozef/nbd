@@ -85,7 +85,10 @@ public class RepairMongoService {
         return RepairConverter.fromRepositoryModel(repairMongoRepository.updateArchive(id, true));
     }
 
-    public Repair delete(UUID id) throws HardwareException, ClientException {
-        return RepairConverter.fromRepositoryModel(repairMongoRepository.remove(id));
+    public boolean delete(UUID id) throws HardwareException, ClientException {
+        RepairEmbeddedMgd repair = repairMongoRepository.remove(id);
+        if (repair == null)
+            return false;
+        else return repair.getClass() == RepairEmbeddedMgd.class;
     }
 }
