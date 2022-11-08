@@ -59,24 +59,6 @@ public class RepairMongoService {
         return repairs;
     }
 
-    public ArrayList<Hardware> getAllHardwares() throws HardwareException {
-        ArrayList<Hardware> hardwares = new ArrayList<>();
-        ArrayList<HardwareMgd> hardwareArrayList = repairMongoRepository.findAllHardwares();
-        for (HardwareMgd hardware : hardwareArrayList) {
-            hardwares.add(HardwareConverter.fromRepositoryModel(hardware));
-        }
-        return hardwares;
-    }
-
-    public ArrayList<Client> getAllClients() throws ClientException {
-        ArrayList<Client> clients = new ArrayList<>();
-        ArrayList<ClientAddressMgd> clientAddressMgdList = repairMongoRepository.findAllClients();
-        for (ClientAddressMgd client : clientAddressMgdList) {
-            clients.add(ClientAddressConverter.fromRepositoryModelClient(client));
-        }
-        return clients;
-    }
-
     public Repair getRepairById(UUID id) throws HardwareException, ClientException {
         return RepairConverter.fromRepositoryModel(repairMongoRepository.find(id));
     }
