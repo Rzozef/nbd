@@ -5,6 +5,7 @@ import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.model.ReturnDocument;
 import com.mongodb.client.model.Updates;
+import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.pl.databaseModel.ClientAddressMgd;
 import org.pl.databaseModel.HardwareMgd;
@@ -48,16 +49,6 @@ public class RepairMongoRepository extends MongoRepository {
         return repairCollection.find(filter, RepairEmbeddedMgd.class).into(new ArrayList<>());
     }
 
-    public ArrayList<ClientAddressMgd> findAllClients() {
-        ArrayList<ClientAddressMgd> clientMgds = repairCollection.aggregate(List.of(Aggregates.replaceRoot("$client")), ClientAddressMgd.class).into(new ArrayList<>());
-        return clientMgds;
-    }
-
-    public ArrayList<HardwareMgd> findAllHardwares() {
-        ArrayList<HardwareMgd> hardwareMgds = repairCollection.aggregate(List.of(Aggregates.replaceRoot("$hardware")), HardwareMgd.class).into(new ArrayList<>());
-        return hardwareMgds;
-    }
-
     public RepairEmbeddedMgd find(UUID id) {
         Bson filter = eq("_id", id);
         return repairCollection.find(filter, RepairEmbeddedMgd.class).first();
@@ -66,6 +57,10 @@ public class RepairMongoRepository extends MongoRepository {
     public RepairEmbeddedMgd remove(UUID id) {
         Bson filter = eq("_id", id);
         return repairCollection.findOneAndDelete(filter);
+    }
+
+    public void removeAll() {
+        repairCollection.deleteMany(new Document());
     }
 
     public RepairEmbeddedMgd updateArchive(UUID id, boolean isArchive) {

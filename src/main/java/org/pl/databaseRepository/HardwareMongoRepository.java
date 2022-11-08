@@ -41,19 +41,27 @@ public class HardwareMongoRepository extends MongoRepository {
     }
 
     public ArrayList<ComputerMgd> findAllComputers() {
-        return hardwareCollection.find(ComputerMgd.class).into(new ArrayList<>());
+        Bson filter;
+        filter = eq("hardwareType._clazz", "computer");
+        return hardwareCollection.find(filter, ComputerMgd.class).into(new ArrayList<>());
     }
 
     public ArrayList<ConsoleMgd> findAllConsoles() {
-        return hardwareCollection.find(ConsoleMgd.class).into(new ArrayList<>());
+        Bson filter;
+        filter = eq("hardwareType._clazz", "console");
+        return hardwareCollection.find(filter, ConsoleMgd.class).into(new ArrayList<>());
     }
 
     public ArrayList<PhoneMgd> findAllPhones() {
-        return hardwareCollection.find(PhoneMgd.class).into(new ArrayList<>());
+        Bson filter;
+        filter = eq("hardwareType._clazz", "phone");
+        return hardwareCollection.find(filter, PhoneMgd.class).into(new ArrayList<>());
     }
 
     public ArrayList<MonitorMgd> findAllMonitors() {
-        return hardwareCollection.find(MonitorMgd.class).into(new ArrayList<>());
+        Bson filter;
+        filter = eq("hardwareType._clazz", "monitor");
+        return hardwareCollection.find(filter, MonitorMgd.class).into(new ArrayList<>());
     }
 
 

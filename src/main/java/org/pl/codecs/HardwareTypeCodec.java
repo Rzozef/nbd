@@ -10,6 +10,8 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.pl.databaseModel.*;
 import org.pl.model.Condition;
 
+import java.util.Objects;
+
 public class HardwareTypeCodec implements Codec<HardwareTypeMgd> {
     private Codec<Condition> conditionCodec;
 
@@ -50,6 +52,18 @@ public class HardwareTypeCodec implements Codec<HardwareTypeMgd> {
     @Override
     public void encode(BsonWriter bsonWriter, HardwareTypeMgd hardwareTypeMgd, EncoderContext encoderContext) {
         bsonWriter.writeStartDocument();
+        bsonWriter.writeName("_clazz");
+        if (hardwareTypeMgd.getClass() == ComputerMgd.class) {
+            bsonWriter.writeString("computer");
+        } else if (hardwareTypeMgd.getClass() == ConsoleMgd.class) {
+            bsonWriter.writeString("console");
+        } else if (hardwareTypeMgd.getClass() == PhoneMgd.class) {
+            bsonWriter.writeString("phone");
+        } else if (hardwareTypeMgd.getClass() == MonitorMgd.class) {
+            bsonWriter.writeString("monitor");
+        } else {
+            bsonWriter.writeString("");
+        }
         bsonWriter.writeName("condition");
         conditionCodec.encode(bsonWriter, hardwareTypeMgd.getCondition(), encoderContext);
         bsonWriter.writeEndDocument();
