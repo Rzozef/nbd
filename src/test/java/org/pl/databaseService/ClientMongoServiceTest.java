@@ -1,6 +1,7 @@
 package org.pl.databaseService;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.pl.converters.ClientTypeConverter;
@@ -17,11 +18,11 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ClientMongoServiceTest {
-    private ClientMongoService clientMongoService;
-    private ClientMongoRepository clientMongoRepository;
+    private static ClientMongoService clientMongoService;
+    private static ClientMongoRepository clientMongoRepository;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void initConnection() {
         clientMongoRepository = new ClientMongoRepository();
         clientMongoService = new ClientMongoService(clientMongoRepository);
     }

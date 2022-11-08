@@ -1,6 +1,7 @@
 package org.pl.databaseRepository;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.pl.databaseModel.*;
@@ -11,7 +12,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RepairMongoRepositoryTest {
-    private RepairMongoRepository repairMongoRepository;
+    private static RepairMongoRepository repairMongoRepository;
     private ComputerMgd computerMgd;
     private HardwareMgd hardwareMgd;
     private HardwareMgd hardwareMgd2;
@@ -22,6 +23,12 @@ public class RepairMongoRepositoryTest {
     private RepairEmbeddedMgd repairEmbeddedMgd2;
     private RepairEmbeddedMgd repairEmbeddedMgd3;
     private RepairEmbeddedMgd repairEmbeddedMgd4;
+
+    @BeforeAll
+    static void initConnection() {
+        repairMongoRepository = new RepairMongoRepository();
+        repairMongoRepository.initConnection();
+    }
 
     @BeforeEach
     void setUp() {
@@ -35,8 +42,6 @@ public class RepairMongoRepositoryTest {
         repairEmbeddedMgd2 = new RepairEmbeddedMgd(UUID.randomUUID(), false, clientAddressMgd2, hardwareMgd);
         repairEmbeddedMgd3 = new RepairEmbeddedMgd(UUID.randomUUID(), false, clientAddressMgd, hardwareMgd2);
         repairEmbeddedMgd4 = new RepairEmbeddedMgd(UUID.randomUUID(), false, clientAddressMgd2, hardwareMgd2);
-        repairMongoRepository = new RepairMongoRepository();
-        repairMongoRepository.initConnection();
     }
 
     @Test

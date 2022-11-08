@@ -1,6 +1,7 @@
 package org.pl.databaseService;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.pl.databaseRepository.HardwareMongoRepository;
@@ -13,11 +14,11 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HardwareMongoServiceTest {
-    private HardwareMongoService hardwareMongoService;
-    private HardwareMongoRepository hardwareMongoRepository;
+    private static HardwareMongoService hardwareMongoService;
+    private static HardwareMongoRepository hardwareMongoRepository;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void initConnection() {
         hardwareMongoRepository = new HardwareMongoRepository();
         hardwareMongoService = new HardwareMongoService(hardwareMongoRepository);
     }

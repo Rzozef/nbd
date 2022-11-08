@@ -2,6 +2,7 @@ package org.pl.databaseRepository;
 
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.pl.databaseModel.*;
@@ -12,7 +13,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HardwareMongoRepositoryTest {
-    private HardwareMongoRepository hardwareMongoRepository;
+    private static HardwareMongoRepository hardwareMongoRepository;
     private ComputerMgd computerMgd;
     private ConsoleMgd consoleMgd;
     private PhoneMgd phoneMgd;
@@ -21,6 +22,12 @@ public class HardwareMongoRepositoryTest {
     private HardwareMgd hardwareMgd2;
     private HardwareMgd hardwareMgd3;
     private HardwareMgd hardwareMgd4;
+
+    @BeforeAll
+    static void initConnection() {
+        hardwareMongoRepository = new HardwareMongoRepository();
+        hardwareMongoRepository.initConnection();
+    }
 
     @BeforeEach
     void setUp() {
@@ -32,8 +39,6 @@ public class HardwareMongoRepositoryTest {
         hardwareMgd2 = new HardwareMgd(UUID.randomUUID(), false, 300, consoleMgd);
         hardwareMgd3 = new HardwareMgd(UUID.randomUUID(), false, 400, phoneMgd);
         hardwareMgd4 = new HardwareMgd(UUID.randomUUID(), false, 500, monitorMgd);
-        hardwareMongoRepository = new HardwareMongoRepository();
-        hardwareMongoRepository.initConnection();
     }
 
     @Test

@@ -15,17 +15,22 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ClientMongoRepositoryTest {
-    private ClientMongoRepository clientMongoRepository;
+    private static ClientMongoRepository clientMongoRepository;
     private ClientTypeMgd clientTypeMgd;
     private ClientAddressMgd clientAddressMgd;
     private ClientAddressMgd clientAddressMgd2;
+
+    @BeforeAll
+    static void initConnection() {
+        clientMongoRepository = new ClientMongoRepository();
+        clientMongoRepository.initConnection();
+    }
+
     @BeforeEach
     void setUp() {
         clientTypeMgd = new ClientTypeMgd(1.0f, 2, "Basic");
         clientAddressMgd = new ClientAddressMgd(UUID.randomUUID(), false, 200, "Jan", "Slawko", "12345678901", "123456789", clientTypeMgd, 0, "city", "5", "street");
         clientAddressMgd2 = new ClientAddressMgd(UUID.randomUUID(), false, 200, "Janek", "Slawko", "12345678901", "123456789", clientTypeMgd, 0, "city", "5", "street");
-        clientMongoRepository = new ClientMongoRepository();
-        clientMongoRepository.initConnection();
     }
     @Test
     void addClientPositiveTest() {

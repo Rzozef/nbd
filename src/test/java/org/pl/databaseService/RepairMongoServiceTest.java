@@ -1,6 +1,7 @@
 package org.pl.databaseService;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.pl.databaseRepository.RepairMongoRepository;
@@ -16,16 +17,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.pl.model.Condition.DUSTY;
 
 public class RepairMongoServiceTest {
-    private RepairMongoService repairMongoService;
-    private RepairMongoRepository repairMongoRepository;
+    private static RepairMongoService repairMongoService;
+    private static RepairMongoRepository repairMongoRepository;
     private Address address;
     private Hardware hardware;
     private Client client;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void initConnection() {
         repairMongoRepository = new RepairMongoRepository();
         repairMongoService = new RepairMongoService(repairMongoRepository);
+    }
+    @BeforeEach
+    void setUp() {
+
         address = Address.builder()
                 .street("White")
                 .number("123")
