@@ -174,7 +174,6 @@ public class ClientMongoRepositoryTest {
         assertEquals(1, clientMongoRepository.findClientByClientId(clientAddressMgd.getEntityId()).getRepairs());
     }
 
-
     @AfterEach
     void clearDatabase() {
         clientMongoRepository.removeAll();

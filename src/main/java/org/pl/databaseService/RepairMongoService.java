@@ -50,7 +50,7 @@ public class RepairMongoService {
         return repairs;
     }
 
-    public ArrayList<Repair> getAllRepairsByClientId(int id) throws HardwareException, ClientException {
+    public ArrayList<Repair> getAllRepairsByClientId(UUID id) throws HardwareException, ClientException {
         ArrayList<Repair> repairs = new ArrayList<>();
         ArrayList<RepairEmbeddedMgd> repairEmbeddedMgdArrayList = repairMongoRepository.findAllRepairsByClientId(id);
         for (RepairEmbeddedMgd repair : repairEmbeddedMgdArrayList) {
@@ -77,15 +77,15 @@ public class RepairMongoService {
         return clients;
     }
 
-    public Repair getRepairById(int id) throws HardwareException, ClientException {
+    public Repair getRepairById(UUID id) throws HardwareException, ClientException {
         return RepairConverter.fromRepositoryModel(repairMongoRepository.find(id));
     }
 
-    public Repair updateArchive(int id) throws HardwareException, ClientException {
+    public Repair updateArchive(UUID id) throws HardwareException, ClientException {
         return RepairConverter.fromRepositoryModel(repairMongoRepository.updateArchive(id, true));
     }
 
-    public Repair delete(int id) throws HardwareException, ClientException {
+    public Repair delete(UUID id) throws HardwareException, ClientException {
         return RepairConverter.fromRepositoryModel(repairMongoRepository.remove(id));
     }
 }
