@@ -32,7 +32,7 @@ public class RepairMongoServiceTest {
                 .city("Lodz")
                 .build();
         client = Client.builder()
-                .entityId(client.getEntityId())
+                .entityId(UUID.randomUUID())
                 .personalId("0")
                 .clientType(new Basic())
                 .phoneNumber("535-535-535")
