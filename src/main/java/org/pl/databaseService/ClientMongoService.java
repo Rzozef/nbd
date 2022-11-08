@@ -80,10 +80,6 @@ public class ClientMongoService {
         return ClientAddressConverter.fromRepositoryModelAddress(clientMongoRepository.findAddressByClientId(id));
     }
 
-    public ClientType getClientType(UUID id) throws ClientException {
-        return ClientTypeConverter.fromRepositoryModel(clientMongoRepository.findClientTypeByClientId(id));
-    }
-
     public Client updateArchive(UUID id, boolean isArchive) throws ClientException {
         return ClientAddressConverter.fromRepositoryModelClient(clientMongoRepository.updateArchive(id, isArchive));
     }
