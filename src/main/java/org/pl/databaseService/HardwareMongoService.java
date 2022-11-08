@@ -66,19 +66,19 @@ public class HardwareMongoService {
         return hardwares;
     }
 
-    public Hardware getHardware(int id) throws HardwareException {
+    public Hardware getHardware(UUID id) throws HardwareException {
         return HardwareConverter.fromRepositoryModel(hardwareMongoRepository.find(id));
     }
 
-    public Hardware updateArchive(int id, boolean archive) throws HardwareException {
+    public Hardware updateArchive(UUID id, boolean archive) throws HardwareException {
         return HardwareConverter.fromRepositoryModel(hardwareMongoRepository.updateArchive(id, archive));
     }
 
-    public Hardware updatePrice(int id, int price) throws HardwareException {
+    public Hardware updatePrice(UUID id, int price) throws HardwareException {
         return HardwareConverter.fromRepositoryModel(hardwareMongoRepository.updatePrice(id, price));
     }
 
-    public boolean delete(int id) {
+    public boolean delete(UUID id) {
         return hardwareMongoRepository.remove(id).getClass() == HardwareMgd.class;
     }
 }

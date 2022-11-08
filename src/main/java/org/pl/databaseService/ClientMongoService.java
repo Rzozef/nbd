@@ -81,7 +81,7 @@ public class ClientMongoService {
     }
 
     public ClientType getClientType(UUID id) throws ClientException {
-        return ClientTypeConverter.fromRepositoryModel(clientMongoRepository.findClientTypeByClientId(id));
+        return ClientTypeConverter.fromRepositoryModel(clientMongoRepository.findClientByClientId(id).getClientType());
     }
 
     public Client updateArchive(UUID id, boolean isArchive) throws ClientException {

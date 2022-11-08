@@ -150,8 +150,4 @@ public class ClientMongoRepository extends MongoRepository {
         Bson setUpdate = Updates.set("repairs", client.getRepairs() + 1);
         return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
     }
-
-    public int getNumberOfDocuments() {
-        return (int) clientsCollection.countDocuments();
-    }
 }

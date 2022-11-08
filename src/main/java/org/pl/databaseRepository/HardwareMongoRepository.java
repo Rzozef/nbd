@@ -4,10 +4,12 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.model.ReturnDocument;
 import com.mongodb.client.model.Updates;
+import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.pl.databaseModel.*;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -55,17 +57,21 @@ public class HardwareMongoRepository extends MongoRepository {
     }
 
 
-    public HardwareMgd find(int id) {
+    public HardwareMgd find(UUID id) {
         Bson filter = eq("_id", id);
         return hardwareCollection.find(filter, HardwareMgd.class).first();
     }
 
-    public HardwareMgd remove(int id) {
+    public HardwareMgd remove(UUID id) {
         Bson filter = eq("_id", id);
         return hardwareCollection.findOneAndDelete(filter);
     }
 
-    public HardwareMgd updateArchive(int id, boolean isArchive) {
+    public void removeAll() {
+        hardwareCollection.deleteMany(new Document());
+    }
+
+    public HardwareMgd updateArchive(UUID id, boolean isArchive) {
         Bson filter = eq("_id", id);
         Bson setUpdate = Updates.set("archive", isArchive);
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
@@ -73,15 +79,11 @@ public class HardwareMongoRepository extends MongoRepository {
         return hardwareCollection.findOneAndUpdate(filter, setUpdate, options);
     }
 
-    public HardwareMgd updatePrice(int id, int price) {
+    public HardwareMgd updatePrice(UUID id, int price) {
         Bson filter = eq("_id", id);
         Bson setUpdate = Updates.set("price", price);
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
         options.returnDocument(ReturnDocument.AFTER);
         return hardwareCollection.findOneAndUpdate(filter, setUpdate, options);
-    }
-
-    public int getNumberOfDocuments() {
-        return (int) hardwareCollection.countDocuments();
     }
 }

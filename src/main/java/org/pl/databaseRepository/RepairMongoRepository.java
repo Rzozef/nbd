@@ -12,6 +12,7 @@ import org.pl.databaseModel.RepairEmbeddedMgd;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -42,7 +43,7 @@ public class RepairMongoRepository extends MongoRepository {
         return repairCollection.find().into(new ArrayList<>());
     }
 
-    public ArrayList<RepairEmbeddedMgd> findAllRepairsByClientId(int clientId) {
+    public ArrayList<RepairEmbeddedMgd> findAllRepairsByClientId(UUID clientId) {
         Bson filter = eq("client._id", clientId);
         return repairCollection.find(filter, RepairEmbeddedMgd.class).into(new ArrayList<>());
     }
@@ -57,25 +58,21 @@ public class RepairMongoRepository extends MongoRepository {
         return hardwareMgds;
     }
 
-    public RepairEmbeddedMgd find(int id) {
+    public RepairEmbeddedMgd find(UUID id) {
         Bson filter = eq("_id", id);
         return repairCollection.find(filter, RepairEmbeddedMgd.class).first();
     }
 
-    public RepairEmbeddedMgd remove(int id) {
+    public RepairEmbeddedMgd remove(UUID id) {
         Bson filter = eq("_id", id);
         return repairCollection.findOneAndDelete(filter);
     }
 
-    public RepairEmbeddedMgd updateArchive(int id, boolean isArchive) {
+    public RepairEmbeddedMgd updateArchive(UUID id, boolean isArchive) {
         Bson filter = eq("_id", id);
         Bson setUpdate = Updates.set("archive", isArchive);
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
         options.returnDocument(ReturnDocument.AFTER);
         return repairCollection.findOneAndUpdate(filter, setUpdate, options);
-    }
-
-    public int getNumberOfDocuments() {
-        return (int) repairCollection.countDocuments();
     }
 }
