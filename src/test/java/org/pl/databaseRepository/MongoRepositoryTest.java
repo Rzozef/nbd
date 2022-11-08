@@ -17,6 +17,7 @@ public class MongoRepositoryTest {
         ClientAddressMgd clientAddressMgd = new ClientAddressMgd(UUID.randomUUID(), false, 200, "Jan", "Kowalski", "12345678901", "123456789", clientTypeMgd, 0, "Lodz", "7", "Zielona");
         clientMongoRepository.initConnection();
         assertTrue(clientMongoRepository.add(clientAddressMgd));
+        System.out.println(clientMongoRepository.findClientByClientId(clientAddressMgd.getEntityId()).getEntityId());
         HardwareMongoRepository hardwareMongoRepository = new HardwareMongoRepository();
         HardwareTypeMgd hardwareTypeMgd = new ComputerMgd(Condition.AVERAGE);
         HardwareMgd hardwareMgd = new HardwareMgd(UUID.randomUUID(), false, 200, hardwareTypeMgd);

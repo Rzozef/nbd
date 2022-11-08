@@ -9,6 +9,7 @@ import com.mongodb.client.MongoDatabase;
 import lombok.Getter;
 import org.bson.UuidRepresentation;
 import org.bson.codecs.UuidCodec;
+import org.bson.codecs.UuidCodecProvider;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.Conventions;
@@ -31,11 +32,11 @@ public class MongoRepository {
 
     protected void initConnection() {
         MongoClientSettings settings = MongoClientSettings.builder()
-                .uuidRepresentation(UuidRepresentation.STANDARD)
                 .credential(credential)
                 .applyConnectionString(connectionString)
                 .codecRegistry(CodecRegistries.fromRegistries(CodecRegistries.fromCodecs(new ConditionCodec()),
-                        CodecRegistries.fromProviders(new HardwareTypeCodecProvider()),
+                        CodecRegistries.fromProviders(new HardwareTypeCodecProvider(),
+                                new UuidCodecProvider(UuidRepresentation.C_SHARP_LEGACY)),
                         MongoClientSettings.getDefaultCodecRegistry(),
                         codecRegistry))
                 .build();

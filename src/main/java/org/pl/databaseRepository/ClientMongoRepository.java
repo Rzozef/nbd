@@ -11,6 +11,7 @@ import org.pl.databaseModel.ClientTypeMgd;
 import org.pl.exceptions.ClientException;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -46,27 +47,27 @@ public class ClientMongoRepository extends MongoRepository {
         return clientsCollection.find(AddressMgd.class).into(new ArrayList<>());
     }
 
-    public ClientAddressMgd findClientByClientId(int id) {
+    public ClientAddressMgd findClientByClientId(UUID id) {
         Bson filter = eq("_id", id);
         return clientsCollection.find(filter, ClientAddressMgd.class).first();
     }
 
-    public AddressMgd findAddressByClientId(int id) {
+    public AddressMgd findAddressByClientId(UUID id) {
         Bson filter = eq("_id", id);
         return clientsCollection.find(filter, AddressMgd.class).first();
     }
 
-    public ClientTypeMgd findClientTypeByClientId(int id) {
+    public ClientTypeMgd findClientTypeByClientId(UUID id) {
         Bson filter = eq("_id", id);
         return clientsCollection.find(filter, ClientTypeMgd.class).first();
     }
 
-    public ClientAddressMgd remove(int id) {
+    public ClientAddressMgd remove(UUID id) {
         Bson filter = eq("_id", id);
         return clientsCollection.findOneAndDelete(filter);
     }
 
-    public ClientAddressMgd updateArchive(int id, boolean isArchive) {
+    public ClientAddressMgd updateArchive(UUID id, boolean isArchive) {
         Bson filter = eq("_id", id);
         Bson setUpdate = Updates.set("archive", isArchive);
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
@@ -74,7 +75,7 @@ public class ClientMongoRepository extends MongoRepository {
         return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
     }
 
-    public ClientAddressMgd updateBalance(int id, double newBalance) {
+    public ClientAddressMgd updateBalance(UUID id, double newBalance) {
         Bson filter = eq("_id", id);
         Bson setUpdate = Updates.set("balance", newBalance);
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
@@ -82,7 +83,7 @@ public class ClientMongoRepository extends MongoRepository {
         return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
     }
 
-    public ClientAddressMgd updateFirstName(int id, String newFirstName) {
+    public ClientAddressMgd updateFirstName(UUID id, String newFirstName) {
         Bson filter = eq("_id", id);
         Bson setUpdate = Updates.set("firstName", newFirstName);
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
@@ -90,7 +91,7 @@ public class ClientMongoRepository extends MongoRepository {
         return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
     }
 
-    public ClientAddressMgd updateLastName(int id, String newLastName) {
+    public ClientAddressMgd updateLastName(UUID id, String newLastName) {
         Bson filter = eq("_id", id);
         Bson setUpdate = Updates.set("lastName", newLastName);
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
@@ -98,7 +99,7 @@ public class ClientMongoRepository extends MongoRepository {
         return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
     }
 
-    public ClientAddressMgd updatePhoneNumber(int id, String newPhoneNumber) {
+    public ClientAddressMgd updatePhoneNumber(UUID id, String newPhoneNumber) {
         Bson filter = eq("_id", id);
         Bson setUpdate = Updates.set("firstName", newPhoneNumber);
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
@@ -106,7 +107,7 @@ public class ClientMongoRepository extends MongoRepository {
         return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
     }
 
-    public ClientAddressMgd updateClientType(int id, ClientTypeMgd newClientType) {
+    public ClientAddressMgd updateClientType(UUID id, ClientTypeMgd newClientType) {
         Bson filter = eq("_id", id);
         Bson setUpdate = Updates.set("clientType", newClientType);
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
@@ -114,7 +115,7 @@ public class ClientMongoRepository extends MongoRepository {
         return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
     }
 
-    public ClientAddressMgd updateCity(int id, String newCity) {
+    public ClientAddressMgd updateCity(UUID id, String newCity) {
         Bson filter = eq("_id", id);
         Bson setUpdate = Updates.set("city", newCity);
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
@@ -122,7 +123,7 @@ public class ClientMongoRepository extends MongoRepository {
         return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
     }
 
-    public ClientAddressMgd updateNumber(int id, String newNumber) {
+    public ClientAddressMgd updateNumber(UUID id, String newNumber) {
         Bson filter = eq("_id", id);
         Bson setUpdate = Updates.set("number", newNumber);
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
@@ -130,7 +131,7 @@ public class ClientMongoRepository extends MongoRepository {
         return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
     }
 
-    public ClientAddressMgd updateStreet(int id, String newStreet) {
+    public ClientAddressMgd updateStreet(UUID id, String newStreet) {
         Bson filter = eq("_id", id);
         Bson setUpdate = Updates.set("street", newStreet);
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
@@ -138,7 +139,7 @@ public class ClientMongoRepository extends MongoRepository {
         return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
     }
 
-    public ClientAddressMgd updateRepairs(int id) throws ClientException {
+    public ClientAddressMgd updateRepairs(UUID id) throws ClientException {
         Bson filter = eq("_id", id);
         ClientAddressMgd client = clientsCollection.find(filter).first();
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
