@@ -72,6 +72,38 @@ public class RepairMongoRepositoryTest {
         assertEquals(repairEmbeddedMgd.getEntityId(), repairMongoRepository.find(repairEmbeddedMgd.getEntityId()).getEntityId());
     }
 
+    @Test
+    void findRepairNegativeTest() {
+        assertNull(repairMongoRepository.find(repairEmbeddedMgd.getEntityId()));
+    }
+
+    @Test
+    void removeRepairTest() {
+        repairMongoRepository.add(repairEmbeddedMgd);
+        assertEquals(1, repairMongoRepository.findAll().size());
+        repairMongoRepository.remove(repairEmbeddedMgd.getEntityId());
+        assertEquals(0, repairMongoRepository.findAll().size());
+    }
+
+    @Test
+    void removeAllTest() {
+        repairMongoRepository.add(repairEmbeddedMgd);
+        repairMongoRepository.add(repairEmbeddedMgd2);
+        repairMongoRepository.add(repairEmbeddedMgd3);
+        repairMongoRepository.add(repairEmbeddedMgd4);
+        assertEquals(4, repairMongoRepository.findAll().size());
+        repairMongoRepository.removeAll();
+        assertEquals(0, repairMongoRepository.findAll().size());
+    }
+
+    @Test
+    void updateArchiveTest() {
+        repairMongoRepository.add(repairEmbeddedMgd);
+        assertFalse(repairMongoRepository.find(repairEmbeddedMgd.getEntityId()).isArchive());
+        repairMongoRepository.updateArchive(repairEmbeddedMgd.getEntityId(), true);
+        assertTrue(repairMongoRepository.find(repairEmbeddedMgd.getEntityId()).isArchive());
+    }
+
     @AfterEach
     void clearDatabase() {
         repairMongoRepository.removeAll();
