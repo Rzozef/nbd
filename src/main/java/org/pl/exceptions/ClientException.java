@@ -12,6 +12,7 @@ public class ClientException extends Exception {
     public static final String CLIENT_TYPE_EXCEPTION = "Invalid client type was given.";
     public static final String CLIENT_TYPE_CALCULATE_DISCOUNT_EXCEPTION = "Cannot calculate discount for negative price.";
     public static final String CLIENT_PERSONALID_EXCEPTION = "Invalid personalId was given";
+    public static final String CLIENT_MAX_REPAIRS_EXCEEDED = "This client can't have more repairs";
 
     public ClientException(String message) {
         super(message);

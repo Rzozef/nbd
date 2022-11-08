@@ -16,9 +16,10 @@ public class Client extends AbstractEntity implements Entity {
     private String phoneNumber;
     private ClientType clientType;
     private Address address;
+    private int repairs;
 
     @Builder
-    public Client(int entityId, boolean archive, double balance, String firstName, String lastName, String personalId, String phoneNumber, ClientType clientType, Address address) {
+    public Client(int entityId, boolean archive, double balance, String firstName, String lastName, String personalId, String phoneNumber, ClientType clientType, Address address, int repairs) {
         super(entityId);
         this.archive = archive;
         this.balance = balance;
@@ -28,6 +29,7 @@ public class Client extends AbstractEntity implements Entity {
         this.phoneNumber = phoneNumber;
         this.clientType = clientType;
         this.address = address;
+        this.repairs = repairs;
     }
 
     public double calculateDiscount(int price) throws ClientException {

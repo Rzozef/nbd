@@ -87,7 +87,7 @@ class RepairServiceTest {
     @Test
     void repairServiceGetInfoTest() throws RepositoryException, RepairException {
         repairService.add(client1, hardware1);
-        String expectedInfo = "Repair(archive=false, client=Client(archive=false, balance=0.0, firstName=Szymon, lastName=Kowalski, personalId=1, phoneNumber=123456789, clientType=Premium(), address=Address(city=Warszawa, number=34, street=Uliczna)), hardware=Hardware(archive=false, price=2000, hardwareType=Computer(condition=Condition.DUSTY)))";
+        String expectedInfo = "Repair(archive=false, client=Client(archive=false, balance=0.0, firstName=Szymon, lastName=Kowalski, personalId=1, phoneNumber=123456789, clientType=Premium(), address=Address(city=Warszawa, number=34, street=Uliczna), repairs=0), hardware=Hardware(archive=false, price=2000, hardwareType=Computer(condition=Condition.DUSTY)))";
         assertEquals(expectedInfo, repairService.getInfo(0));
     }
 

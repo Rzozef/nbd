@@ -14,6 +14,7 @@ public class ClientAddressMgd extends AbstractEntityMgd{
                             @BsonProperty("personalId") String personalId,
                             @BsonProperty("phoneNumber") String phoneNumber,
                             @BsonProperty("clientType") ClientTypeMgd clientType,
+                            @BsonProperty("repairs") int repairs,
                             @BsonProperty("city") String city,
                             @BsonProperty("number") String number,
                             @BsonProperty("street") String street) {
@@ -25,10 +26,14 @@ public class ClientAddressMgd extends AbstractEntityMgd{
         this.personalId = personalId;
         this.phoneNumber = phoneNumber;
         this.clientType = clientType;
+        this.repairs = repairs;
         this.city = city;
         this.number = number;
         this.street = street;
     }
+
+    @BsonProperty("repairs")
+    private int repairs;
 
     @BsonProperty("archive")
     private boolean archive;
@@ -99,4 +104,6 @@ public class ClientAddressMgd extends AbstractEntityMgd{
     public String getStreet() {
         return street;
     }
+
+    public int getRepairs() { return repairs; }
 }

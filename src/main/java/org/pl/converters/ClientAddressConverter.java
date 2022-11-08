@@ -10,7 +10,7 @@ public class ClientAddressConverter {
     public static ClientAddressMgd toRepositoryModel(Client client) {
         return new ClientAddressMgd(client.getEntityId(), client.isArchive(), client.getBalance(), client.getFirstName(),
                 client.getLastName(), client.getPersonalId(), client.getPhoneNumber(),
-                ClientTypeConverter.toRepositoryModel(client.getClientType()),
+                ClientTypeConverter.toRepositoryModel(client.getClientType()), client.getRepairs(),
                 client.getAddress().getCity(), client.getAddress().getNumber(), client.getAddress().getStreet());
     }
 
@@ -22,6 +22,7 @@ public class ClientAddressConverter {
         return new Client(clientAddressMgd.getEntityId(), clientAddressMgd.isArchive(), clientAddressMgd.getBalance(),
                 clientAddressMgd.getFirstName(), clientAddressMgd.getLastName(), clientAddressMgd.getPersonalId(),
                 clientAddressMgd.getPhoneNumber(), ClientTypeConverter.fromRepositoryModel(clientAddressMgd.getClientType()),
-                new Address(clientAddressMgd.getCity(), clientAddressMgd.getNumber(), clientAddressMgd.getStreet()));
+                new Address(clientAddressMgd.getCity(), clientAddressMgd.getNumber(), clientAddressMgd.getStreet()),
+                clientAddressMgd.getRepairs());
     }
 }

@@ -57,9 +57,9 @@ public class RepairMongoRepository extends MongoRepository {
         return hardwareMgds;
     }
 
-    public ArrayList<RepairEmbeddedMgd> find(int id) {
+    public RepairEmbeddedMgd find(int id) {
         Bson filter = eq("_id", id);
-        return repairCollection.find(filter, RepairEmbeddedMgd.class).into(new ArrayList<>());
+        return repairCollection.find(filter, RepairEmbeddedMgd.class).first();
     }
 
     public RepairEmbeddedMgd remove(int id) {
@@ -70,22 +70,6 @@ public class RepairMongoRepository extends MongoRepository {
     public RepairEmbeddedMgd updateArchive(int id, boolean isArchive) {
         Bson filter = eq("_id", id);
         Bson setUpdate = Updates.set("archive", isArchive);
-        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
-        options.returnDocument(ReturnDocument.AFTER);
-        return repairCollection.findOneAndUpdate(filter, setUpdate, options);
-    }
-
-    public RepairEmbeddedMgd updateClient(int repairId, ClientAddressMgd client) {
-        Bson filter = eq("_id", repairId);
-        Bson setUpdate = Updates.set("client", client);
-        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
-        options.returnDocument(ReturnDocument.AFTER);
-        return repairCollection.findOneAndUpdate(filter, setUpdate, options);
-    }
-
-    public RepairEmbeddedMgd updateHardware(int repairId, HardwareMgd hardware) {
-        Bson filter = eq("_id", repairId);
-        Bson setUpdate = Updates.set("hardware", hardware);
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
         options.returnDocument(ReturnDocument.AFTER);
         return repairCollection.findOneAndUpdate(filter, setUpdate, options);

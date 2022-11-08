@@ -47,6 +47,7 @@ public class ClientMongoService {
                 .firstName(firstName)
                 .lastName(lastName)
                 .phoneNumber(phoneNumber)
+                .repairs(0)
                 .address(address)
                 .entityId(clientMongoRepository.getNumberOfDocuments())
                 .build();
@@ -82,40 +83,44 @@ public class ClientMongoService {
         return ClientTypeConverter.fromRepositoryModel(clientMongoRepository.findClientTypeByClientId(id));
     }
 
-    public ClientAddressMgd updateArchive(int id, boolean isArchive) {
-        return clientMongoRepository.updateArchive(id, isArchive);
+    public Client updateArchive(int id, boolean isArchive) throws ClientException {
+        return ClientAddressConverter.fromRepositoryModelClient(clientMongoRepository.updateArchive(id, isArchive));
     }
 
-    public ClientAddressMgd updateBalance(int id, double newBalance) {
-        return clientMongoRepository.updateBalance(id, newBalance);
+    public Client updateBalance(int id, double newBalance) throws ClientException {
+        return ClientAddressConverter.fromRepositoryModelClient(clientMongoRepository.updateBalance(id, newBalance));
     }
 
-    public ClientAddressMgd updateFirstName(int id, String newFirstName) {
-        return clientMongoRepository.updateFirstName(id, newFirstName);
+    public Client updateFirstName(int id, String newFirstName) throws ClientException {
+        return ClientAddressConverter.fromRepositoryModelClient(clientMongoRepository.updateFirstName(id, newFirstName));
     }
 
-    public ClientAddressMgd updateLastName(int id, String newLastName) {
-        return clientMongoRepository.updateLastName(id, newLastName);
+    public Client updateLastName(int id, String newLastName) throws ClientException {
+        return ClientAddressConverter.fromRepositoryModelClient(clientMongoRepository.updateLastName(id, newLastName));
     }
 
-    public ClientAddressMgd updatePhoneNumber(int id, String newPhoneNumber) {
-        return clientMongoRepository.updatePhoneNumber(id, newPhoneNumber);
+    public Client updatePhoneNumber(int id, String newPhoneNumber) throws ClientException {
+        return ClientAddressConverter.fromRepositoryModelClient(clientMongoRepository.updatePhoneNumber(id, newPhoneNumber));
     }
 
-    public ClientAddressMgd updateClientType(int id, ClientTypeMgd newClientType) {
-        return clientMongoRepository.updateClientType(id, newClientType);
+    public Client updateClientType(int id, ClientTypeMgd newClientType) throws ClientException {
+        return ClientAddressConverter.fromRepositoryModelClient(clientMongoRepository.updateClientType(id, newClientType));
     }
 
-    public ClientAddressMgd updateCity(int id, String newCity) {
-        return clientMongoRepository.updateCity(id, newCity);
+    public Client updateCity(int id, String newCity) throws ClientException {
+        return ClientAddressConverter.fromRepositoryModelClient(clientMongoRepository.updateCity(id, newCity));
     }
 
-    public ClientAddressMgd updateNumber(int id, String newNumber) {
-        return clientMongoRepository.updateNumber(id, newNumber);
+    public Client updateNumber(int id, String newNumber) throws ClientException {
+        return ClientAddressConverter.fromRepositoryModelClient(clientMongoRepository.updateNumber(id, newNumber));
     }
 
-    public ClientAddressMgd updateStreet(int id, String newStreet) {
-        return clientMongoRepository.updateStreet(id, newStreet);
+    public Client updateStreet(int id, String newStreet) throws ClientException {
+        return ClientAddressConverter.fromRepositoryModelClient(clientMongoRepository.updateStreet(id, newStreet));
+    }
+
+    public Client updateRepairs(int id) throws ClientException {
+        return ClientAddressConverter.fromRepositoryModelClient(clientMongoRepository.updateRepairs(id));
     }
 
     public boolean delete(int id) {

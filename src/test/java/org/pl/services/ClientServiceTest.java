@@ -59,7 +59,7 @@ public class ClientServiceTest {
     @Test
     void clientServiceToStringTest() throws RepositoryException, ClientException {
         clientService.add("Pan", "Tadeusz", "280618349", "10", address);
-        String expectedInfo = "Client(archive=false, balance=0.0, firstName=Pan, lastName=Tadeusz, personalId=10, phoneNumber=280618349, clientType=null, address=Address(city=Lodz, number=123, street=White))";
+        String expectedInfo = "Client(archive=false, balance=0.0, firstName=Pan, lastName=Tadeusz, personalId=10, phoneNumber=280618349, clientType=null, address=Address(city=Lodz, number=123, street=White), repairs=0)";
         assertEquals(expectedInfo, clientService.getInfo(0));
     }
 

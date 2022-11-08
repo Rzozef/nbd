@@ -12,7 +12,7 @@ public class MongoRepositoryTest {
     void testConnectivity() {
         ClientMongoRepository clientMongoRepository = new ClientMongoRepository();
         ClientTypeMgd clientTypeMgd = new ClientTypeMgd((float) 1.2, 3, "basic");
-        ClientAddressMgd clientAddressMgd = new ClientAddressMgd(0, false, 200, "Jan", "Kowalski", "12345678901", "123456789", clientTypeMgd, "Lodz", "7", "Zielona");
+        ClientAddressMgd clientAddressMgd = new ClientAddressMgd(0, false, 200, "Jan", "Kowalski", "12345678901", "123456789", clientTypeMgd, 0, "Lodz", "7", "Zielona");
         //clientMongoRepository.initConnection();
         HardwareMongoRepository hardwareMongoRepository = new HardwareMongoRepository();
         HardwareTypeMgd hardwareTypeMgd = new ComputerMgd(Condition.AVERAGE);
@@ -26,7 +26,7 @@ public class MongoRepositoryTest {
         //repairMongoRepository.add(repairEmbeddedMgd);
         //repairMongoRepository.add(repairEmbeddedMgd2);
         //repairMongoRepository.initConnection();
-        ClientAddressMgd clientAddressMgd2 = new ClientAddressMgd(1, false, 200, "Janek", "Kowalski", "12345678901", "123456789", clientTypeMgd, "Lodz", "17", "Zielona");
+        ClientAddressMgd clientAddressMgd2 = new ClientAddressMgd(1, false, 200, "Janek", "Kowalski", "12345678901", "123456789", clientTypeMgd, 0, "Lodz", "17", "Zielona");
         HardwareMgd hardwareMgd3 = new HardwareMgd(2, false, 300, hardwareTypeMgd);
         //repairMongoRepository.updateHardware(0, hardwareMgd3);
         hardwareMongoRepository.add(hardwareMgd3);

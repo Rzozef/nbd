@@ -8,6 +8,7 @@ import org.bson.conversions.Bson;
 import org.pl.databaseModel.AddressMgd;
 import org.pl.databaseModel.ClientAddressMgd;
 import org.pl.databaseModel.ClientTypeMgd;
+import org.pl.exceptions.ClientException;
 
 import java.util.ArrayList;
 
@@ -134,6 +135,18 @@ public class ClientMongoRepository extends MongoRepository {
         Bson setUpdate = Updates.set("street", newStreet);
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
         options.returnDocument(ReturnDocument.AFTER);
+        return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
+    }
+
+    public ClientAddressMgd updateRepairs(int id) throws ClientException {
+        Bson filter = eq("_id", id);
+        ClientAddressMgd client = clientsCollection.find(filter).first();
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
+        options.returnDocument(ReturnDocument.AFTER);
+        if (client.getRepairs() + 1 > client.getClientType().getMaxRepairs()) {
+            throw new ClientException(ClientException.CLIENT_MAX_REPAIRS_EXCEEDED);
+        }
+        Bson setUpdate = Updates.set("repairs", client.getRepairs() + 1);
         return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
     }
 
