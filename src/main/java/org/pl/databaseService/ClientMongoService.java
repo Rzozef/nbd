@@ -1,18 +1,16 @@
 package org.pl.databaseService;
 
 import org.pl.converters.ClientAddressConverter;
-import org.pl.converters.ClientTypeConverter;
 import org.pl.databaseModel.AddressMgd;
 import org.pl.databaseModel.ClientAddressMgd;
 import org.pl.databaseModel.ClientTypeMgd;
 import org.pl.databaseRepository.ClientMongoRepository;
 import org.pl.exceptions.ClientException;
 import org.pl.exceptions.RepositoryException;
-import org.pl.model.Address;
-import org.pl.model.Client;
-import org.pl.model.ClientType;
+import org.pl.model.*;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -23,7 +21,7 @@ public class ClientMongoService {
         this.clientMongoRepository = clientMongoRepository;
     }
 
-    public boolean add(String firstName, String lastName, String phoneNumber, String personalId, String city, String number, String street) throws RepositoryException, ClientException {
+    public boolean add(String firstName, String lastName, String phoneNumber, String personalId, String city, String number, String street, String typeName) throws RepositoryException, ClientException {
         if (Objects.equals(firstName, ""))
             throw new ClientException(ClientException.CLIENT_FIRST_NAME_EXCEPTION);
         if (Objects.equals(lastName, ""))
@@ -38,6 +36,15 @@ public class ClientMongoService {
             throw new ClientException(ClientException.CLIENT_ADDRESS_EXCEPTION);
         if (Objects.equals(street, ""))
             throw new ClientException(ClientException.CLIENT_ADDRESS_EXCEPTION);
+        if (Objects.equals(typeName, ""))
+            throw new ClientException(ClientException.CLIENT_TYPE_EXCEPTION);
+        ClientType clientType;
+        switch (typeName.toLowerCase(Locale.ROOT)) {
+            case "basic" -> clientType = new Basic();
+            case "vip" -> clientType = new Vip();
+            case "premium" -> clientType = new Premium();
+            default -> throw new ClientException(ClientException.CLIENT_TYPE_EXCEPTION);
+        }
         Address address = Address.builder()
                 .city(city)
                 .number(number)
@@ -47,10 +54,12 @@ public class ClientMongoService {
                 .personalId(personalId)
                 .firstName(firstName)
                 .lastName(lastName)
+                .archive(false)
                 .phoneNumber(phoneNumber)
                 .repairs(0)
                 .address(address)
                 .entityId(UUID.randomUUID())
+                .clientType(clientType)
                 .build();
         return clientMongoRepository.add(ClientAddressConverter.toRepositoryModel(client));
     }
@@ -121,6 +130,9 @@ public class ClientMongoService {
     }
 
     public boolean delete(UUID id) {
-        return clientMongoRepository.remove(id).getClass() == ClientAddressMgd.class;
+        ClientAddressMgd client = clientMongoRepository.remove(id);
+        if (client == null)
+            return false;
+        else return client.getClass() == ClientAddressMgd.class;
     }
 }
