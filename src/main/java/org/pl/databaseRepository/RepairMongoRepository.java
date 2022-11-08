@@ -7,7 +7,6 @@ import com.mongodb.client.model.ReturnDocument;
 import com.mongodb.client.model.Updates;
 import org.bson.conversions.Bson;
 import org.pl.databaseModel.ClientAddressMgd;
-import org.pl.databaseModel.ClientMgd;
 import org.pl.databaseModel.HardwareMgd;
 import org.pl.databaseModel.RepairEmbeddedMgd;
 
@@ -48,8 +47,8 @@ public class RepairMongoRepository extends MongoRepository {
         return repairCollection.find(filter, RepairEmbeddedMgd.class).into(new ArrayList<>());
     }
 
-    public ArrayList<ClientMgd> findAllClients() {
-        ArrayList<ClientMgd> clientMgds = repairCollection.aggregate(List.of(Aggregates.replaceRoot("$client")), ClientMgd.class).into(new ArrayList<>());
+    public ArrayList<ClientAddressMgd> findAllClients() {
+        ArrayList<ClientAddressMgd> clientMgds = repairCollection.aggregate(List.of(Aggregates.replaceRoot("$client")), ClientAddressMgd.class).into(new ArrayList<>());
         return clientMgds;
     }
 
@@ -90,5 +89,9 @@ public class RepairMongoRepository extends MongoRepository {
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
         options.returnDocument(ReturnDocument.AFTER);
         return repairCollection.findOneAndUpdate(filter, setUpdate, options);
+    }
+
+    public int getNumberOfDocuments() {
+        return (int) repairCollection.countDocuments();
     }
 }

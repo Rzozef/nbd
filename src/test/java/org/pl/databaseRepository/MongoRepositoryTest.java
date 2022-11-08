@@ -29,5 +29,7 @@ public class MongoRepositoryTest {
         ClientAddressMgd clientAddressMgd2 = new ClientAddressMgd(1, false, 200, "Janek", "Kowalski", "12345678901", "123456789", clientTypeMgd, "Lodz", "17", "Zielona");
         HardwareMgd hardwareMgd3 = new HardwareMgd(2, false, 300, hardwareTypeMgd);
         //repairMongoRepository.updateHardware(0, hardwareMgd3);
+        hardwareMongoRepository.add(hardwareMgd3);
+        System.out.println(hardwareMongoRepository.findAllComputers());
     }
 }

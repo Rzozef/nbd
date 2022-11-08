@@ -2,7 +2,6 @@ package org.pl.converters;
 
 import org.pl.databaseModel.AddressMgd;
 import org.pl.databaseModel.ClientAddressMgd;
-import org.pl.databaseModel.ClientMgd;
 import org.pl.exceptions.ClientException;
 import org.pl.model.Address;
 import org.pl.model.Client;

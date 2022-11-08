@@ -7,7 +7,6 @@ import com.mongodb.client.model.Updates;
 import org.bson.conversions.Bson;
 import org.pl.databaseModel.AddressMgd;
 import org.pl.databaseModel.ClientAddressMgd;
-import org.pl.databaseModel.ClientMgd;
 import org.pl.databaseModel.ClientTypeMgd;
 
 import java.util.ArrayList;
@@ -41,17 +40,14 @@ public class ClientMongoRepository extends MongoRepository {
         return clientsCollection.find().into(new ArrayList<>());
     }
 
-    public ArrayList<ClientMgd> findAllClients() {
-        return clientsCollection.find(ClientMgd.class).into(new ArrayList<>());
-    }
 
     public ArrayList<AddressMgd> findAllAddresses() {
         return clientsCollection.find(AddressMgd.class).into(new ArrayList<>());
     }
 
-    public ArrayList<ClientMgd> find(int id) {
+    public ClientAddressMgd findClientByClientId(int id) {
         Bson filter = eq("_id", id);
-        return clientsCollection.find(filter, ClientMgd.class).into(new ArrayList<>());
+        return clientsCollection.find(filter, ClientAddressMgd.class).first();
     }
 
     public AddressMgd findAddressByClientId(int id) {
@@ -139,5 +135,9 @@ public class ClientMongoRepository extends MongoRepository {
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
         options.returnDocument(ReturnDocument.AFTER);
         return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
+    }
+
+    public int getNumberOfDocuments() {
+        return (int) clientsCollection.countDocuments();
     }
 }

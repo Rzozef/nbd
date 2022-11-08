@@ -25,7 +25,7 @@ public class ClientService {
         if (Objects.isNull(address))
             throw new ClientException(ClientException.CLIENT_ADDRESS_EXCEPTION);
         if (Objects.equals(personalId, "")) {
-            throw new ClientException(ClientException.CLIENT_IDE_EXCEPTION);
+            throw new ClientException(ClientException.CLIENT_PERSONALID_EXCEPTION);
         }
         Client client = Client.builder()
                 .entityId(clientRepository.getElements().size())

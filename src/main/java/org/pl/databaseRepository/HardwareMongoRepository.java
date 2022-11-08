@@ -1,16 +1,13 @@
 package org.pl.databaseRepository;
 
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.model.ReturnDocument;
 import com.mongodb.client.model.Updates;
 import org.bson.conversions.Bson;
 import org.pl.databaseModel.*;
-import org.pl.model.Condition;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -58,9 +55,9 @@ public class HardwareMongoRepository extends MongoRepository {
     }
 
 
-    public ArrayList<HardwareMgd> find(int id) {
+    public HardwareMgd find(int id) {
         Bson filter = eq("_id", id);
-        return hardwareCollection.find(filter, HardwareMgd.class).into(new ArrayList<>());
+        return hardwareCollection.find(filter, HardwareMgd.class).first();
     }
 
     public HardwareMgd remove(int id) {
@@ -82,5 +79,9 @@ public class HardwareMongoRepository extends MongoRepository {
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
         options.returnDocument(ReturnDocument.AFTER);
         return hardwareCollection.findOneAndUpdate(filter, setUpdate, options);
+    }
+
+    public int getNumberOfDocuments() {
+        return (int) hardwareCollection.countDocuments();
     }
 }
