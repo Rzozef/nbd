@@ -4,6 +4,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.model.ReturnDocument;
 import com.mongodb.client.model.Updates;
+import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.pl.databaseModel.AddressMgd;
 import org.pl.databaseModel.ClientAddressMgd;
@@ -22,20 +23,20 @@ public class ClientMongoRepository extends MongoRepository {
         clientsCollection = getMongoDB().getCollection("clients", ClientAddressMgd.class);
     }
 
-    public boolean add(ClientAddressMgd client) {
-        if(contains(client)) {
-            return false;
-        }
-        clientsCollection.insertOne(client);
-        return true;
-    }
-
     private boolean contains(ClientAddressMgd client) {
         Bson filter;
         filter = eq("_id", client.getEntityId());
 
         ArrayList<ClientAddressMgd> output = clientsCollection.find(filter).into(new ArrayList<>());
         return !output.isEmpty();
+    }
+
+    public boolean add(ClientAddressMgd client) {
+        if(contains(client)) {
+            return false;
+        }
+        clientsCollection.insertOne(client);
+        return true;
     }
 
     public ArrayList<ClientAddressMgd> findAll() {
@@ -57,14 +58,13 @@ public class ClientMongoRepository extends MongoRepository {
         return clientsCollection.find(filter, AddressMgd.class).first();
     }
 
-    public ClientTypeMgd findClientTypeByClientId(UUID id) {
-        Bson filter = eq("_id", id);
-        return clientsCollection.find(filter, ClientTypeMgd.class).first();
-    }
-
     public ClientAddressMgd remove(UUID id) {
         Bson filter = eq("_id", id);
         return clientsCollection.findOneAndDelete(filter);
+    }
+
+    public void removeAll() {
+        clientsCollection.deleteMany(new Document());
     }
 
     public ClientAddressMgd updateArchive(UUID id, boolean isArchive) {
@@ -101,7 +101,7 @@ public class ClientMongoRepository extends MongoRepository {
 
     public ClientAddressMgd updatePhoneNumber(UUID id, String newPhoneNumber) {
         Bson filter = eq("_id", id);
-        Bson setUpdate = Updates.set("firstName", newPhoneNumber);
+        Bson setUpdate = Updates.set("phoneNumber", newPhoneNumber);
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
         options.returnDocument(ReturnDocument.AFTER);
         return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
