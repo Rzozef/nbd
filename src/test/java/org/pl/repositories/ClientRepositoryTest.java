@@ -8,6 +8,7 @@ import org.pl.model.Basic;
 import org.pl.model.Client;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,7 +27,7 @@ public class ClientRepositoryTest {
                 .city("Lodz")
                 .build();
         client = Client.builder()
-                .entityId(0)
+                .entityId(UUID.randomUUID())
                 .archive(true)
                 .clientType(new Basic())
                 .phoneNumber("535-535-535")
@@ -37,7 +38,7 @@ public class ClientRepositoryTest {
                 .address(address)
                 .build();
         client1 = Client.builder()
-                .entityId(1)
+                .entityId(UUID.randomUUID())
                 .archive(false)
                 .clientType(new Basic())
                 .phoneNumber("535-535-535")
@@ -77,7 +78,7 @@ public class ClientRepositoryTest {
 
     @Test
     void getTest() throws RepositoryException {
-        assertThrows(RepositoryException.class, () -> repository.get(-1));
+        assertThrows(RepositoryException.class, () -> repository.get(null));
         assertThrows(RepositoryException.class, () -> repository.get(client.getID()));
         repository.add(client);
         assertEquals(client, repository.get(client.getID()));

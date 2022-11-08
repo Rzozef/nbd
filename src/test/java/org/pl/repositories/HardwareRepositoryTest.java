@@ -6,6 +6,7 @@ import org.pl.exceptions.RepositoryException;
 import org.pl.model.*;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -23,13 +24,13 @@ public class HardwareRepositoryTest {
                 .archive(true)
                 .hardwareType(new Computer(DUSTY))
                 .price(100)
-                .entityId(0)
+                .entityId(UUID.randomUUID())
                 .build();
         hardware1 = Hardware.builder()
                 .archive(false)
                 .hardwareType(new Computer(DUSTY))
                 .price(100)
-                .entityId(1)
+                .entityId(UUID.randomUUID())
                 .build();
         list = new ArrayList<>();
         repository = new HardwareRepository(list);
@@ -61,7 +62,7 @@ public class HardwareRepositoryTest {
 
     @Test
     void getTest() throws RepositoryException {
-        assertThrows(RepositoryException.class, () -> repository.get(-1));
+        assertThrows(RepositoryException.class, () -> repository.get(null));
         assertThrows(RepositoryException.class, () -> repository.get(hardware.getID()));
         repository.add(hardware);
         assertEquals(hardware, repository.get(hardware.getID()));

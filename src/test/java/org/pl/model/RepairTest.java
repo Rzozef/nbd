@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.pl.exceptions.HardwareException;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.pl.model.Condition.*;
 
@@ -27,14 +29,15 @@ class RepairTest {
                 .personalId("12345")
                 .phoneNumber("123-123-123")
                 .archive(false)
+                .entityId(UUID.randomUUID())
                 .build();
-        hardware = new Hardware(1, false, 100, new Computer(DUSTY));
+        hardware = new Hardware(UUID.randomUUID(), false, 100, new Computer(DUSTY));
 
         repair = Repair.builder()
                 .client(client)
                 .hardware(hardware)
                 .archive(false)
-                .entityId(1)
+                .entityId(UUID.randomUUID())
                 .build();
     }
 
@@ -49,11 +52,6 @@ class RepairTest {
         assertFalse(repair.isArchive());
         repair.setArchive(true);
         assertTrue(repair.isArchive());
-    }
-
-    @Test
-    void getID() {
-        assertEquals(1, repair.getID());
     }
 
     @Test
@@ -90,7 +88,7 @@ class RepairTest {
 
     @Test
     void setHardware() {
-       Hardware newHardware = new Hardware(2, false, 100, new Computer(DUSTY));
+       Hardware newHardware = new Hardware(UUID.randomUUID(), false, 100, new Computer(DUSTY));
        repair.setHardware(newHardware);
        assertEquals(newHardware, repair.getHardware());
        assertNotEquals(hardware, repair.getHardware());
@@ -107,14 +105,15 @@ class RepairTest {
                 .personalId("12345")
                 .phoneNumber("123-123-123")
                 .archive(false)
+                .entityId(client.getEntityId())
                 .build();
-        Hardware newHardware = new Hardware(1, false, 100, new Computer(DUSTY));
+        Hardware newHardware = new Hardware(hardware.getEntityId(), false, 100, new Computer(DUSTY));
 
         Repair newRepair = Repair.builder()
                 .client(newClient)
                 .hardware(newHardware)
                 .archive(false)
-                .entityId(1)
+                .entityId(repair.getEntityId())
                 .build();
         assertEquals(newRepair, repair);
         newRepair.setArchive(true);

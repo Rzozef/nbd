@@ -7,6 +7,7 @@ import org.pl.model.Client;
 import org.pl.repositories.ClientRepository;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class ClientService {
     private final ClientRepository clientRepository;
@@ -28,7 +29,7 @@ public class ClientService {
             throw new ClientException(ClientException.CLIENT_PERSONALID_EXCEPTION);
         }
         Client client = Client.builder()
-                .entityId(clientRepository.getElements().size())
+                .entityId(UUID.randomUUID())
                 .personalId(personalId)
                 .firstName(firstName)
                 .lastName(lastName)
@@ -51,13 +52,13 @@ public class ClientService {
                 .lastName(lastName)
                 .phoneNumber(phoneNumber)
                 .address(address)
-                .entityId(clientRepository.getElements().size())
+                .entityId(UUID.randomUUID())
                 .build();
         clientRepository.add(client);
         return client;
     }
 
-    public Client get(int id) throws RepositoryException {
+    public Client get(UUID id) throws RepositoryException {
         return clientRepository.get(id);
     }
 
@@ -65,7 +66,7 @@ public class ClientService {
         return clientRepository.getSize(false);
     }
 
-    public double getClientBalance(int id) throws RepositoryException {
+    public double getClientBalance(UUID id) throws RepositoryException {
         return clientRepository.get(id).getBalance();
     }
 
@@ -73,11 +74,11 @@ public class ClientService {
         return clientRepository.getSize(true);
     }
 
-    public String getInfo(int id) throws RepositoryException {
+    public String getInfo(UUID id) throws RepositoryException {
         return clientRepository.get(id).toString();
     }
 
-    public void remove(int id) throws RepositoryException {
+    public void remove(UUID id) throws RepositoryException {
         clientRepository.archivise(id);
     }
 }

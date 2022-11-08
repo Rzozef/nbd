@@ -4,9 +4,11 @@ import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
+import java.util.UUID;
+
 public class HardwareMgd extends AbstractEntityMgd{
     @BsonCreator
-    public HardwareMgd(@BsonId int entityId,
+    public HardwareMgd(@BsonId UUID entityId,
                        @BsonProperty("archive") boolean archive,
                        @BsonProperty("price") int price,
                        @BsonProperty("hardwareType") HardwareTypeMgd hardwareType) {

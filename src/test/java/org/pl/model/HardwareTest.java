@@ -3,6 +3,8 @@ package org.pl.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.pl.model.Condition.*;
 
@@ -15,7 +17,7 @@ class HardwareTest {
         hardware = Hardware.builder()
                 .hardwareType(new Computer(DUSTY))
                 .price(100)
-                .entityId(1)
+                .entityId(UUID.randomUUID())
                 .build();
     }
 
@@ -37,11 +39,6 @@ class HardwareTest {
         assertFalse(hardware.isArchive());
         hardware.setArchive(false);
         assertFalse(hardware.isArchive());
-    }
-
-    @Test
-    void getID() {
-        assertEquals(1, hardware.getID());
     }
 
     @Test
@@ -78,11 +75,11 @@ class HardwareTest {
 
     @Test
     void testEquals() {
-        assertEquals(new Hardware(1, false, 100, new Computer(DUSTY)), hardware);
-        assertNotEquals(new Hardware(2, true, 100, new Computer(DUSTY)), hardware);
-        assertNotEquals(new Hardware(1, false, 120, new Computer(DUSTY)), hardware);
-        assertNotEquals(new Hardware(1, false, 100, new Computer(FINE)), hardware);
-        assertNotEquals(new Hardware(1, false, 100, new Phone(DUSTY)), hardware);
+        assertEquals(new Hardware(hardware.getEntityId(), false, 100, new Computer(DUSTY)), hardware);
+        assertNotEquals(new Hardware(UUID.randomUUID(), true, 100, new Computer(DUSTY)), hardware);
+        assertNotEquals(new Hardware(hardware.getEntityId(), false, 120, new Computer(DUSTY)), hardware);
+        assertNotEquals(new Hardware(hardware.getEntityId(), false, 100, new Computer(FINE)), hardware);
+        assertNotEquals(new Hardware(hardware.getEntityId(), false, 100, new Phone(DUSTY)), hardware);
     }
 
     @Test

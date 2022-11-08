@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.pl.exceptions.ClientException;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ClientTest {
@@ -20,7 +22,7 @@ class ClientTest {
                 .build();
 
         client = Client.builder()
-                .entityId(0)
+                .entityId(UUID.randomUUID())
                 .personalId("0")
                 .clientType(new Basic())
                 .phoneNumber("535-535-535")
@@ -138,7 +140,7 @@ class ClientTest {
     @Test
     void testEquals() {
         Client sameClient = Client.builder()
-                .entityId(0)
+                .entityId(client.getEntityId())
                 .personalId("0")
                 .clientType(new Basic())
                 .phoneNumber("535-535-535")

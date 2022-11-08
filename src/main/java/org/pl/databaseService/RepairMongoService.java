@@ -16,6 +16,7 @@ import org.pl.model.Repair;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.UUID;
 
 public class RepairMongoService {
     private RepairMongoRepository repairMongoRepository;
@@ -24,7 +25,7 @@ public class RepairMongoService {
         this.repairMongoRepository = repairMongoRepository;
     }
 
-    public boolean add(Client client, Hardware hardware) throws RepairException, ClientException, HardwareException {
+    public boolean add(UUID entityId, Client client, Hardware hardware) throws RepairException, ClientException, HardwareException {
         if (Objects.isNull(client))
             throw new RepairException(RepairException.REPAIR_CLIENT_EXCEPTION);
         if (Objects.isNull(hardware))
@@ -33,7 +34,7 @@ public class RepairMongoService {
                 .archive(false)
                 .client(client)
                 .hardware(hardware)
-                .entityId(repairMongoRepository.getNumberOfDocuments()).build();
+                .entityId(entityId).build();
         if (client.getRepairs() + 1 > client.getClientType().getMaxRepairs()) {
             throw new ClientException(ClientException.CLIENT_MAX_REPAIRS_EXCEEDED);
         }

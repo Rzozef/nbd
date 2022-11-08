@@ -2,6 +2,8 @@ package org.pl.model;
 
 import lombok.*;
 
+import java.util.UUID;
+
 import static org.pl.model.Condition.FINE;
 
 @Getter
@@ -14,7 +16,7 @@ public class Hardware extends AbstractEntity implements Entity {
     private HardwareType hardwareType;
 
     @Builder
-    public Hardware(int entityId, boolean archive, int price, HardwareType hardwareType) {
+    public Hardware(UUID entityId, boolean archive, int price, HardwareType hardwareType) {
         super(entityId);
         this.archive = archive;
         this.price = price;
@@ -31,7 +33,7 @@ public class Hardware extends AbstractEntity implements Entity {
     }
 
     @Override
-    public int getID() {
+    public UUID getID() {
         return getEntityId();
     }
 }

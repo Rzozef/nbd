@@ -14,6 +14,7 @@ import org.pl.model.ClientType;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.UUID;
 
 public class ClientMongoService {
     private ClientMongoRepository clientMongoRepository;
@@ -49,7 +50,7 @@ public class ClientMongoService {
                 .phoneNumber(phoneNumber)
                 .repairs(0)
                 .address(address)
-                .entityId(clientMongoRepository.getNumberOfDocuments())
+                .entityId(UUID.randomUUID())
                 .build();
         return clientMongoRepository.add(ClientAddressConverter.toRepositoryModel(client));
     }

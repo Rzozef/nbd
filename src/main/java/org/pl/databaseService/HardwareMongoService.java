@@ -10,6 +10,7 @@ import org.pl.exceptions.ServiceException;
 import org.pl.model.*;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class HardwareMongoService {
     private HardwareMongoRepository hardwareMongoRepository;
@@ -49,7 +50,7 @@ public class HardwareMongoService {
             default -> throw new ServiceException(ServiceException.HARDWARE_SERVICE_INVALID_HARDWARE_EXCEPTION);
         }
         Hardware hardware = Hardware.builder()
-                .entityId(hardwareMongoRepository.getNumberOfDocuments())
+                .entityId(UUID.randomUUID())
                 .archive(archive)
                 .price(price)
                 .hardwareType(type).build();

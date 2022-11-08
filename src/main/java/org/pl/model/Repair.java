@@ -3,6 +3,8 @@ package org.pl.model;
 import lombok.*;
 import org.pl.exceptions.HardwareException;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @ToString
@@ -13,7 +15,7 @@ public class Repair extends AbstractEntity implements Entity {
     Hardware hardware;
 
     @Builder
-    public Repair(int entityId, boolean archive, Client client, Hardware hardware) {
+    public Repair(UUID entityId, boolean archive, Client client, Hardware hardware) {
         super(entityId);
         this.archive = archive;
         this.client = client;
@@ -30,7 +32,7 @@ public class Repair extends AbstractEntity implements Entity {
     }
 
     @Override
-    public int getID() {
+    public UUID getID() {
         return getEntityId();
     }
 }

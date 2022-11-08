@@ -4,9 +4,11 @@ import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
+import java.util.UUID;
+
 public class RepairEmbeddedMgd extends AbstractEntityMgd {
     @BsonCreator
-    public RepairEmbeddedMgd(@BsonId int entityId,
+    public RepairEmbeddedMgd(@BsonId UUID entityId,
                              @BsonProperty("archive") boolean archive,
                              @BsonProperty("client") ClientAddressMgd client,
                              @BsonProperty("hardware") HardwareMgd hardware) {

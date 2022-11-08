@@ -6,6 +6,8 @@ import org.pl.exceptions.ServiceException;
 import org.pl.model.*;
 import org.pl.repositories.HardwareRepository;
 
+import java.util.UUID;
+
 public class HardwareService {
     private final HardwareRepository hardwareRepository;
 
@@ -18,7 +20,7 @@ public class HardwareService {
             throw new HardwareException(HardwareException.HARDWARE_PRICE_EXCEPTION);
 
         Hardware hardware = Hardware.builder()
-                .entityId(hardwareRepository.getElements().size())
+                .entityId(UUID.randomUUID())
                 .price(price)
                 .hardwareType(hardwareType)
                 .build();
@@ -53,7 +55,7 @@ public class HardwareService {
             throw new ServiceException(ServiceException.HARDWARE_SERVICE_INVALID_HARDWARE_EXCEPTION);
 
         Hardware hardware = Hardware.builder()
-                .entityId(hardwareRepository.getElements().size())
+                .entityId(UUID.randomUUID())
                 .price(price)
                 .hardwareType(hardwareType)
                 .build();
@@ -77,7 +79,7 @@ public class HardwareService {
         return add(price, type, c);
     }
 
-    public Hardware get(int id) throws RepositoryException {
+    public Hardware get(UUID id) throws RepositoryException {
         return hardwareRepository.get(id);
     }
 
@@ -85,7 +87,7 @@ public class HardwareService {
         return hardwareRepository.getSize(false);
     }
 
-    public String getInfo(int id) throws RepositoryException {
+    public String getInfo(UUID id) throws RepositoryException {
         return hardwareRepository.get(id).toString();
     }
 
@@ -93,7 +95,7 @@ public class HardwareService {
         return hardwareRepository.getSize(true);
     }
 
-    public void remove(int id) throws RepositoryException {
+    public void remove(UUID id) throws RepositoryException {
         hardwareRepository.archivise(id);
     }
 }

@@ -4,9 +4,11 @@ import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
+import java.util.UUID;
+
 public class ClientAddressMgd extends AbstractEntityMgd{
     @BsonCreator
-    public ClientAddressMgd(@BsonId int entityId,
+    public ClientAddressMgd(@BsonId UUID entityId,
                             @BsonProperty("archive") boolean archive,
                             @BsonProperty("balance") double balance,
                             @BsonProperty("firstName") String firstName,

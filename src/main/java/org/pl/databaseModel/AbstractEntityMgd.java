@@ -2,16 +2,17 @@ package org.pl.databaseModel;
 
 import org.bson.codecs.pojo.annotations.BsonId;
 import java.io.Serializable;
+import java.util.UUID;
 
 public abstract class AbstractEntityMgd implements Serializable {
     @BsonId
-    private final int entityId;
+    private final UUID entityId;
 
-    public int getEntityId() {
+    public UUID getEntityId() {
         return entityId;
     }
 
-    public AbstractEntityMgd(int entityId) {
+    public AbstractEntityMgd(UUID entityId) {
         this.entityId = entityId;
     }
 }

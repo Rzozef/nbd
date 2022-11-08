@@ -3,6 +3,8 @@ package org.pl.model;
 import lombok.*;
 import org.pl.exceptions.ClientException;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @ToString
@@ -19,7 +21,7 @@ public class Client extends AbstractEntity implements Entity {
     private int repairs;
 
     @Builder
-    public Client(int entityId, boolean archive, double balance, String firstName, String lastName, String personalId, String phoneNumber, ClientType clientType, Address address, int repairs) {
+    public Client(UUID entityId, boolean archive, double balance, String firstName, String lastName, String personalId, String phoneNumber, ClientType clientType, Address address, int repairs) {
         super(entityId);
         this.archive = archive;
         this.balance = balance;
@@ -46,7 +48,7 @@ public class Client extends AbstractEntity implements Entity {
     }
 
     @Override
-    public int getID() {
+    public UUID getID() {
         return getEntityId();
     }
 }

@@ -6,6 +6,7 @@ import org.pl.exceptions.RepositoryException;
 import org.pl.model.*;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -42,19 +43,19 @@ class RepairReposioryTest {
                 .archive(false)
                 .hardwareType(new Computer(DUSTY))
                 .price(100)
-                .entityId(1)
+                .entityId(UUID.randomUUID())
                 .build();
         repair = Repair.builder()
                 .client(client)
                 .hardware(hardware)
                 .archive(true)
-                .entityId(0)
+                .entityId(UUID.randomUUID())
                 .build();
         repair1 = Repair.builder()
                 .client(client)
                 .hardware(hardware)
                 .archive(false)
-                .entityId(1)
+                .entityId(UUID.randomUUID())
                 .build();
         list = new ArrayList<>();
         repository = new RepairRepository(list);
@@ -86,7 +87,7 @@ class RepairReposioryTest {
 
     @Test
     void getTest() throws RepositoryException {
-        assertThrows(RepositoryException.class, () -> repository.get(-1));
+        assertThrows(RepositoryException.class, () -> repository.get(null));
         assertThrows(RepositoryException.class, () -> repository.get(repair.getID()));
         repository.add(repair);
         assertEquals(repair, repository.get(repair.getID()));
