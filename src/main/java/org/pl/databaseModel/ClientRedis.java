@@ -2,7 +2,6 @@ package org.pl.databaseModel;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.pl.model.ClientType;
 
 import java.util.UUID;
 
@@ -33,24 +32,6 @@ public class ClientRedis {
         this.number = number;
         this.street = street;
         this.repairs = repairs;
-    }
-
-    @Override
-    public String toString() {
-        return "ClientRedis{" +
-                "entityID=" + entityId +
-                "repairs=" + repairs +
-                ", archive=" + archive +
-                ", balance=" + balance +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", personalId='" + personalId + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", clientType=" + clientType +
-                ", city='" + city + '\'' +
-                ", number='" + number + '\'' +
-                ", street='" + street + '\'' +
-                '}';
     }
 
     public UUID getEntityId() {
