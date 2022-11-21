@@ -10,8 +10,9 @@ public class ClientAddressConverter {
     public static ClientAddressMgd toRepositoryModel(Client client) {
         return new ClientAddressMgd(client.getEntityId(), client.isArchive(), client.getBalance(), client.getFirstName(),
                 client.getLastName(), client.getPersonalId(), client.getPhoneNumber(),
-                ClientTypeConverter.toRepositoryModel(client.getClientType()), client.getRepairs(),
-                client.getAddress().getCity(), client.getAddress().getNumber(), client.getAddress().getStreet());
+                ClientTypeConverter.toRepositoryModel(client.getClientType()),
+                client.getAddress().getCity(), client.getAddress().getNumber(), client.getAddress().getStreet(),
+                client.getRepairs());
     }
 
     public static Address fromRepositoryModelAddress(AddressMgd addressMgd) {

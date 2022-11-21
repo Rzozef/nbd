@@ -47,7 +47,7 @@ public class ClientAddressConverterTest {
     @Test
     void convertClientAddressMgdToModelAddress() throws ClientException {
         ClientTypeMgd clientTypeMgd = new ClientTypeMgd((float) 1.2, 4, "Basic");
-        ClientAddressMgd clientAddressMgd = new ClientAddressMgd(UUID.randomUUID(), false, 200, "Jan", "Kowal", "12345678902", "123456789", clientTypeMgd, 0, "Las", "3", "Lasowa");
+        ClientAddressMgd clientAddressMgd = new ClientAddressMgd(UUID.randomUUID(), false, 200, "Jan", "Kowal", "12345678902", "123456789", clientTypeMgd, "Las", "3", "Lasowa", 0);
         Client client1 = ClientAddressConverter.fromRepositoryModelClient(clientAddressMgd);
         assertEquals(client1.getClass(), Client.class);
     }

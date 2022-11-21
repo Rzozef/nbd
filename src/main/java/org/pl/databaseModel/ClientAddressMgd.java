@@ -16,10 +16,10 @@ public class ClientAddressMgd extends AbstractEntityMgd{
                             @BsonProperty("personalId") String personalId,
                             @BsonProperty("phoneNumber") String phoneNumber,
                             @BsonProperty("clientType") ClientTypeMgd clientType,
-                            @BsonProperty("repairs") int repairs,
                             @BsonProperty("city") String city,
                             @BsonProperty("number") String number,
-                            @BsonProperty("street") String street) {
+                            @BsonProperty("street") String street,
+                            @BsonProperty("repairs") int repairs) {
         super(entityId);
         this.archive = archive;
         this.balance = balance;
@@ -28,10 +28,10 @@ public class ClientAddressMgd extends AbstractEntityMgd{
         this.personalId = personalId;
         this.phoneNumber = phoneNumber;
         this.clientType = clientType;
-        this.repairs = repairs;
         this.city = city;
         this.number = number;
         this.street = street;
+        this.repairs = repairs;
     }
 
     @BsonProperty("repairs")

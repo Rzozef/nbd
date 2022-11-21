@@ -29,8 +29,8 @@ public class ClientMongoRepositoryTest {
     @BeforeEach
     void setUp() {
         clientTypeMgd = new ClientTypeMgd(1.0f, 2, "Basic");
-        clientAddressMgd = new ClientAddressMgd(UUID.randomUUID(), false, 200, "Jan", "Slawko", "12345678901", "123456789", clientTypeMgd, 0, "city", "5", "street");
-        clientAddressMgd2 = new ClientAddressMgd(UUID.randomUUID(), false, 200, "Janek", "Slawko", "12345678901", "123456789", clientTypeMgd, 0, "city", "5", "street");
+        clientAddressMgd = new ClientAddressMgd(UUID.randomUUID(), false, 200, "Jan", "Slawko", "12345678901", "123456789", clientTypeMgd, "city", "5", "street", 0);
+        clientAddressMgd2 = new ClientAddressMgd(UUID.randomUUID(), false, 200, "Janek", "Slawko", "12345678901", "123456789", clientTypeMgd, "city", "5", "street", 0);
     }
     @Test
     void addClientPositiveTest() {

@@ -36,8 +36,8 @@ public class RepairMongoRepositoryTest {
         hardwareMgd = new HardwareMgd(UUID.randomUUID(), false, 200, computerMgd);
         hardwareMgd2 = new HardwareMgd(UUID.randomUUID(), false, 200, computerMgd);
         clientTypeMgd = new ClientTypeMgd(1.0f, 2, "Basic");
-        clientAddressMgd = new ClientAddressMgd(UUID.randomUUID(), false, 200, "Jan", "Slawko", "12345678901", "123456789", clientTypeMgd, 0, "city", "5", "street");
-        clientAddressMgd2 = new ClientAddressMgd(UUID.randomUUID(), false, 200, "Jan", "Slawko", "12345678901", "123456789", clientTypeMgd, 0, "city", "5", "street");
+        clientAddressMgd = new ClientAddressMgd(UUID.randomUUID(), false, 200, "Jan", "Slawko", "12345678901", "123456789", clientTypeMgd, "city", "5", "street", 0);
+        clientAddressMgd2 = new ClientAddressMgd(UUID.randomUUID(), false, 200, "Jan", "Slawko", "12345678901", "123456789", clientTypeMgd, "city", "5", "street", 0);
         repairEmbeddedMgd = new RepairEmbeddedMgd(UUID.randomUUID(), false, clientAddressMgd, hardwareMgd);
         repairEmbeddedMgd2 = new RepairEmbeddedMgd(UUID.randomUUID(), false, clientAddressMgd2, hardwareMgd);
         repairEmbeddedMgd3 = new RepairEmbeddedMgd(UUID.randomUUID(), false, clientAddressMgd, hardwareMgd2);

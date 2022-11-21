@@ -25,7 +25,7 @@ public class RepairConverterTest {
     @Test
     void convertRepairEmbeddedMgdToRepairTest() throws HardwareException, ClientException {
         ClientTypeMgd clientTypeMgd = new ClientTypeMgd(1.0f, 2, "Basic");
-        ClientAddressMgd clientAddressMgd = new ClientAddressMgd(UUID.randomUUID(), false, 200, "Jan", "Slawko", "12345678901", "123456789", clientTypeMgd, 0, "city", "5", "street");
+        ClientAddressMgd clientAddressMgd = new ClientAddressMgd(UUID.randomUUID(), false, 200, "Jan", "Slawko", "12345678901", "123456789", clientTypeMgd, "city", "5", "street", 0);
         HardwareTypeMgd computerMgd = new ComputerMgd(Condition.FINE);
         HardwareMgd hardwareMgd = new HardwareMgd(UUID.randomUUID(), false, 100, computerMgd);
         RepairEmbeddedMgd repairEmbeddedMgd = new RepairEmbeddedMgd(UUID.randomUUID(), false, clientAddressMgd, hardwareMgd);
