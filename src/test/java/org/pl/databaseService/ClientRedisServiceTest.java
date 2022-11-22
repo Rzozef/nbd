@@ -41,7 +41,7 @@ public class ClientRedisServiceTest {
     }
 
     @Test
-    void addClientPositiveTest() {
+    void addClientNegativeTest() {
         assertThrows(ClientException.class,
                 ()-> clientRedisService.add("", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
         assertThrows(ClientException.class,

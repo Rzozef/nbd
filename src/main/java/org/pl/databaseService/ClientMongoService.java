@@ -160,8 +160,21 @@ public class ClientMongoService {
         return ClientAddressConverter.fromRepositoryModelClient(clientMongoRepository.updateStreet(id, newStreet));
     }
 
-    public Client updateRepairs(UUID id) throws ClientException {
+    public Client updateRepairs(UUID id) throws ClientException, JsonProcessingException, RepositoryException {
+        Client client = ClientRedisConverter.fromRepositoryModelClient(clientRedisRepository.read(id.toString()));
+        int newRepairs = client.getRepairs() + 1;
+        if (newRepairs > client.getClientType().getMaxRepairs())
+            throw new RepositoryException(RepositoryException.REPOSITORY_MAX_REPAIRS_EXCEED);
+        client.setRepairs(newRepairs);
+        clientRedisRepository.set(id.toString(), ClientRedisConverter.toRepositoryModel(client));
         return ClientAddressConverter.fromRepositoryModelClient(clientMongoRepository.updateRepairs(id));
+    }
+
+    public Client updateRepairsWithNumberOfRepairs(UUID id, int repairs) throws ClientException, JsonProcessingException {
+        Client client = ClientRedisConverter.fromRepositoryModelClient(clientRedisRepository.read(id.toString()));
+        client.setRepairs(repairs);
+        clientRedisRepository.set(id.toString(), ClientRedisConverter.toRepositoryModel(client));
+        return ClientAddressConverter.fromRepositoryModelClient(clientMongoRepository.updateRepairsWithNumberOfRepairs(id, repairs));
     }
 
     public boolean delete(UUID id) throws JsonProcessingException {

@@ -150,4 +150,16 @@ public class ClientMongoRepository extends MongoRepository {
         Bson setUpdate = Updates.set("repairs", client.getRepairs() + 1);
         return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
     }
+
+    public ClientAddressMgd updateRepairsWithNumberOfRepairs(UUID id, int repairs) throws ClientException {
+        Bson filter = eq("_id", id);
+        ClientAddressMgd client = clientsCollection.find(filter).first();
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
+        options.returnDocument(ReturnDocument.AFTER);
+        if (repairs > client.getClientType().getMaxRepairs()) {
+            throw new ClientException(ClientException.CLIENT_MAX_REPAIRS_EXCEEDED);
+        }
+        Bson setUpdate = Updates.set("repairs", repairs);
+        return clientsCollection.findOneAndUpdate(filter, setUpdate, options);
+    }
 }

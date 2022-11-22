@@ -102,7 +102,7 @@ public class ClientRedisService {
         clientMongoRepository.updateNumber(id, ClientAddressConverter.toRepositoryModel(client).getNumber());
         clientMongoRepository.updateStreet(id, ClientAddressConverter.toRepositoryModel(client).getStreet());
         clientMongoRepository.updateClientType(id, ClientAddressConverter.toRepositoryModel(client).getClientType());
-        clientMongoRepository.updateRepairs(id);
+        clientMongoRepository.updateRepairsWithNumberOfRepairs(id, ClientAddressConverter.toRepositoryModel(client).getRepairs());
         return ClientRedisConverter.fromRepositoryModelClient(clientRedisRepository.set(id.toString(), ClientRedisConverter.toRepositoryModel(client)));
     }
 
