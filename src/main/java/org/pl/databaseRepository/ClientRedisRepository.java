@@ -13,9 +13,13 @@ public class ClientRedisRepository extends RedisRepository {
         objectMapper = new ObjectMapper();
     }
 
-    public void add(ClientRedis client) throws JsonProcessingException {
-        String json = objectMapper.writeValueAsString(client);
-        getPool().set(hashPrefix + client.getEntityId(), json);
+    public boolean add(ClientRedis client) throws JsonProcessingException {
+        if (getPool().get(hashPrefix + client.getEntityId().toString()) == null) {
+            String json = objectMapper.writeValueAsString(client);
+            getPool().set(hashPrefix + client.getEntityId(), json);
+            return true;
+        }
+        return false;
     }
 
     public ClientRedis read(String key) throws JsonProcessingException {
@@ -24,8 +28,9 @@ public class ClientRedisRepository extends RedisRepository {
         return objectMapper.readValue(getPool().get(hashPrefix + key), ClientRedis.class);
     }
 
-    public void set(String key, ClientRedis client) throws JsonProcessingException {
+    public ClientRedis set(String key, ClientRedis client) throws JsonProcessingException {
         getPool().set(hashPrefix + key, objectMapper.writeValueAsString(client));
+        return objectMapper.readValue(getPool().get(hashPrefix + key), ClientRedis.class);
     }
 
     public boolean delete(String key) throws JsonProcessingException {
