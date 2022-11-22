@@ -50,6 +50,13 @@ public class ClientRedisRepositoryTest {
     }
 
     @Test
+    void readAllClientsTest() throws JsonProcessingException {
+        assertTrue(clientRedisRepository.add(clientRedis));
+        assertTrue(clientRedisRepository.add(clientRedis1));
+        assertEquals(2, clientRedisRepository.readAllClients().size());
+    }
+
+    @Test
     void readClientNegativeTest() throws JsonProcessingException {
         assertNull(clientRedisRepository.read(clientRedis.getEntityId().toString()));
     }

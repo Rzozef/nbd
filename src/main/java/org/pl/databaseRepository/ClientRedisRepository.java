@@ -4,8 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.pl.converters.ClientRedisConverter;
 import org.pl.databaseModel.ClientRedis;
-import org.pl.exceptions.ClientException;
 import org.pl.model.Client;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class ClientRedisRepository extends RedisRepository {
     private ObjectMapper objectMapper;
@@ -31,21 +34,18 @@ public class ClientRedisRepository extends RedisRepository {
         return objectMapper.readValue(getPool().get(hashPrefix + key), ClientRedis.class);
     }
 
-    public ClientRedis set(String key, ClientRedis clientRedis) throws JsonProcessingException, ClientException {
-        Client client = ClientRedisConverter.fromRepositoryModelClient(clientRedis);
-        Client client1 = ClientRedisConverter.fromRepositoryModelClient(read(key));
-        client1.setArchive(client.isArchive());
-        client1.setBalance(client.getBalance());
-        client1.setFirstName(client.getFirstName());
-        client1.setLastName(client.getLastName());
-        client1.setPhoneNumber(client.getPhoneNumber());
-        client1.setClientType(client.getClientType());
-        client1.setAddress(client.getAddress());
-        if (client.getRepairs() > client.getClientType().getMaxRepairs()) {
-            throw new ClientException(ClientException.CLIENT_MAX_REPAIRS_EXCEEDED);
+    public List<ClientRedis> readAllClients() throws JsonProcessingException {
+        Set<String> setStringKeys = getJedis().keys("*");
+        List<String> listStringKeys = new ArrayList<>(setStringKeys);
+        List<ClientRedis> clientsRedis = new ArrayList<>();
+        for (int i = 0; i < setStringKeys.size(); i++) {
+            clientsRedis.add(objectMapper.readValue(getPool().get(listStringKeys.get(i)), ClientRedis.class));
         }
-        client1.setRepairs(client.getRepairs());
-        getPool().set(hashPrefix + key, objectMapper.writeValueAsString(ClientRedisConverter.toRepositoryModel(client1)));
+        return clientsRedis;
+    }
+
+    public ClientRedis set(String key, ClientRedis client) throws JsonProcessingException {
+        getPool().set(hashPrefix + key, objectMapper.writeValueAsString(client));
         return objectMapper.readValue(getPool().get(hashPrefix + key), ClientRedis.class);
     }
 
@@ -59,9 +59,5 @@ public class ClientRedisRepository extends RedisRepository {
 
     public void deleteAll() {
         getJedis().flushDB();
-    }
-
-    public boolean isConnected() {
-        return getJedis().ping().equalsIgnoreCase("pong");
     }
 }
