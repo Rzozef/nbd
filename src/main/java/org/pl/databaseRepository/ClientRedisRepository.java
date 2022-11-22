@@ -35,4 +35,8 @@ public class ClientRedisRepository extends RedisRepository {
         }
         return false;
     }
+
+    public void deleteAll() {
+        getJedis().flushDB();
+    }
 }
