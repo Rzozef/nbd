@@ -1,5 +1,6 @@
 package org.pl.databaseService;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +23,7 @@ public class ClientMongoServiceTest {
     private static ClientMongoRepository clientMongoRepository;
 
     @BeforeAll
-    static void initConnection() {
+    static void initConnection() throws JsonProcessingException {
         clientMongoRepository = new ClientMongoRepository();
         clientMongoService = new ClientMongoService(clientMongoRepository);
     }
@@ -50,12 +51,12 @@ public class ClientMongoServiceTest {
     }
 
     @Test
-    void addPositiveTest() throws RepositoryException, ClientException {
+    void addPositiveTest() throws RepositoryException, ClientException, JsonProcessingException {
         assertTrue(clientMongoService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
     }
 
     @Test
-    void getAllAddressesTest() throws RepositoryException, ClientException {
+    void getAllAddressesTest() throws RepositoryException, ClientException, JsonProcessingException {
         assertEquals(0, clientMongoService.getAllAddresses().size());
         assertTrue(clientMongoService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
         assertEquals(1, clientMongoService.getAllAddresses().size());
@@ -63,7 +64,7 @@ public class ClientMongoServiceTest {
     }
 
     @Test
-    void getClientTest() throws RepositoryException, ClientException {
+    void getClientTest() throws RepositoryException, ClientException, JsonProcessingException {
         assertTrue(clientMongoService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
         UUID id = clientMongoService.getAllClients().get(0).getEntityId();
         assertEquals(Client.class, clientMongoService.getClient(id).getClass());
@@ -71,7 +72,7 @@ public class ClientMongoServiceTest {
     }
 
     @Test
-    void getClientsAddress() throws RepositoryException, ClientException {
+    void getClientsAddress() throws RepositoryException, ClientException, JsonProcessingException {
         assertTrue(clientMongoService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
         UUID id = clientMongoService.getAllClients().get(0).getEntityId();
         assertEquals(Address.class, clientMongoService.getAddress(id).getClass());
@@ -81,7 +82,7 @@ public class ClientMongoServiceTest {
     }
 
     @Test
-    void updateArchiveTest() throws RepositoryException, ClientException {
+    void updateArchiveTest() throws RepositoryException, ClientException, JsonProcessingException {
         assertTrue(clientMongoService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
         UUID id = clientMongoService.getAllClients().get(0).getEntityId();
         assertEquals(Client.class, clientMongoService.updateArchive(id, true).getClass());
@@ -89,7 +90,7 @@ public class ClientMongoServiceTest {
     }
 
     @Test
-    void updateBalanceTest() throws RepositoryException, ClientException {
+    void updateBalanceTest() throws RepositoryException, ClientException, JsonProcessingException {
         assertTrue(clientMongoService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
         UUID id = clientMongoService.getAllClients().get(0).getEntityId();
         assertEquals(Client.class, clientMongoService.updateBalance(id, 100.0).getClass());
@@ -97,7 +98,7 @@ public class ClientMongoServiceTest {
     }
 
     @Test
-    void updateFirstNameTest() throws RepositoryException, ClientException {
+    void updateFirstNameTest() throws RepositoryException, ClientException, JsonProcessingException {
         assertTrue(clientMongoService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
         UUID id = clientMongoService.getAllClients().get(0).getEntityId();
         assertEquals(Client.class, clientMongoService.updateFirstName(id, "Adam").getClass());
@@ -105,7 +106,7 @@ public class ClientMongoServiceTest {
     }
 
     @Test
-    void updateLastNameTest() throws RepositoryException, ClientException {
+    void updateLastNameTest() throws RepositoryException, ClientException, JsonProcessingException {
         assertTrue(clientMongoService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
         UUID id = clientMongoService.getAllClients().get(0).getEntityId();
         assertEquals(Client.class, clientMongoService.updateLastName(id, "Nowak").getClass());
@@ -113,7 +114,7 @@ public class ClientMongoServiceTest {
     }
 
     @Test
-    void updatePhoneNumberTest() throws RepositoryException, ClientException {
+    void updatePhoneNumberTest() throws RepositoryException, ClientException, JsonProcessingException {
         assertTrue(clientMongoService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
         UUID id = clientMongoService.getAllClients().get(0).getEntityId();
         assertEquals(Client.class, clientMongoService.updatePhoneNumber(id, "112").getClass());
@@ -121,7 +122,7 @@ public class ClientMongoServiceTest {
     }
 
     @Test
-    void updateClientTypeTest() throws RepositoryException, ClientException {
+    void updateClientTypeTest() throws RepositoryException, ClientException, JsonProcessingException {
         assertTrue(clientMongoService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
         UUID id = clientMongoService.getAllClients().get(0).getEntityId();
         assertEquals(Client.class, clientMongoService.updateClientType(id, ClientTypeConverter.toRepositoryModel(new Vip())).getClass());
@@ -129,7 +130,7 @@ public class ClientMongoServiceTest {
     }
 
     @Test
-    void updateCityTest() throws RepositoryException, ClientException {
+    void updateCityTest() throws RepositoryException, ClientException, JsonProcessingException {
         assertTrue(clientMongoService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
         UUID id = clientMongoService.getAllClients().get(0).getEntityId();
         assertEquals(Client.class, clientMongoService.updateCity(id, "Gdynia").getClass());
@@ -137,7 +138,7 @@ public class ClientMongoServiceTest {
     }
 
     @Test
-    void updateNumberTest() throws RepositoryException, ClientException {
+    void updateNumberTest() throws RepositoryException, ClientException, JsonProcessingException {
         assertTrue(clientMongoService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
         UUID id = clientMongoService.getAllClients().get(0).getEntityId();
         assertEquals(Client.class, clientMongoService.updateNumber(id, "10").getClass());
@@ -145,7 +146,7 @@ public class ClientMongoServiceTest {
     }
 
     @Test
-    void updateStreetTest() throws RepositoryException, ClientException {
+    void updateStreetTest() throws RepositoryException, ClientException, JsonProcessingException {
         assertTrue(clientMongoService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
         UUID id = clientMongoService.getAllClients().get(0).getEntityId();
         assertEquals(Client.class, clientMongoService.updateStreet(id, "Kilinskiego").getClass());
@@ -153,7 +154,7 @@ public class ClientMongoServiceTest {
     }
 
     @Test
-    void updateRepairsTest() throws RepositoryException, ClientException {
+    void updateRepairsTest() throws RepositoryException, ClientException, JsonProcessingException {
         assertTrue(clientMongoService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
         UUID id = clientMongoService.getAllClients().get(0).getEntityId();
         assertEquals(Client.class, clientMongoService.updateRepairs(id).getClass());
@@ -165,7 +166,7 @@ public class ClientMongoServiceTest {
     }
 
     @Test
-    void deleteTest() throws RepositoryException, ClientException {
+    void deleteTest() throws RepositoryException, ClientException, JsonProcessingException {
         assertTrue(clientMongoService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
         UUID id1 = clientMongoService.getAllClients().get(0).getEntityId();
         assertTrue(clientMongoService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
