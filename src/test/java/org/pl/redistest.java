@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.pl.converters.ClientRedisConverter;
 import org.pl.databaseModel.ClientRedis;
 import org.pl.databaseRepository.ClientRedisRepository;
+import org.pl.exceptions.ClientException;
 import org.pl.model.Address;
 import org.pl.model.Basic;
 import org.pl.model.Client;
@@ -21,7 +22,7 @@ public class redistest {
     private Client client = new Client(UUID.randomUUID(), false, 10, "a", "b", "1", "1", new Basic(), new Address("a", "g", "b"), 0);
 
     @Test
-    public void initConnection() throws JsonProcessingException {
+    public void initConnection() throws JsonProcessingException, ClientException {
         crr = new ClientRedisRepository();
         ClientRedis clientRedis = ClientRedisConverter.toRepositoryModel(client);
         Client client1 = client;
@@ -31,8 +32,8 @@ public class redistest {
         System.out.println(clientRedis.isArchive());
         crr.set(client.getEntityId().toString(), clientRedis1);
         System.out.println(crr.read(clientRedis.getEntityId().toString()).isArchive());
-        crr.delete(client.getEntityId().toString());
+        assertTrue(crr.delete(client.getEntityId().toString()));
         assertNull(crr.read(client.getEntityId().toString()));
-        crr.delete(client.getEntityId().toString());
+        assertFalse(crr.delete(client.getEntityId().toString()));
     }
 }
