@@ -6,6 +6,7 @@ import org.pl.converters.ClientRedisConverter;
 import org.pl.databaseModel.ClientRedis;
 import org.pl.exceptions.ClientException;
 import org.pl.model.Client;
+import redis.clients.jedis.exceptions.JedisConnectionException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,10 +73,17 @@ public class ClientRedisRepository extends RedisRepository {
     }
 
     public void deleteAll() {
-        getJedis().flushDB();
+        if (isConnected())
+            getJedis().flushDB();
     }
 
     public boolean isConnected() {
-        return getJedis().ping().equalsIgnoreCase("pong");
+        boolean isConnected;
+        try {
+            isConnected = getJedis().ping().equalsIgnoreCase("pong");
+        } catch (JedisConnectionException ex) {
+            isConnected = false;
+        }
+        return isConnected;
     }
 }

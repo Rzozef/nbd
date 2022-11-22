@@ -161,7 +161,7 @@ public class ClientMongoServiceTest {
         assertEquals(clientMongoService.getClient(id).getRepairs(), 1);
         assertEquals(Client.class, clientMongoService.updateRepairs(id).getClass());
         assertEquals(clientMongoService.getClient(id).getRepairs(), 2);
-        assertThrows(ClientException.class,
+        assertThrows(RepositoryException.class,
                 ()-> clientMongoService.updateRepairs(id));
     }
 

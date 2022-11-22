@@ -90,6 +90,8 @@ public class ClientMongoService {
     }
 
     public Client getClient(UUID id) throws ClientException {
+        if (clientMongoRepository.findClientByClientId(id) == null)
+            return null;
         return ClientAddressConverter.fromRepositoryModelClient(clientMongoRepository.findClientByClientId(id));
     }
 
