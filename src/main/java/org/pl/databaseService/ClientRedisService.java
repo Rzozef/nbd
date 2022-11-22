@@ -10,10 +10,7 @@ import org.pl.exceptions.ClientException;
 import org.pl.exceptions.RepositoryException;
 import org.pl.model.*;
 
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class ClientRedisService {
     private ClientRedisRepository clientRedisRepository;
@@ -66,7 +63,18 @@ public class ClientRedisService {
     }
 
     public Client getClient(UUID id) throws ClientException, JsonProcessingException {
+        if (clientRedisRepository.read(id.toString()) == null)
+            return null;
         return ClientRedisConverter.fromRepositoryModelClient(clientRedisRepository.read(id.toString()));
+    }
+
+    public List<Client> getAllClients() throws JsonProcessingException, ClientException {
+        List<ClientRedis> clientsRedis = clientRedisRepository.readAllClients();
+        List<Client> clients = new ArrayList<>();
+        for (int i = 0; i < clientsRedis.size(); i++) {
+            clients.add(ClientRedisConverter.fromRepositoryModelClient(clientsRedis.get(i)));
+        }
+        return clients;
     }
 
     public Client updateClient(UUID id, Client client) throws JsonProcessingException, ClientException {

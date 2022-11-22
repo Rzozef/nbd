@@ -16,8 +16,7 @@ import org.pl.model.Client;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ClientRedisServiceTest {
     private static ClientRedisRepository clientRedisRepository;
@@ -34,8 +33,8 @@ public class ClientRedisServiceTest {
 
     @BeforeEach
     void setUp() {
-        Client client = new Client(UUID.randomUUID(), false, 10, "a", "b", "1", "1", new Basic(), new Address("a", "g", "b"), 0);
-        Client client1 = new Client(UUID.randomUUID(), true, 20, "a", "b", "1", "1", new Basic(), new Address("a", "g", "b"), 0);
+        client = new Client(UUID.randomUUID(), false, 10, "a", "b", "1", "1", new Basic(), new Address("a", "g", "b"), 0);
+        client1 = new Client(UUID.randomUUID(), true, 20, "a", "b", "1", "1", new Basic(), new Address("a", "g", "b"), 0);
         clientRedis = ClientRedisConverter.toRepositoryModel(client);
         clientRedis1 = ClientRedisConverter.toRepositoryModel(client1);
         clientRedisService = new ClientRedisService(clientRedisRepository);
@@ -71,6 +70,33 @@ public class ClientRedisServiceTest {
     @Test
     void getPositiveTest() throws RepositoryException, ClientException, JsonProcessingException {
         assertTrue(clientRedisService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
+        UUID id = clientRedisService.getAllClients().get(0).getEntityId();
+        assertNotNull(clientRedisService.getClient(id));
+    }
+
+    @Test
+    void getAllClientsTest() throws RepositoryException, ClientException, JsonProcessingException {
+        assertTrue(clientRedisService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
+        assertTrue(clientRedisService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
+        assertEquals(2, clientRedisService.getAllClients().size());
+    }
+
+    @Test
+    void updateClientTest() throws RepositoryException, ClientException, JsonProcessingException {
+        assertTrue(clientRedisService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
+        UUID id = clientRedisService.getAllClients().get(0).getEntityId();
+        System.out.println(clientRedisService.getClient(id).getID());
+        clientRedisService.updateClient(id, client);
+        assertEquals("a", clientRedisService.getClient(id).getFirstName());
+        System.out.println(clientRedisService.getClient(id).getID());
+    }
+
+    @Test
+    void deleteClientTest() throws RepositoryException, ClientException, JsonProcessingException {
+        assertTrue(clientRedisService.add("Jan", "Kowalski", "997", "123", "Lodz", "12", "Dabrowskiego", "Basic"));
+        UUID id = clientRedisService.getAllClients().get(0).getEntityId();
+        clientRedisService.deleteClient(id);
+        assertNull(clientRedisService.getClient(id));
     }
 
     @AfterEach
