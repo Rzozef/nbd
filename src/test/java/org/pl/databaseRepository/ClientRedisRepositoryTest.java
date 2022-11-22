@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.*;
 import org.pl.converters.ClientRedisConverter;
 import org.pl.databaseModel.ClientRedis;
+import org.pl.exceptions.ClientException;
 import org.pl.model.Address;
 import org.pl.model.Basic;
 import org.pl.model.Client;
@@ -54,9 +55,10 @@ public class ClientRedisRepositoryTest {
     }
 
     @Test
-    void updateClientTest() throws JsonProcessingException {
+    void updateClientTest() throws JsonProcessingException, ClientException {
         assertTrue(clientRedisRepository.add(clientRedis));
-        assertEquals(clientRedis1.getEntityId(), clientRedisRepository.set(clientRedis.getEntityId().toString(), clientRedis1).getEntityId());
+        assertEquals(clientRedis.getEntityId(), clientRedisRepository.set(clientRedis.getEntityId().toString(), clientRedis1).getEntityId());
+        assertNotEquals(clientRedis, clientRedisRepository.set(clientRedis.getEntityId().toString(), clientRedis1));
     }
 
     @Test
@@ -81,6 +83,11 @@ public class ClientRedisRepositoryTest {
         clientRedisRepository.deleteAll();
         assertNull(clientRedisRepository.read(clientRedis.getEntityId().toString()));
         assertNull(clientRedisRepository.read(clientRedis1.getEntityId().toString()));
+    }
+
+    @Test
+    void isConnectedPositiveTest() {
+        assertTrue(clientRedisRepository.isConnected());
     }
 
     @AfterEach
