@@ -20,7 +20,6 @@ import java.util.UUID;
 public class redistest {
     private ClientRedisRepository crr;
     private Client client = new Client(UUID.randomUUID(), false, 10, "a", "b", "1", "1", new Basic(), new Address("a", "g", "b"), 0);
-
     @Test
     public void initConnection() throws JsonProcessingException, ClientException {
         crr = new ClientRedisRepository();
@@ -32,7 +31,7 @@ public class redistest {
         System.out.println(clientRedis.isArchive());
         crr.set(client.getEntityId().toString(), clientRedis1);
         System.out.println(crr.read(clientRedis.getEntityId().toString()).isArchive());
-        assertTrue(crr.delete(client.getEntityId().toString()));
+        assertTrue(crr.delete(clientRedis.getEntityId().toString()));
         assertNull(crr.read(client.getEntityId().toString()));
         assertFalse(crr.delete(client.getEntityId().toString()));
     }
