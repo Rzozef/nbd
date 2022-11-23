@@ -33,63 +33,79 @@ public class ClientRedisRepositoryTest {
 
     @Test
     void addClientPositiveTest() throws JsonProcessingException {
-        assertTrue(clientRedisRepository.add(clientRedis));
-        assertNotNull(clientRedisRepository.read(clientRedis.getEntityId().toString()));
+        if (clientRedisRepository.isConnected()) {
+            assertTrue(clientRedisRepository.add(clientRedis));
+            assertNotNull(clientRedisRepository.read(clientRedis.getEntityId().toString()));
+        }
     }
 
     @Test
     void addClientNegativeTest() throws JsonProcessingException {
-        assertTrue(clientRedisRepository.add(clientRedis));
-        assertFalse(clientRedisRepository.add(clientRedis));
+        if (clientRedisRepository.isConnected()) {
+            assertTrue(clientRedisRepository.add(clientRedis));
+            assertFalse(clientRedisRepository.add(clientRedis));
+        }
     }
 
     @Test
     void readClientPositiveTest() throws JsonProcessingException {
-        assertTrue(clientRedisRepository.add(clientRedis));
-        assertEquals(clientRedis.getEntityId(), clientRedisRepository.read(clientRedis.getEntityId().toString()).getEntityId());
+        if (clientRedisRepository.isConnected()) {
+            assertTrue(clientRedisRepository.add(clientRedis));
+            assertEquals(clientRedis.getEntityId(), clientRedisRepository.read(clientRedis.getEntityId().toString()).getEntityId());
+        }
     }
 
     @Test
     void readAllClientsTest() throws JsonProcessingException {
-        assertTrue(clientRedisRepository.add(clientRedis));
-        assertTrue(clientRedisRepository.add(clientRedis1));
-        assertEquals(2, clientRedisRepository.readAllClients().size());
+        if (clientRedisRepository.isConnected()) {
+            assertTrue(clientRedisRepository.add(clientRedis));
+            assertTrue(clientRedisRepository.add(clientRedis1));
+            assertEquals(2, clientRedisRepository.readAllClients().size());
+        }
     }
 
     @Test
     void readClientNegativeTest() throws JsonProcessingException {
-        assertNull(clientRedisRepository.read(clientRedis.getEntityId().toString()));
+        if (clientRedisRepository.isConnected())
+            assertNull(clientRedisRepository.read(clientRedis.getEntityId().toString()));
     }
 
     @Test
     void updateClientTest() throws JsonProcessingException, ClientException {
-        assertTrue(clientRedisRepository.add(clientRedis));
-        assertEquals(clientRedis.getEntityId(), clientRedisRepository.set(clientRedis.getEntityId().toString(), clientRedis1).getEntityId());
-        assertNotEquals(clientRedis, clientRedisRepository.set(clientRedis.getEntityId().toString(), clientRedis1));
+        if (clientRedisRepository.isConnected()) {
+            assertTrue(clientRedisRepository.add(clientRedis));
+            assertEquals(clientRedis.getEntityId(), clientRedisRepository.set(clientRedis.getEntityId().toString(), clientRedis1).getEntityId());
+            assertNotEquals(clientRedis, clientRedisRepository.set(clientRedis.getEntityId().toString(), clientRedis1));
+        }
     }
 
     @Test
     void deleteClientPositiveTest() throws JsonProcessingException {
-        assertTrue(clientRedisRepository.add(clientRedis));
-        assertNotNull(clientRedisRepository.read(clientRedis.getEntityId().toString()));
-        assertTrue(clientRedisRepository.delete(clientRedis.getEntityId().toString()));
-        assertNull(clientRedisRepository.read(clientRedis.getEntityId().toString()));
+        if (clientRedisRepository.isConnected()) {
+            assertTrue(clientRedisRepository.add(clientRedis));
+            assertNotNull(clientRedisRepository.read(clientRedis.getEntityId().toString()));
+            assertTrue(clientRedisRepository.delete(clientRedis.getEntityId().toString()));
+            assertNull(clientRedisRepository.read(clientRedis.getEntityId().toString()));
+        }
     }
 
     @Test
     void deleteClientNegativeTest() throws JsonProcessingException {
-        assertFalse(clientRedisRepository.delete(clientRedis.getEntityId().toString()));
+        if (clientRedisRepository.isConnected())
+            assertFalse(clientRedisRepository.delete(clientRedis.getEntityId().toString()));
     }
 
     @Test
     void deleteAllClientsTest() throws JsonProcessingException {
-        assertTrue(clientRedisRepository.add(clientRedis));
-        assertTrue(clientRedisRepository.add(clientRedis1));
-        assertNotNull(clientRedisRepository.read(clientRedis.getEntityId().toString()));
-        assertNotNull(clientRedisRepository.read(clientRedis1.getEntityId().toString()));
-        clientRedisRepository.deleteAll();
-        assertNull(clientRedisRepository.read(clientRedis.getEntityId().toString()));
-        assertNull(clientRedisRepository.read(clientRedis1.getEntityId().toString()));
+        if (clientRedisRepository.isConnected()) {
+            assertTrue(clientRedisRepository.add(clientRedis));
+            assertTrue(clientRedisRepository.add(clientRedis1));
+            assertNotNull(clientRedisRepository.read(clientRedis.getEntityId().toString()));
+            assertNotNull(clientRedisRepository.read(clientRedis1.getEntityId().toString()));
+            clientRedisRepository.deleteAll();
+            assertNull(clientRedisRepository.read(clientRedis.getEntityId().toString()));
+            assertNull(clientRedisRepository.read(clientRedis1.getEntityId().toString()));
+        }
     }
 
     @Test
