@@ -4,12 +4,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.pl.exceptions.ClientException;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ClientTest {
 
-    Client client;
-    Address address;
+    private Client client;
+    private Address address;
+    private UUID clientUUID = UUID.randomUUID();
 
     @BeforeEach
     void setUp() {
@@ -20,7 +23,8 @@ class ClientTest {
                 .build();
 
         client = Client.builder()
-                .personalId(0)
+                .id(clientUUID)
+                .personalId("12345678901")
                 .clientType(new Basic())
                 .phoneNumber("535-535-535")
                 .balance(100)
@@ -74,7 +78,7 @@ class ClientTest {
 
     @Test
     void getPersonalId() {
-        assertEquals(0, client.getPersonalId());
+        assertEquals("12345678901", client.getPersonalId());
     }
 
     @Test
@@ -112,8 +116,8 @@ class ClientTest {
 
     @Test
     void setPersonalId() {
-        client.setPersonalId(1092);
-        assertEquals(1092, client.getPersonalId());
+        client.setPersonalId("09876543212");
+        assertEquals("09876543212", client.getPersonalId());
     }
 
     @Test
@@ -137,7 +141,8 @@ class ClientTest {
     @Test
     void testEquals() {
         Client sameClient = Client.builder()
-                .personalId(0)
+                .id(clientUUID)
+                .personalId("12345678901")
                 .clientType(new Basic())
                 .phoneNumber("535-535-535")
                 .balance(100)
@@ -146,7 +151,8 @@ class ClientTest {
                 .address(address)
                 .build();
         Client differentClient = Client.builder()
-                .personalId(2)
+                .id(UUID.randomUUID())
+                .personalId("098761234565")
                 .clientType(new Basic())
                 .phoneNumber("111-111-111")
                 .balance(100)

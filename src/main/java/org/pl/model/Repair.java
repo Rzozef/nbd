@@ -4,10 +4,12 @@ import lombok.Builder;
 import lombok.Data;
 import org.pl.exceptions.HardwareException;
 
+import java.util.UUID;
+
 @Data
 @Builder
 public class Repair implements Entity {
-    private int id;
+    private UUID id;
     private boolean archive;
     Client client;
     Hardware hardware;
@@ -22,7 +24,7 @@ public class Repair implements Entity {
     }
 
     @Override
-    public int getID() {
+    public UUID getID() {
         return id;
     }
 }

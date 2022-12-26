@@ -6,19 +6,24 @@ import org.pl.exceptions.RepositoryException;
 import org.pl.model.*;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.pl.model.Condition.DUSTY;
 
 class RepairReposioryTest {
-    Repository<Repair> repository;
-    Address address;
-    Client client;
-    Hardware hardware;
-    Repair repair;
-    Repair repair1;
-    ArrayList<Repair> list;
+    private Repository<Repair> repository;
+    private Address address;
+    private Client client;
+    private Hardware hardware;
+    private Repair repair;
+    private Repair repair1;
+    private ArrayList<Repair> list;
+    private UUID clientUUID = UUID.randomUUID();
+    private UUID hardwareUUID = UUID.randomUUID();
+    private UUID repairUUID1 = UUID.randomUUID();
+    private UUID repairUUID2 = UUID.randomUUID();
 
     @BeforeEach
     void setUp() {
@@ -29,12 +34,13 @@ class RepairReposioryTest {
                 .build();
 
         client = Client.builder()
+                .id(clientUUID)
                 .clientType(new Premium())
                 .address(address)
                 .balance(300.0)
                 .firstName("John")
                 .lastName("Doe")
-                .personalId(0)
+                .personalId("12345678901")
                 .phoneNumber("123-123-123")
                 .archive(false)
                 .build();
@@ -42,19 +48,19 @@ class RepairReposioryTest {
                 .archive(false)
                 .hardwareType(new Computer(DUSTY))
                 .price(100)
-                .id(1)
+                .id(hardwareUUID)
                 .build();
         repair = Repair.builder()
                 .client(client)
                 .hardware(hardware)
                 .archive(true)
-                .id(0)
+                .id(repairUUID1)
                 .build();
         repair1 = Repair.builder()
                 .client(client)
                 .hardware(hardware)
                 .archive(false)
-                .id(1)
+                .id(repairUUID2)
                 .build();
         list = new ArrayList<>();
         repository = new RepairRepository(list);
@@ -76,7 +82,7 @@ class RepairReposioryTest {
     }
 
     @Test
-    void archiviseTest() throws RepositoryException {
+    void archiveTest() throws RepositoryException {
         repository.add(repair);
         assertThrows(RepositoryException.class, () -> repository.archivise(repair.getID()));
         repository.add(repair1);
@@ -86,7 +92,6 @@ class RepairReposioryTest {
 
     @Test
     void getTest() throws RepositoryException {
-        assertThrows(RepositoryException.class, () -> repository.get(-1));
         assertThrows(RepositoryException.class, () -> repository.get(repair.getID()));
         repository.add(repair);
         assertEquals(repair, repository.get(repair.getID()));
@@ -115,8 +120,8 @@ class RepairReposioryTest {
     @Test
     void unarchiviseTest() throws RepositoryException {
         repository.add(repair);
-        repository.unarchivise(repair.getID());
+        repository.unarchive(repair.getID());
         assertFalse(repository.isArchive(repair.getID()));
-        assertThrows(RepositoryException.class, () -> repository.unarchivise(repair1.getID()));
+        assertThrows(RepositoryException.class, () -> repository.unarchive(repair1.getID()));
     }
 }

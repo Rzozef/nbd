@@ -4,14 +4,17 @@ import lombok.Builder;
 import lombok.Data;
 import org.pl.exceptions.ClientException;
 
+import java.util.UUID;
+
 @Data
 @Builder
 public class Client implements Entity {
+    private UUID id;
     private boolean archive;
     private double balance;
     private String firstName;
     private String lastName;
-    private int personalId;
+    private String personalId;
     private String phoneNumber;
     private ClientType clientType;
     private Address address;
@@ -30,7 +33,7 @@ public class Client implements Entity {
     }
 
     @Override
-    public int getID() {
-        return personalId;
+    public UUID getID() {
+        return id;
     }
 }

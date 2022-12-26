@@ -3,19 +3,23 @@ package org.pl.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.pl.model.Condition.*;
 
 class HardwareTest {
 
-    Hardware hardware;
+    private Hardware hardware;
+    private UUID hardwareUUID = UUID.randomUUID();
 
     @BeforeEach
     void setUp() {
+
         hardware = Hardware.builder()
                 .hardwareType(new Computer(DUSTY))
                 .price(100)
-                .id(1)
+                .id(hardwareUUID)
                 .build();
     }
 
@@ -41,7 +45,7 @@ class HardwareTest {
 
     @Test
     void getID() {
-        assertEquals(1, hardware.getID());
+        assertEquals(hardwareUUID, hardware.getID());
     }
 
     @Test
@@ -61,10 +65,9 @@ class HardwareTest {
 
     @Test
     void setId() {
-        hardware.setId(0);
-        assertEquals(0, hardware.getID());
-        hardware.setId(20);
-        assertEquals(20, hardware.getID());
+        UUID newUUID = UUID.randomUUID();
+        hardware.setId(newUUID);
+        assertEquals(newUUID, hardware.getID());
     }
 
     @Test
@@ -85,15 +88,16 @@ class HardwareTest {
 
     @Test
     void testEquals() {
-        assertEquals(new Hardware(1, false, 100, new Computer(DUSTY)), hardware);
-        assertNotEquals(new Hardware(2, true, 100, new Computer(DUSTY)), hardware);
-        assertNotEquals(new Hardware(1, false, 120, new Computer(DUSTY)), hardware);
-        assertNotEquals(new Hardware(1, false, 100, new Computer(FINE)), hardware);
-        assertNotEquals(new Hardware(1, false, 100, new Phone(DUSTY)), hardware);
+        UUID newUUID = UUID.randomUUID();
+        assertEquals(new Hardware(hardwareUUID, false, 100, new Computer(DUSTY)), hardware);
+        assertNotEquals(new Hardware(newUUID, true, 100, new Computer(DUSTY)), hardware);
+        assertNotEquals(new Hardware(hardwareUUID, false, 120, new Computer(DUSTY)), hardware);
+        assertNotEquals(new Hardware(hardwareUUID, false, 100, new Computer(FINE)), hardware);
+        assertNotEquals(new Hardware(hardwareUUID, false, 100, new Phone(DUSTY)), hardware);
     }
 
     @Test
     void testToString() {
-        assertEquals("Hardware(id=1, archive=false, price=100, hardwareType=Computer(condition=DUSTY))", hardware.toString());
+        assertEquals("Hardware(id=" + hardwareUUID.toString() + ", archive=false, price=100, hardwareType=Computer(condition=DUSTY))", hardware.toString());
     }
 }

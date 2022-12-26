@@ -7,6 +7,8 @@ import org.pl.exceptions.RepositoryException;
 import org.pl.model.Entity;
 
 import java.util.ArrayList;
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,7 +28,7 @@ public class Repository<T extends Entity> {
         elements.add(element);
     }
 
-    public void archivise(int id) throws RepositoryException {
+    public void archivise(UUID id) throws RepositoryException {
         for (T element : elements) {
             if (element.getID() == id && !element.isArchive()) {
                 element.setArchive(true);
@@ -36,10 +38,7 @@ public class Repository<T extends Entity> {
         throw new RepositoryException(RepositoryException.REPOSITORY_ARCHIVE_EXCEPTION);
     }
 
-    public T get(int id) throws RepositoryException {
-        if (id < 0) {
-            throw new RepositoryException(RepositoryException.REPOSITORY_GET_INVALID_INPUT_EXCEPTION);
-        }
+    public T get(UUID id) throws RepositoryException {
         if (elements.isEmpty()) {
             throw new RepositoryException(RepositoryException.REPOSITORY_GET_EXCEPTION);
         }
@@ -54,20 +53,29 @@ public class Repository<T extends Entity> {
     public int getSize(boolean present) throws RepositoryException {
         int output = 0;
         if (present) {
-            for (int i = 0; i < elements.size(); i++) {
-                if (!get(i).isArchive())
+//            for (int i = 0; i < elements.size(); i++) {
+//                if (!get(i).isArchive())
+//                    output++;
+//            }
+            for (Entity entity : elements) {
+                if (!entity.isArchive())
                     output++;
             }
         } else {
-            for (int i = 0; i < elements.size(); i++) {
-                if (get(i).isArchive())
+//            for (int i = 0; i < elements.size(); i++) {
+//                if (get(i).isArchive())
+//                    output++;
+//            }
+            for (Entity entity : elements) {
+                if (entity.isArchive()) {
                     output++;
+                }
             }
         }
         return output;
     }
 
-    public boolean isArchive(int id) throws RepositoryException {
+    public boolean isArchive(UUID id) throws RepositoryException {
         for (T element : elements) {
             if (element.getID() == id) {
                 return element.isArchive();
@@ -76,7 +84,7 @@ public class Repository<T extends Entity> {
         throw new RepositoryException(RepositoryException.REPOSITORY_GET_EXCEPTION);
     }
 
-    public void unarchivise(int id) throws RepositoryException {
+    public void unarchive(UUID id) throws RepositoryException {
         for (T element : elements) {
             if (element.getID() == id) {
                 element.setArchive(false);

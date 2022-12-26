@@ -5,7 +5,7 @@ import lombok.ToString;
 @ToString
 public class ClientException extends Exception {
     public static final String CLIENT_FIRST_NAME_EXCEPTION = "Invalid name was given.";
-    public static final String CLIENT_IDE_EXCEPTION = "Invalid ID was given.";
+    public static final String CLIENT_PERSONAL_ID_EXCEPTION = "Invalid personal ID was given.";
     public static final String CLIENT_LAST_NAME_EXCEPTION = "Invalid last name was given.";
     public static final String CLIENT_PHONE_NUMBER_EXCEPTION = "Invalid phone number was given.";
     public static final String CLIENT_ADDRESS_EXCEPTION = "Invalid address was given.";

@@ -6,16 +6,17 @@ import org.pl.exceptions.RepositoryException;
 import org.pl.model.*;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.pl.model.Condition.DUSTY;
 
 public class HardwareRepositoryTest {
-    HardwareRepository repository;
-    Hardware hardware;
-    Hardware hardware1;
-    ArrayList<Hardware> list;
+    private HardwareRepository repository;
+    private Hardware hardware;
+    private Hardware hardware1;
+    private ArrayList<Hardware> list;
 
     @BeforeEach
     void setUp() {
@@ -23,13 +24,13 @@ public class HardwareRepositoryTest {
                 .archive(true)
                 .hardwareType(new Computer(DUSTY))
                 .price(100)
-                .id(0)
+                .id(UUID.randomUUID())
                 .build();
         hardware1 = Hardware.builder()
                 .archive(false)
                 .hardwareType(new Computer(DUSTY))
                 .price(100)
-                .id(1)
+                .id(UUID.randomUUID())
                 .build();
         list = new ArrayList<>();
         repository = new HardwareRepository(list);
@@ -61,7 +62,6 @@ public class HardwareRepositoryTest {
 
     @Test
     void getTest() throws RepositoryException {
-        assertThrows(RepositoryException.class, () -> repository.get(-1));
         assertThrows(RepositoryException.class, () -> repository.get(hardware.getID()));
         repository.add(hardware);
         assertEquals(hardware, repository.get(hardware.getID()));
@@ -90,8 +90,8 @@ public class HardwareRepositoryTest {
     @Test
     void unarchiviseTest() throws RepositoryException {
         repository.add(hardware);
-        repository.unarchivise(hardware.getID());
+        repository.unarchive(hardware.getID());
         assertFalse(repository.isArchive(hardware.getID()));
-        assertThrows(RepositoryException.class, () -> repository.unarchivise(hardware1.getID()));
+        assertThrows(RepositoryException.class, () -> repository.unarchive(hardware1.getID()));
     }
 }

@@ -9,6 +9,7 @@ import org.pl.model.Client;
 import org.pl.model.Repair;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 @AllArgsConstructor
 public class RepairRepository extends Repository<Repair>{
@@ -27,7 +28,7 @@ public class RepairRepository extends Repository<Repair>{
         return counter;
     }
 
-    public void repair(int ID) throws RepositoryException, HardwareException, ClientException {
+    public void repair(UUID ID) throws RepositoryException, HardwareException, ClientException {
         if (get(ID).getClient().isArchive()) {
             throw new RepositoryException(RepositoryException.REPOSITORY_CLIENT_IS_ARCHIVE_EXCEPTION);
         }

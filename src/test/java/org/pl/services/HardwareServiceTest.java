@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HardwareServiceTest {
-    HardwareType computer, console, monitor, phone;
-    ArrayList<Hardware> hardwares;
-    HardwareRepository hardwareRepository;
-    HardwareService hardwareService;
+    private HardwareType computer, console, monitor, phone;
+    private ArrayList<Hardware> hardwareList;
+    private HardwareRepository hardwareRepository;
+    private HardwareService hardwareService;
 
     @BeforeEach
     void setUp() {
@@ -23,21 +23,21 @@ public class HardwareServiceTest {
         console = new Console(Condition.VERY_BAD);
         monitor = new Monitor(Condition.DUSTY);
         phone = new Phone(Condition.UNREPAIRABLE);
-        hardwares = new ArrayList<>();
-        hardwareRepository = new HardwareRepository(hardwares);
+        hardwareList = new ArrayList<>();
+        hardwareRepository = new HardwareRepository(hardwareList);
         hardwareService = new HardwareService(hardwareRepository);
     }
 
     @Test
     void hardwareServiceAddPositiveTest() throws ServiceException, RepositoryException, HardwareException {
-        hardwareService.add(1000, "computer", Condition.FINE);
-        assertNotNull(hardwareService.get(0));
-        hardwareService.add(100, "console", Condition.VERY_BAD);
-        assertNotNull(hardwareService.get(1));
-        hardwareService.add(10, "monitor", Condition.DUSTY);
-        assertNotNull(hardwareService.get(2));
-        hardwareService.add(10, "phone", Condition.UNREPAIRABLE);
-        assertNotNull(hardwareService.get(3));
+        Hardware hardware1 = hardwareService.add(1000, "computer", Condition.FINE);
+        assertNotNull(hardwareService.get(hardware1.getID()));
+        Hardware hardware2 = hardwareService.add(100, "console", Condition.VERY_BAD);
+        assertNotNull(hardwareService.get(hardware2.getID()));
+        Hardware hardware3 = hardwareService.add(10, "monitor", Condition.DUSTY);
+        assertNotNull(hardwareService.get(hardware3.getID()));
+        Hardware hardware4 = hardwareService.add(10, "phone", Condition.UNREPAIRABLE);
+        assertNotNull(hardwareService.get(hardware4.getID()));
     }
 
     @Test
@@ -54,48 +54,48 @@ public class HardwareServiceTest {
 
     @Test
     void hardwareServiceGetInfoTest() throws ServiceException, HardwareException, RepositoryException {
-        hardwareService.add(200, "monitor", "fine");
-        String expectedInfo = "Hardware(id=0, archive=false, price=200, hardwareType=Monitor(condition=FINE))";
-        assertEquals(expectedInfo, hardwareService.getInfo(0));
+        Hardware hardware = hardwareService.add(200, "monitor", "fine");
+        String expectedInfo = "Hardware(id=" + hardware.getID() + ", archive=false, price=200, hardwareType=Monitor(condition=FINE))";
+        assertEquals(expectedInfo, hardwareService.getInfo(hardware.getID()));
     }
 
     @Test
     void hardwareServiceRemovePositiveTest() throws HardwareException, RepositoryException {
-        hardwareService.add(100, computer);
+        Hardware hardware1 = hardwareService.add(100, computer);
         assertEquals(1, hardwareService.getPresentSize());
-        hardwareService.add(1000, console);
+        Hardware hardware2 = hardwareService.add(1000, console);
         assertEquals(2, hardwareService.getPresentSize());
-        hardwareService.remove(1);
+        hardwareService.remove(hardware1.getID());
         assertEquals(1, hardwareService.getPresentSize());
-        assertTrue(hardwareService.get(1).isArchive());
-        hardwareService.remove(0);
+        assertTrue(hardwareService.get(hardware1.getID()).isArchive());
+        hardwareService.remove(hardware2.getID());
         assertEquals(0, hardwareService.getPresentSize());
-        assertTrue(hardwareService.get(0).isArchive());
+        assertTrue(hardwareService.get(hardware2.getID()).isArchive());
     }
 
     @Test
     void hardwareServiceRemoveNegativeTest() throws HardwareException, RepositoryException {
-        hardwareService.add(1000, phone);
-        hardwareService.add(1000, computer);
-        hardwareService.remove(1);
+        Hardware hardware1 = hardwareService.add(1000, phone);
+        Hardware hardware2 = hardwareService.add(1000, computer);
+        hardwareService.remove(hardware1.getID());
         assertThrows(RepositoryException.class,
-                ()-> hardwareService.remove(1));
+                ()-> hardwareService.remove(hardware1.getID()));
     }
 
     @Test
     void hardwareServiceGetSizeTest() throws RepositoryException, HardwareException {
         assertEquals(0, hardwareService.getPresentSize());
         assertEquals(0, hardwareService.getArchiveSize());
-        hardwareService.add(100, monitor);
+        Hardware hardware1 = hardwareService.add(100, monitor);
         assertEquals(1, hardwareService.getPresentSize());
         assertEquals(0, hardwareService.getArchiveSize());
-        hardwareService.add(1000, phone);
+        Hardware hardware2 = hardwareService.add(1000, phone);
         assertEquals(2, hardwareService.getPresentSize());
         assertEquals(0, hardwareService.getArchiveSize());
-        hardwareService.remove(0);
+        hardwareService.remove(hardware1.getID());
         assertEquals(1, hardwareService.getPresentSize());
         assertEquals(1, hardwareService.getArchiveSize());
-        hardwareService.remove(1);
+        hardwareService.remove(hardware2.getID());
         assertEquals(0, hardwareService.getPresentSize());
         assertEquals(2, hardwareService.getArchiveSize());
     }

@@ -8,15 +8,18 @@ import org.pl.model.Basic;
 import org.pl.model.Client;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ClientRepositoryTest {
-    ClientRepository repository;
-    Client client;
-    Client client1;
-    Address address;
+    private ClientRepository repository;
+    private Client client;
+    private Client client1;
+    private Address address;
     ArrayList<Client> list;
+    private UUID clientUUID1 = UUID.randomUUID();
+    private UUID clientUUID2 = UUID.randomUUID();
 
     @BeforeEach
     void setUp() {
@@ -26,23 +29,25 @@ public class ClientRepositoryTest {
                 .city("Lodz")
                 .build();
         client = Client.builder()
+                .id(clientUUID1)
                 .archive(true)
                 .clientType(new Basic())
                 .phoneNumber("535-535-535")
                 .balance(100)
                 .firstName("John")
                 .lastName("Doe")
-                .personalId(0)
+                .personalId("12345678901")
                 .address(address)
                 .build();
         client1 = Client.builder()
+                .id(clientUUID2)
                 .archive(false)
                 .clientType(new Basic())
                 .phoneNumber("535-535-535")
                 .balance(100)
                 .firstName("John")
                 .lastName("Doe")
-                .personalId(1)
+                .personalId("10987654321")
                 .address(address)
                 .build();
         list = new ArrayList<>();
@@ -65,7 +70,7 @@ public class ClientRepositoryTest {
     }
 
     @Test
-    void archiviseTest() throws RepositoryException {
+    void archiveTest() throws RepositoryException {
         repository.add(client);
         assertThrows(RepositoryException.class, () -> repository.archivise(client.getID()));
         repository.add(client1);
@@ -75,7 +80,6 @@ public class ClientRepositoryTest {
 
     @Test
     void getTest() throws RepositoryException {
-        assertThrows(RepositoryException.class, () -> repository.get(-1));
         assertThrows(RepositoryException.class, () -> repository.get(client.getID()));
         repository.add(client);
         assertEquals(client, repository.get(client.getID()));
@@ -104,8 +108,8 @@ public class ClientRepositoryTest {
     @Test
     void unarchiviseTest() throws RepositoryException {
         repository.add(client);
-        repository.unarchivise(client.getID());
+        repository.unarchive(client.getID());
         assertFalse(repository.isArchive(client.getID()));
-        assertThrows(RepositoryException.class, () -> repository.unarchivise(client1.getID()));
+        assertThrows(RepositoryException.class, () -> repository.unarchive(client1.getID()));
     }
 }

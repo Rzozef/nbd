@@ -10,6 +10,7 @@ import org.pl.model.Repair;
 import org.pl.repositories.RepairRepository;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class RepairService {
     private final RepairRepository repairRepository;
@@ -25,7 +26,7 @@ public class RepairService {
             throw new RepairException(RepairException.REPAIR_HARDWARE_EXCEPTION);
 
         Repair repair = Repair.builder()
-                .id(repairRepository.getElements().size())
+                .id(UUID.randomUUID())
                 .client(client)
                 .hardware(hardware)
                 .build();
@@ -33,7 +34,7 @@ public class RepairService {
         return repair;
     }
 
-    public Repair get(int id) throws RepositoryException {
+    public Repair get(UUID id) throws RepositoryException {
         return repairRepository.get(id);
     }
 
@@ -41,7 +42,7 @@ public class RepairService {
         return repairRepository.getSize(false);
     }
 
-    public String getInfo(int id) throws RepositoryException {
+    public String getInfo(UUID id) throws RepositoryException {
         return repairRepository.get(id).toString();
     }
 
@@ -49,7 +50,7 @@ public class RepairService {
         return repairRepository.getSize(true);
     }
 
-    public void repair(int id) throws HardwareException, RepositoryException, ClientException {
+    public void repair(UUID id) throws HardwareException, RepositoryException, ClientException {
         repairRepository.repair(id);
     }
 }

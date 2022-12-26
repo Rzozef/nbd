@@ -3,12 +3,14 @@ package org.pl.model;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.UUID;
+
 import static org.pl.model.Condition.FINE;
 
 @Data
 @Builder
 public class Hardware implements Entity {
-    private int id;
+    private UUID id;
     private boolean archive;
     private int price;
     private HardwareType hardwareType;
@@ -23,7 +25,7 @@ public class Hardware implements Entity {
     }
 
     @Override
-    public int getID() {
+    public UUID getID() {
         return id;
     }
 }
