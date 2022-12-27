@@ -1,14 +1,19 @@
 version: "3.9"
 
-networks:
-  cassandranet:
-    driver: bridge
-
 volumes:
   cassandra1_data:
     driver: local
   cassandra2_data:
     driver: local
+
+networks:
+  cassandranet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.24.0.0/24
+          gateway: 172.24.0.1
 
 services:
   cassandra1:
@@ -20,7 +25,8 @@ services:
     volumes:
       - cassandra1_data:/bitnami
     networks:
-      - cassandranet
+      cassandranet:
+        ipv4_address: 172.24.0.2
     environment:
       - CASSANDRA_LISTEN_ADDRESS=cassandra1
       - CASSANDRA_BROADCAST_ADDRESS=cassandra1
@@ -43,7 +49,8 @@ services:
     volumes:
       - cassandra2_data:/bitnami
     networks:
-      - cassandranet
+      cassandranet:
+        ipv4_address: 172.24.0.3
     environment:
       - CASSANDRA_LISTEN_ADDRESS=cassandra2
       - CASSANDRA_BROADCAST_ADDRESS=cassandra2
