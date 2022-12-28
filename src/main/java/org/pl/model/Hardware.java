@@ -1,10 +1,22 @@
 package org.pl.model;
 
+import com.datastax.oss.driver.api.mapper.annotations.CqlName;
+import com.datastax.oss.driver.api.mapper.annotations.Entity;
+import com.datastax.oss.driver.api.mapper.annotations.PartitionKey;
+import com.datastax.oss.driver.api.mapper.annotations.PropertyStrategy;
+
 import java.util.Objects;
 import java.util.UUID;
 import static org.pl.model.Condition.FINE;
 
+
+@Entity(defaultKeyspace = "repair_hardware")
+@CqlName("hardwares")
+@PropertyStrategy(mutable = false)
 public class Hardware implements EntityInterface {
+
+    @PartitionKey
+    @CqlName("hardware_id")
     private UUID id;
     private boolean archive;
     private int price;
