@@ -20,18 +20,9 @@ public class HardwareRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        hardware = Hardware.builder()
-                .archive(true)
-                .hardwareType(new Computer(DUSTY))
-                .price(100)
-                .id(UUID.randomUUID())
-                .build();
-        hardware1 = Hardware.builder()
-                .archive(false)
-                .hardwareType(new Computer(DUSTY))
-                .price(100)
-                .id(UUID.randomUUID())
-                .build();
+        hardware = new Hardware(UUID.randomUUID(), true, 100, new Computer(DUSTY));
+
+        hardware1 = new Hardware(UUID.randomUUID(), false, 100, new Computer(DUSTY));
         list = new ArrayList<>();
         repository = new HardwareRepository(list);
     }

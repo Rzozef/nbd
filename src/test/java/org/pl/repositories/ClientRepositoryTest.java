@@ -23,33 +23,11 @@ public class ClientRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        address = Address.builder()
-                .street("White")
-                .number("123")
-                .city("Lodz")
-                .build();
-        client = Client.builder()
-                .id(clientUUID1)
-                .archive(true)
-                .clientType(new Basic())
-                .phoneNumber("535-535-535")
-                .balance(100)
-                .firstName("John")
-                .lastName("Doe")
-                .personalId("12345678901")
-                .address(address)
-                .build();
-        client1 = Client.builder()
-                .id(clientUUID2)
-                .archive(false)
-                .clientType(new Basic())
-                .phoneNumber("535-535-535")
-                .balance(100)
-                .firstName("John")
-                .lastName("Doe")
-                .personalId("10987654321")
-                .address(address)
-                .build();
+        address = new Address("White", "123", "Lodz");
+        client = new Client(clientUUID1, 100, "John", "Doe", "12345678901",
+                "535-535-535", new Basic(), address);
+        client1 = new Client(clientUUID2, 100, "John", "Doe", "10987654321",
+                "535-535-535", new Basic(), address);
         list = new ArrayList<>();
         repository = new ClientRepository(list);
     }
@@ -71,8 +49,6 @@ public class ClientRepositoryTest {
 
     @Test
     void archiveTest() throws RepositoryException {
-        repository.add(client);
-        assertThrows(RepositoryException.class, () -> repository.archivise(client.getID()));
         repository.add(client1);
         repository.archivise(client1.getID());
         assertTrue(client1.isArchive());
@@ -91,17 +67,17 @@ public class ClientRepositoryTest {
         assertEquals(0, repository.getSize(true));
         assertEquals(0, repository.getSize(false));
         repository.add(client);
-        assertEquals(0, repository.getSize(true));
-        assertEquals(1, repository.getSize(false));
-        repository.add(client1);
         assertEquals(1, repository.getSize(true));
-        assertEquals(1, repository.getSize(false));
+        assertEquals(0, repository.getSize(false));
+        repository.add(client1);
+        assertEquals(2, repository.getSize(true));
+        assertEquals(0, repository.getSize(false));
     }
 
     @Test
     void isArchiveTest() throws RepositoryException {
         repository.add(client);
-        assertTrue(repository.isArchive(client.getID()));
+        assertFalse(repository.isArchive(client.getID()));
         assertThrows(RepositoryException.class, () -> repository.isArchive(client1.getID()));
     }
 

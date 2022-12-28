@@ -25,46 +25,17 @@ class RepairServiceTest {
 
     @BeforeEach
     void setUp() {
-        address1 = Address.builder()
-                .city("Warszawa")
-                .street("Uliczna")
-                .number("34")
-                .build();
-        address2 = Address.builder()
-                .city("Warszawa")
-                .street("Kolorowa")
-                .number("23")
-                .build();
-        client1 = Client.builder()
-                .id(UUID.randomUUID())
-                .personalId("12345678901")
-                .firstName("Szymon")
-                .lastName("Kowalski")
-                .phoneNumber("123456789")
-                .address(address1)
-                .clientType(new Premium())
-                .build();
-        client2 = Client.builder()
-                .id(UUID.randomUUID())
-                .personalId("12345678901")
-                .firstName("Kacper")
-                .lastName("Jackowski")
-                .phoneNumber("987654321")
-                .address(address2)
-                .clientType(new Vip())
-                .build();
+        address1 = new Address("Warszawa", "34", "Uliczna");
+        address2 = new Address("Warszawa", "23", "Kolorowa");
+        client1 = new Client(UUID.randomUUID(), 100, "Szymon", "Kowalski", "12345678901",
+                "123456789", new Premium(), address1);
+        client2 = new Client(UUID.randomUUID(), 100, "Kacper", "Jackowski", "12345678901",
+                "987654321", new Vip(), address2);
+
         computer = new Computer(Condition.DUSTY);
         monitor = new Monitor(Condition.AVERAGE);
-        hardware1 = Hardware.builder()
-                .id(UUID.randomUUID())
-                .price(2000)
-                .hardwareType(computer)
-                .build();
-        hardware2 = Hardware.builder()
-                .id(UUID.randomUUID())
-                .price(3000)
-                .hardwareType(monitor)
-                .build();
+        hardware1 = new Hardware(UUID.randomUUID(), false, 2000, computer);
+        hardware2 = new Hardware(UUID.randomUUID(), false, 3000, monitor);
         repairs = new ArrayList<>();
         repairRepository = new RepairRepository(repairs);
         repairService = new RepairService(repairRepository);
@@ -89,7 +60,7 @@ class RepairServiceTest {
     @Test
     void repairServiceGetInfoTest() throws RepositoryException, RepairException {
         Repair repair = repairService.add(client1, hardware1);
-        String expectedInfo = "Repair(id=" + repair.getID() + ", archive=false, client=Client(id=" + client1.getID() + ", archive=false, balance=0.0, firstName=Szymon, lastName=Kowalski, personalId=12345678901, phoneNumber=123456789, clientType=Premium(), address=Address(city=Warszawa, number=34, street=Uliczna)), hardware=Hardware(id=" + hardware1.getID() + ", archive=false, price=2000, hardwareType=Computer(condition=DUSTY)))";
+        String expectedInfo = "Repair{id=" + repair.getID() + ", archive=false, client=Client{id=" + repair.getClient().getID() + ", archive=false, balance=100.0, firstName='Szymon', lastName='Kowalski', personalId='12345678901', phoneNumber='123456789', clientType=org.pl.model.Premium@4fa44017, address=Address{city='Warszawa', number='34', street='Uliczna'}}, hardware=Hardware{id="+ repair.getHardware().getID() + ", archive=false, price=2000, hardwareType=Computer{condition=DUSTY}}}";
         assertEquals(expectedInfo, repairService.getInfo(repair.getID()));
     }
 
@@ -162,10 +133,10 @@ class RepairServiceTest {
     void repairServiceChangeBalanceTest() throws RepositoryException, RepairException, HardwareException, ClientException {
         Repair repair1 = repairService.add(client1, hardware1);
         Repair repair2 = repairService.add(client1, hardware2);
-        assertEquals(0, client1.getBalance());
+        assertEquals(100.0, client1.getBalance());
         repairService.repair(repair2.getID());
-        assertEquals(-2160, client1.getBalance());
+        assertEquals(-2060, client1.getBalance());
         repairService.repair(repair1.getID());
-        assertEquals(-2164.5, client1.getBalance());
+        assertEquals(-2064.5, client1.getBalance());
     }
 }

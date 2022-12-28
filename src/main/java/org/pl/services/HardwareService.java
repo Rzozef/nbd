@@ -19,11 +19,7 @@ public class HardwareService {
         if (price <= 0)
             throw new HardwareException(HardwareException.HARDWARE_PRICE_EXCEPTION);
 
-        Hardware hardware = Hardware.builder()
-                .id(UUID.randomUUID())
-                .price(price)
-                .hardwareType(hardwareType)
-                .build();
+        Hardware hardware = new Hardware(UUID.randomUUID(), false, price, hardwareType);
         hardwareRepository.add(hardware);
         return hardware;
     }
@@ -36,29 +32,14 @@ public class HardwareService {
         type = type.toLowerCase();
 
         switch (type) {
-            case "computer" -> hardwareType = Computer.builder()
-                    .condition(condition)
-                    .build();
-            case "console" -> hardwareType = Console.builder()
-                    .condition(condition)
-                    .build();
-            case "monitor" -> hardwareType = Monitor.builder()
-                    .condition(condition)
-                    .build();
-            case "phone" -> hardwareType = Phone.builder()
-                    .condition(condition)
-                    .build();
+            case "computer" -> hardwareType = new Computer(condition);
+            case "console" -> hardwareType = new Console(condition);
+            case "monitor" -> hardwareType = new Monitor(condition);
+            case "phone" -> hardwareType = new Phone(condition);
             default -> throw new ServiceException(ServiceException.HARDWARE_SERVICE_INVALID_HARDWARE_EXCEPTION);
         }
 
-        if (hardwareType == null)
-            throw new ServiceException(ServiceException.HARDWARE_SERVICE_INVALID_HARDWARE_EXCEPTION);
-
-        Hardware hardware = Hardware.builder()
-                .id(UUID.randomUUID())
-                .price(price)
-                .hardwareType(hardwareType)
-                .build();
+        Hardware hardware = new Hardware(UUID.randomUUID(), false, price, hardwareType);
         hardwareRepository.add(hardware);
         return hardware;
     }

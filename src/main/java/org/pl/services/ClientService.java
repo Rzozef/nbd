@@ -3,6 +3,7 @@ package org.pl.services;
 import org.pl.exceptions.ClientException;
 import org.pl.exceptions.RepositoryException;
 import org.pl.model.Address;
+import org.pl.model.Basic;
 import org.pl.model.Client;
 import org.pl.repositories.ClientRepository;
 
@@ -27,32 +28,16 @@ public class ClientService {
             throw new ClientException(ClientException.CLIENT_PHONE_NUMBER_EXCEPTION);
         if (Objects.isNull(address))
             throw new ClientException(ClientException.CLIENT_ADDRESS_EXCEPTION);
-        Client client = Client.builder()
-                .id(UUID.randomUUID())
-                .personalId(personalId)
-                .firstName(firstName)
-                .lastName(lastName)
-                .phoneNumber(phoneNumber)
-                .address(address)
-                .build();
+        Client client = new Client(UUID.randomUUID(), 0, firstName, lastName, personalId, phoneNumber,
+                new Basic(), address);
         clientRepository.add(client);
         return client;
     }
 
     public Client add(String firstName, String lastName, String personalId, String phoneNumber, String city, String number, String street) throws RepositoryException {
-        Address address = Address.builder()
-                .city(city)
-                .number(number)
-                .street(street)
-                .build();
-        Client client = Client.builder()
-                .id(UUID.randomUUID())
-                .firstName(firstName)
-                .lastName(lastName)
-                .phoneNumber(phoneNumber)
-                .address(address)
-                .personalId(personalId)
-                .build();
+        Address address = new Address(city, number, street);
+        Client client = new Client(UUID.randomUUID(), 0, firstName, lastName, personalId,
+                phoneNumber, new Basic(), address);
         clientRepository.add(client);
         return client;
     }

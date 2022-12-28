@@ -1,8 +1,6 @@
 package org.pl.exceptions;
 
-import lombok.ToString;
 
-@ToString
 public class HardwareException extends Exception {
     public static final String HARDWARE_ID_EXCEPTION = "Invalid ID was given.";
     public static final String HARDWARE_PRICE_EXCEPTION = "Price cannot be less or equal to zero.";

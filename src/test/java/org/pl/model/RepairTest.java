@@ -23,25 +23,11 @@ class RepairTest {
     void setUp() {
        address = new Address("Warsaw", "123", "White");
 
-        client = Client.builder()
-                .id(clientUUID)
-                .clientType(new Premium())
-                .address(address)
-                .balance(300.0)
-                .firstName("John")
-                .lastName("Doe")
-                .personalId("12345678901")
-                .phoneNumber("123-123-123")
-                .archive(false)
-                .build();
+        client = new Client(clientUUID, 300.0, "John", "Doe", "12345678901",
+                "123-123-123", new Premium(), address);
         hardware = new Hardware(hardwareUUID, false, 100, new Computer(DUSTY));
 
-        repair = Repair.builder()
-                .client(client)
-                .hardware(hardware)
-                .archive(false)
-                .id(repairUUID)
-                .build();
+        repair = new Repair(repairUUID, false, client, hardware);
     }
 
     @Test
@@ -78,25 +64,9 @@ class RepairTest {
     }
 
     @Test
-    void setId() {
-        UUID newUUID = UUID.randomUUID();
-       repair.setId(newUUID);
-       assertEquals(newUUID, repair.getID());
-    }
-
-    @Test
     void setClient() {
-        Client newClient = Client.builder()
-                .id(UUID.randomUUID())
-                .clientType(new Vip())
-                .address(address)
-                .balance(300.0)
-                .firstName("John")
-                .lastName("Doe")
-                .personalId("9098765432")
-                .phoneNumber("123-123-123")
-                .archive(false)
-                .build();
+        Client newClient = new Client(UUID.randomUUID(), 300.0, "John", "Doe", "9098765432",
+                "123-123-123", new Vip(), address);
         repair.setClient(newClient);
         assertEquals(newClient, repair.getClient());
         assertNotEquals(client, repair.getClient());
@@ -112,25 +82,12 @@ class RepairTest {
 
     @Test
     void testEquals() {
-        Client newClient = Client.builder()
-                .id(clientUUID)
-                .clientType(new Premium())
-                .address(address)
-                .balance(300.0)
-                .firstName("John")
-                .lastName("Doe")
-                .personalId("12345678901")
-                .phoneNumber("123-123-123")
-                .archive(false)
-                .build();
+        Client newClient = new Client(clientUUID, 300.0, "John", "Doe", "12345678901",
+                "123-123-123", new Premium(), address);
         Hardware newHardware = new Hardware(hardwareUUID, false, 100, new Computer(DUSTY));
 
-        Repair newRepair = Repair.builder()
-                .client(newClient)
-                .hardware(newHardware)
-                .archive(false)
-                .id(repairUUID)
-                .build();
+        Repair newRepair = new Repair(repairUUID, false, newClient, newHardware);
+
         assertEquals(newRepair, repair);
         newRepair.setArchive(true);
         assertNotEquals(newRepair, repair);

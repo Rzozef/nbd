@@ -1,8 +1,5 @@
 package org.pl.exceptions;
 
-import lombok.ToString;
-
-@ToString
 public class ClientException extends Exception {
     public static final String CLIENT_FIRST_NAME_EXCEPTION = "Invalid name was given.";
     public static final String CLIENT_PERSONAL_ID_EXCEPTION = "Invalid personal ID was given.";

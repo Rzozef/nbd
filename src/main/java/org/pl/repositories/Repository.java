@@ -1,19 +1,21 @@
 package org.pl.repositories;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.pl.exceptions.RepositoryException;
-import org.pl.model.Entity;
+import org.pl.model.EntityInterface;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Repository<T extends Entity> {
+public class Repository<T extends EntityInterface> {
     protected ArrayList<T> elements;
+
+    public ArrayList<T> getElements() {
+        return elements;
+    }
+
+    public Repository(ArrayList<T> elements) {
+        this.elements = elements;
+    }
 
     public void add(T element) throws RepositoryException {
         if (element == null) {
@@ -57,8 +59,8 @@ public class Repository<T extends Entity> {
 //                if (!get(i).isArchive())
 //                    output++;
 //            }
-            for (Entity entity : elements) {
-                if (!entity.isArchive())
+            for (EntityInterface entityInterface : elements) {
+                if (!entityInterface.isArchive())
                     output++;
             }
         } else {
@@ -66,8 +68,8 @@ public class Repository<T extends Entity> {
 //                if (get(i).isArchive())
 //                    output++;
 //            }
-            for (Entity entity : elements) {
-                if (entity.isArchive()) {
+            for (EntityInterface entityInterface : elements) {
+                if (entityInterface.isArchive()) {
                     output++;
                 }
             }

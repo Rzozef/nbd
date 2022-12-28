@@ -11,11 +11,7 @@ class AddressTest {
 
     @BeforeEach
     void setUp() {
-        address = Address.builder()
-                .number("123")
-                .street("White")
-                .city("Lodz")
-                .build();
+        address = new Address("Lodz", "123", "White");
     }
 
     @Test
@@ -53,17 +49,9 @@ class AddressTest {
 
     @Test
     void testEquals() {
-        Address newAddress = Address.builder()
-                .number("123")
-                .city("London")
-                .street("Tower")
-                .build();
+        Address newAddress = new Address("London", "123", "Tower");
 
-        Address sameAddress = Address.builder()
-                .number("123")
-                .street("White")
-                .city("Lodz")
-                .build();
+        Address sameAddress = new Address("Lodz", "123", "White");
 
         assertEquals(address, address);
         assertEquals(address, sameAddress);
@@ -72,6 +60,6 @@ class AddressTest {
 
     @Test
     void testToString() {
-        assertEquals("Address(city=Lodz, number=123, street=White)", address.toString());
+        assertEquals("Address{city='Lodz', number='123', street='White'}", address.toString());
     }
 }

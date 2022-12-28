@@ -1,8 +1,5 @@
 package org.pl.exceptions;
 
-import lombok.ToString;
-
-@ToString
 public class RepositoryException extends Exception {
     public static final String REPOSITORY_ADD_INVALID_EXCEPTION = "Invalid attempt to add object to repository.";
     public static final String REPOSITORY_ARCHIVE_EXCEPTION = "Trying to archive archived object.";

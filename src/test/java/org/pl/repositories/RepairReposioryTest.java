@@ -27,41 +27,13 @@ class RepairReposioryTest {
 
     @BeforeEach
     void setUp() {
-        address = Address.builder()
-                .street("White")
-                .number("123")
-                .city("Lodz")
-                .build();
+        address = new Address("Lodz", "123", "White");
 
-        client = Client.builder()
-                .id(clientUUID)
-                .clientType(new Premium())
-                .address(address)
-                .balance(300.0)
-                .firstName("John")
-                .lastName("Doe")
-                .personalId("12345678901")
-                .phoneNumber("123-123-123")
-                .archive(false)
-                .build();
-        hardware = Hardware.builder()
-                .archive(false)
-                .hardwareType(new Computer(DUSTY))
-                .price(100)
-                .id(hardwareUUID)
-                .build();
-        repair = Repair.builder()
-                .client(client)
-                .hardware(hardware)
-                .archive(true)
-                .id(repairUUID1)
-                .build();
-        repair1 = Repair.builder()
-                .client(client)
-                .hardware(hardware)
-                .archive(false)
-                .id(repairUUID2)
-                .build();
+        client = new Client(clientUUID, 300.0, "John", "Doe", "12345678901",
+                "123-123-123", new Premium(), address);
+        hardware = new Hardware(hardwareUUID, false, 100, new Computer(DUSTY));
+        repair = new Repair(repairUUID1, true, client, hardware);
+        repair1 = new Repair(repairUUID2, false, client, hardware);
         list = new ArrayList<>();
         repository = new RepairRepository(list);
     }

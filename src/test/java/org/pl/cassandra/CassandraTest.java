@@ -11,26 +11,26 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
 public class CassandraTest {
-    private static CqlSession session;
-
-    public void initConnection() {
-        session = CqlSession.builder()
-                .addContactPoint(new InetSocketAddress(9042))
-                .addContactPoint(new InetSocketAddress(9043))
-                .withLocalDatacenter("dc1")
-                .withAuthCredentials("cassandra", "cassandrapassword")
-                .build();
-    }
-    @Test
-    void cassandraTest() {
-        initConnection();
-        CreateKeyspace keyspace = SchemaBuilder.createKeyspace(CqlIdentifier.fromCql("repair_hardware"))
-                .ifNotExists()
-                .withSimpleStrategy(2)
-                .withDurableWrites(true);
-        SimpleStatement createKeyspace = keyspace.build();
-        session.execute(createKeyspace);
-        session.close();
-    }
+//    private static CqlSession session;
+//
+//    public void initConnection() {
+//        session = CqlSession.builder()
+//                .addContactPoint(new InetSocketAddress(9042))
+//                .addContactPoint(new InetSocketAddress(9043))
+//                .withLocalDatacenter("dc1")
+//                .withAuthCredentials("cassandra", "cassandrapassword")
+//                .build();
+//    }
+//    @Test
+//    void cassandraTest() {
+//        initConnection();
+//        CreateKeyspace keyspace = SchemaBuilder.createKeyspace(CqlIdentifier.fromCql("repair_hardware"))
+//                .ifNotExists()
+//                .withSimpleStrategy(2)
+//                .withDurableWrites(true);
+//        SimpleStatement createKeyspace = keyspace.build();
+//        session.execute(createKeyspace);
+//        session.close();
+//    }
 
 }

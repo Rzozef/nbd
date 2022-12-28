@@ -1,7 +1,6 @@
 package org.pl.repositories;
 
 
-import lombok.AllArgsConstructor;
 import org.pl.exceptions.ClientException;
 import org.pl.exceptions.HardwareException;
 import org.pl.exceptions.RepositoryException;
@@ -10,8 +9,6 @@ import org.pl.model.Repair;
 
 import java.util.ArrayList;
 import java.util.UUID;
-
-@AllArgsConstructor
 public class RepairRepository extends Repository<Repair>{
 
     public RepairRepository(ArrayList<Repair> elements) {

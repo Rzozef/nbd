@@ -25,11 +25,7 @@ public class RepairService {
         if (Objects.isNull(hardware))
             throw new RepairException(RepairException.REPAIR_HARDWARE_EXCEPTION);
 
-        Repair repair = Repair.builder()
-                .id(UUID.randomUUID())
-                .client(client)
-                .hardware(hardware)
-                .build();
+        Repair repair = new Repair(UUID.randomUUID(), false, client, hardware);
         repairRepository.add(repair);
         return repair;
     }

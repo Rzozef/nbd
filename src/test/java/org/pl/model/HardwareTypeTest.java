@@ -55,7 +55,7 @@ class HardwareTypeTest {
 
         @Test
         void testToString() {
-            assertEquals(String.format("Computer(condition=%s)", computer.getCondition()), computer.toString());
+            assertEquals(String.format("Computer{condition=%s}", computer.getCondition()), computer.toString());
         }
 
         @Nested
@@ -144,7 +144,7 @@ class HardwareTypeTest {
 
         @Test
         void testToString() {
-            assertEquals(String.format("Monitor(condition=%s)", monitor.getCondition()), monitor.toString());
+            assertEquals(String.format("Monitor{condition=%s}", monitor.getCondition()), monitor.toString());
         }
 
         @Nested
@@ -233,7 +233,7 @@ class HardwareTypeTest {
 
         @Test
         void testToString() {
-            assertEquals(String.format("Console(condition=%s)", console.getCondition()), console.toString());
+            assertEquals(String.format("Console{condition=%s}", console.getCondition()), console.toString());
         }
 
         @Nested
@@ -322,7 +322,7 @@ class HardwareTypeTest {
 
         @Test
         void testToString() {
-            assertEquals(String.format("Phone(condition=%s)", phone.getCondition()), phone.toString());
+            assertEquals(String.format("Phone{condition=%s}", phone.getCondition()), phone.toString());
         }
 
         @Nested

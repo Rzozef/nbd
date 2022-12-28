@@ -9,8 +9,6 @@ import org.pl.model.Client;
 import org.pl.repositories.ClientRepository;
 
 import java.util.ArrayList;
-import java.util.UUID;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ClientServiceTest {
@@ -21,11 +19,7 @@ public class ClientServiceTest {
 
     @BeforeEach
     void setUp() {
-        address = Address.builder()
-                .street("White")
-                .number("123")
-                .city("Lodz")
-                .build();
+        address = new Address("Lodz", "123", "White");
         clientsList = new ArrayList<>();
         clientRepository = new ClientRepository(clientsList);
         clientService = new ClientService(clientRepository);
@@ -58,17 +52,13 @@ public class ClientServiceTest {
     @Test
     void clientServiceToStringTest() throws RepositoryException, ClientException {
         Client client = clientService.add("Pan", "Tadeusz", "12345678909", "280618349", address);
-        String expectedInfo = "Client(id=" + client.getID() + ", archive=false, balance=0.0, firstName=Pan, lastName=Tadeusz, personalId=12345678909, phoneNumber=280618349, clientType=null, address=Address(city=Lodz, number=123, street=White))";
+        String expectedInfo = "Client{id=" + client.getID() + ", archive=false, balance=0.0, firstName='Pan', lastName='Tadeusz', personalId='12345678909', phoneNumber='280618349', clientType=org.pl.model.Basic@635058ab, address=Address{city='Lodz', number='123', street='White'}}";
         assertEquals(expectedInfo, clientService.getInfo(client.getID()));
     }
 
     @Test
     void clientServiceRemovePositiveTest() throws RepositoryException, ClientException {
-        Address address2 = Address.builder()
-                         .city("Katowice")
-                         .street("Porajska")
-                         .number("34")
-                         .build();
+        Address address2 = new Address("Katowice", "34", "Porajska");
         Client client1 = clientService.add("Jakub", "Stokrotka", "12345678909", "5876321210", address);
         assertEquals(1, clientService.getPresentSize());
         Client client2 = clientService.add("Marcin", "Steczkowski", "12345678909", "8765432109", address2);
@@ -83,13 +73,7 @@ public class ClientServiceTest {
 
     @Test
     void clientServiceRemoveNegativeTest() throws RepositoryException, ClientException {
-        Address address2 = Address.builder()
-                .city("Katowice")
-                .street("Porajska")
-                .number("34")
-                .build();
         Client client1 = clientService.add("Jakub", "Stokrotka", "12345678909", "5876321210", address);
-        Client client2 = clientService.add("Marcin", "Steczkowski", "12345678909", "8765432109", address2);
         clientService.remove(client1.getID());
         assertThrows(RepositoryException.class,
                 ()-> clientService.remove(client1.getID()));
@@ -103,11 +87,7 @@ public class ClientServiceTest {
         Client client1 = clientService.add("Kuba", "Jakubowski", "12345678909", "1234567890", address);
         assertEquals(1, clientService.getPresentSize());
         assertEquals(0, clientService.getArchiveSize());
-        Address address2 = Address.builder()
-                .city("Katowice")
-                .street("Porajska")
-                .number("34")
-                .build();
+        Address address2 = new Address("Katowice", "34", "Porajska");
         Client client2 = clientService.add("Piotr", "Piotrkowski", "12345678909", "0987654321", address2);
         assertEquals(2, clientService.getPresentSize());
         assertEquals(0, clientService.getArchiveSize());

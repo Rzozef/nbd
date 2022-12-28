@@ -1,16 +1,44 @@
 package org.pl.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.pl.exceptions.HardwareException;
 
-@Data
-@Builder
-@AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+import java.util.Objects;
+
 public class Phone extends HardwareType {
+    public Phone(Condition condition) {
+        this.condition = condition;
+    }
+
+    @Override
+    public Condition getCondition() {
+        return condition;
+    }
+
+    @Override
+    public void setCondition(Condition condition) {
+        this.condition = condition;
+    }
+
+    @Override
+    public String toString() {
+        return "Phone{" +
+                "condition=" + condition +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Phone phone = (Phone) o;
+        return condition == phone.condition;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(condition);
+    }
+
     private Condition condition;
 
     public double calculateRepairCost(int price) throws HardwareException {

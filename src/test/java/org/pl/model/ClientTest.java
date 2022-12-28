@@ -16,22 +16,9 @@ class ClientTest {
 
     @BeforeEach
     void setUp() {
-        address = Address.builder()
-                .street("White")
-                .number("123")
-                .city("Lodz")
-                .build();
-
-        client = Client.builder()
-                .id(clientUUID)
-                .personalId("12345678901")
-                .clientType(new Basic())
-                .phoneNumber("535-535-535")
-                .balance(100)
-                .firstName("John")
-                .lastName("Doe")
-                .address(address)
-                .build();
+        address = new Address("White", "123", "Lodz");
+        client = new Client(clientUUID, 100, "John", "Doe", "12345678901",
+                "535-535-535", new Basic(), address);
     }
 
     @Test
@@ -140,26 +127,10 @@ class ClientTest {
 
     @Test
     void testEquals() {
-        Client sameClient = Client.builder()
-                .id(clientUUID)
-                .personalId("12345678901")
-                .clientType(new Basic())
-                .phoneNumber("535-535-535")
-                .balance(100)
-                .firstName("John")
-                .lastName("Doe")
-                .address(address)
-                .build();
-        Client differentClient = Client.builder()
-                .id(UUID.randomUUID())
-                .personalId("098761234565")
-                .clientType(new Basic())
-                .phoneNumber("111-111-111")
-                .balance(100)
-                .firstName("John")
-                .lastName("Doe")
-                .address(address)
-                .build();
+        Client sameClient = new Client(clientUUID, 100, "John", "Doe", "12345678901",
+                "535-535-535", new Basic(), address);
+        Client differentClient = new Client(UUID.randomUUID(), 100, "John", "Doe", "098761234565",
+                "111-111-111", new Basic(), address);
         assertEquals(sameClient, client);
         assertNotEquals(differentClient, client);
     }
