@@ -114,4 +114,52 @@ public class ClientCassandra {
     public String getNumber() {
         return number;
     }
+
+    public void setArchive(boolean archive) {
+        this.archive = archive;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPersonalId(String personalId) {
+        this.personalId = personalId;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setFactor(float factor) {
+        this.factor = factor;
+    }
+
+    public void setMaxRepairs(int maxRepairs) {
+        this.maxRepairs = maxRepairs;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
 }

@@ -37,7 +37,7 @@ public class HardwareCassandraRepositoryTest {
     }
 
     @Test
-    void readHardwareByUIdPositiveTest() {
+    void findHardwareByUIdPositiveTest() {
         assertTrue(hardwareCassandraRepository.create(hardwareCassandra));
         assertEquals(hardwareUUID, hardwareCassandraRepository.findByUId(hardwareUUID).getId());
     }
@@ -90,7 +90,7 @@ public class HardwareCassandraRepositoryTest {
     }
 
     @AfterAll
-    static void tearDown() throws Exception {
+    static void tearDown() {
         hardwareCassandraRepository.close();
     }
 }
