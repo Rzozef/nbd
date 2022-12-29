@@ -23,16 +23,18 @@ public class HardwareQueryProvider {
         this.session = ctx.getSession();
     }
 
-    Hardware findById(UUID uuid) {
+    public Hardware findByUId(UUID uuid) {
         Select selectHardware = QueryBuilder
                 .selectFrom(CqlIdentifier.fromCql("hardwares"))
                 .all()
                 .where(Relation.column(CqlIdentifier.fromCql("hardware_id")).isEqualTo(literal(uuid)));
         Row row = session.execute(selectHardware.build()).one();
-        return getHardware(row);
+        if (row != null)
+            return getHardware(row);
+        return null;
     }
 
-    List<Hardware> findAll() {
+    public List<Hardware> findAll() {
         Select selectHardwares = QueryBuilder
                 .selectFrom(CqlIdentifier.fromCql("hardwares"))
                 .all();
@@ -43,7 +45,7 @@ public class HardwareQueryProvider {
             hardwares.add(new Hardware(
                     row.getInt("price"),
                     (HardwareType) row.getObject("hardwareType"),
-                    row.getBoolean("archive"),
+                    row.getBoolean("is_archive"),
                     row.getUuid("hardware_id")
             ));
         });

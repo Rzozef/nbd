@@ -1,6 +1,7 @@
-package org.pl.cassandra.repositories;
+package org.pl.cassandra.daos;
 
 import com.datastax.oss.driver.api.mapper.annotations.*;
+import org.pl.cassandra.repositories.HardwareQueryProvider;
 import org.pl.model.Hardware;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface HardwareDao {
 
     @StatementAttributes(consistencyLevel = "QUORUM")
     @QueryProvider(providerClass = HardwareQueryProvider.class)
-    Hardware findById(UUID uuid);
+    Hardware findByUId(UUID uuid);
 
     @StatementAttributes(consistencyLevel = "QUORUM")
     @QueryProvider(providerClass = HardwareQueryProvider.class)

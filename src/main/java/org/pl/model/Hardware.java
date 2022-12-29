@@ -14,10 +14,10 @@ import static org.pl.model.Condition.FINE;
 @CqlName("hardwares")
 @PropertyStrategy(mutable = false)
 public class Hardware implements EntityInterface {
-
     @PartitionKey
     @CqlName("hardware_id")
     private UUID id;
+    @CqlName("is_archive")
     private boolean archive;
     private int price;
     private HardwareType hardwareType;
