@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.pl.cassandra.daos.HardwareDao;
 import org.pl.cassandra.mappers.HardwareMapper;
 import org.pl.cassandra.mappers.HardwareMapperBuilder;
+import org.pl.cassandra.model.HardwareCassandra;
 import org.pl.model.Computer;
 import org.pl.model.Condition;
 import org.pl.model.Hardware;
@@ -44,27 +45,22 @@ public class CassandraTest {
     @Test
     void cassandraTest() {
         initConnection();
-        SimpleStatement createType = SchemaBuilder.createType(CqlIdentifier.fromCql("repair_hardware"), CqlIdentifier.fromCql("hardware_type"))
-                .ifNotExists()
-                .withField(CqlIdentifier.fromCql("condition"), DataTypes.TEXT)
-                .build();
-        session.execute(createType);
         SimpleStatement createHardwares = SchemaBuilder.createTable(CqlIdentifier.fromCql("hardwares"))
                 .ifNotExists()
                 .withPartitionKey(CqlIdentifier.fromCql("hardware_id"), DataTypes.UUID)
                 .withColumn(CqlIdentifier.fromCql("is_archive"), DataTypes.BOOLEAN)
                 .withColumn(CqlIdentifier.fromCql("price"), DataTypes.INT)
-                .withColumn(CqlIdentifier.fromCql("hardware_type"), udt(CqlIdentifier.fromCql("hardware_type")))
-                .withColumn(CqlIdentifier.fromCql("discriminator"), DataTypes.TEXT)
+                .withColumn(CqlIdentifier.fromCql("hardware_type"), DataTypes.TEXT)
+                .withColumn(CqlIdentifier.fromCql("condition"), DataTypes.TEXT)
                 .build();
         session.execute(createHardwares);
         UUID randomUUID = UUID.randomUUID();
         hardwareMapper = new HardwareMapperBuilder(session).build();
         hardwareDao = hardwareMapper.hardwareDao();
         Computer computer = new Computer(Condition.FINE);
-        Hardware hardware = new Hardware(randomUUID,200, computer, false,  "computer");
+        HardwareCassandra hardware = new HardwareCassandra(randomUUID, false, 100, computer.toString(), "FINE");
         assertTrue(hardwareDao.create(hardware));
-        assertEquals(hardwareDao.findByUId(randomUUID), hardware);
+        assertEquals(hardwareDao.findByUId(randomUUID).getId(), hardware.getId());
         session.close();
     }
 

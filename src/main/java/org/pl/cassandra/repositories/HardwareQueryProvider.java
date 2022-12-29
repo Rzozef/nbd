@@ -7,8 +7,7 @@ import com.datastax.oss.driver.api.mapper.MapperContext;
 import com.datastax.oss.driver.api.querybuilder.QueryBuilder;
 import com.datastax.oss.driver.api.querybuilder.relation.Relation;
 import com.datastax.oss.driver.api.querybuilder.select.Select;
-import org.pl.model.Hardware;
-import org.pl.model.HardwareType;
+import org.pl.cassandra.model.HardwareCassandra;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ public class HardwareQueryProvider {
         this.session = ctx.getSession();
     }
 
-    public Hardware findByUId(UUID uuid) {
+    public HardwareCassandra findByUId(UUID uuid) {
         Select selectHardware = QueryBuilder
                 .selectFrom(CqlIdentifier.fromCql("hardwares"))
                 .all()
@@ -34,12 +33,12 @@ public class HardwareQueryProvider {
         return null;
     }
 
-    public List<Hardware> findAll() {
+    public List<HardwareCassandra> findAll() {
         Select selectHardwares = QueryBuilder
                 .selectFrom(CqlIdentifier.fromCql("hardwares"))
                 .all();
         List<Row> rows = session.execute(selectHardwares.build()).all();
-        List<Hardware> hardwares = new ArrayList<>();
+        List<HardwareCassandra> hardwares = new ArrayList<>();
 
         rows.forEach(row -> {
             hardwares.add(getHardware(row));
@@ -48,13 +47,13 @@ public class HardwareQueryProvider {
         return hardwares;
     }
 
-    private Hardware getHardware(Row row) {
-        return new Hardware(
+    private HardwareCassandra getHardware(Row row) {
+        return new HardwareCassandra(
                 row.getUuid("hardware_id"),
+                row.getBoolean("is_archive"),
                 row.getInt("price"),
-                (HardwareType) row.getObject("hardwareType"),
-                row.getBoolean("archive"),
-                row.getString("discriminator")
+                row.getString("hardware_type"),
+                row.getString("condition")
         );
     }
 }

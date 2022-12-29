@@ -1,12 +1,9 @@
 package org.pl.model;
 
-import com.datastax.oss.driver.api.mapper.annotations.Entity;
-import com.datastax.oss.driver.api.mapper.annotations.PropertyStrategy;
 import org.pl.exceptions.HardwareException;
 
 import java.util.Objects;
-@Entity
-@PropertyStrategy(mutable = false)
+
 public class Phone extends HardwareType {
     public Phone(Condition condition) {
         this.condition = condition;
