@@ -9,6 +9,7 @@ import org.pl.cassandra.queryProviders.RepairQueryProvider;
 import java.util.List;
 import java.util.UUID;
 
+@Dao
 public interface RepairDao {
     @StatementAttributes(consistencyLevel = "QUORUM")
     @Insert(ifNotExists = true)
