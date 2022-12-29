@@ -25,7 +25,7 @@ class RepairTest {
 
         client = new Client(clientUUID, 300.0, "John", "Doe", "12345678901",
                 "123-123-123", new Premium(), address);
-        hardware = new Hardware(100, new Computer(DUSTY),false, hardwareUUID);
+        hardware = new Hardware(100, new Computer(DUSTY),false, hardwareUUID, "");
 
         repair = new Repair(repairUUID, false, client, hardware);
     }
@@ -74,7 +74,7 @@ class RepairTest {
 
     @Test
     void setHardware() {
-       Hardware newHardware = new Hardware(100, new Computer(DUSTY),false, UUID.randomUUID());
+       Hardware newHardware = new Hardware(100, new Computer(DUSTY),false, UUID.randomUUID(), "");
        repair.setHardware(newHardware);
        assertEquals(newHardware, repair.getHardware());
        assertNotEquals(hardware, repair.getHardware());
@@ -84,7 +84,7 @@ class RepairTest {
     void testEquals() {
         Client newClient = new Client(clientUUID, 300.0, "John", "Doe", "12345678901",
                 "123-123-123", new Premium(), address);
-        Hardware newHardware = new Hardware(100, new Computer(DUSTY), false, hardwareUUID);
+        Hardware newHardware = new Hardware(100, new Computer(DUSTY), false, hardwareUUID, "");
 
         Repair newRepair = new Repair(repairUUID, false, newClient, newHardware);
 

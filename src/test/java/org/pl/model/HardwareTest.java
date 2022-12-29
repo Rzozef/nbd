@@ -16,7 +16,7 @@ class HardwareTest {
     @BeforeEach
     void setUp() {
 
-        hardware = new Hardware(100, new Computer(DUSTY),false, hardwareUUID);
+        hardware = new Hardware(100, new Computer(DUSTY),false, hardwareUUID, "");
     }
 
     @Test
@@ -78,11 +78,11 @@ class HardwareTest {
     @Test
     void testEquals() {
         UUID newUUID = UUID.randomUUID();
-        assertEquals(new Hardware(100, new Computer(DUSTY),false, hardwareUUID), hardware);
-        assertNotEquals(new Hardware(100, new Computer(DUSTY), true, newUUID), hardware);
-        assertNotEquals(new Hardware(120, new Computer(DUSTY),false, hardwareUUID), hardware);
-        assertNotEquals(new Hardware(100, new Computer(FINE),false, hardwareUUID), hardware);
-        assertNotEquals(new Hardware(100, new Phone(DUSTY), false, hardwareUUID), hardware);
+        assertEquals(new Hardware(100, new Computer(DUSTY),false, hardwareUUID, ""), hardware);
+        assertNotEquals(new Hardware(100, new Computer(DUSTY), true, newUUID, ""), hardware);
+        assertNotEquals(new Hardware(120, new Computer(DUSTY),false, hardwareUUID, ""), hardware);
+        assertNotEquals(new Hardware(100, new Computer(FINE),false, hardwareUUID, ""), hardware);
+        assertNotEquals(new Hardware(100, new Phone(DUSTY), false, hardwareUUID, ""), hardware);
     }
 
     @Test

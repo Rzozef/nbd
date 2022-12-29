@@ -20,14 +20,17 @@ public class Hardware implements EntityInterface {
     @CqlName("is_archive")
     private boolean archive;
     private int price;
+    @CqlName("hardware_type")
     private HardwareType hardwareType;
+    private String discriminator;
 
 
-    public Hardware( int price, HardwareType hardwareType, boolean archive, UUID id) {
+    public Hardware( int price, HardwareType hardwareType, boolean archive, UUID id, String discriminator) {
         this.id = id;
         this.archive = archive;
         this.price = price;
         this.hardwareType = hardwareType;
+        this.discriminator = discriminator;
     }
 
     public int getPrice() {
@@ -58,6 +61,10 @@ public class Hardware implements EntityInterface {
     @Override
     public UUID getID() {
         return id;
+    }
+
+    public String getDiscriminator() {
+        return discriminator;
     }
 
     public void setHardwareType(HardwareType hardwareType) {

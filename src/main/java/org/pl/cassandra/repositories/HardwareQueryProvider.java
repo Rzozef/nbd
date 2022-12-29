@@ -42,12 +42,7 @@ public class HardwareQueryProvider {
         List<Hardware> hardwares = new ArrayList<>();
 
         rows.forEach(row -> {
-            hardwares.add(new Hardware(
-                    row.getInt("price"),
-                    (HardwareType) row.getObject("hardwareType"),
-                    row.getBoolean("is_archive"),
-                    row.getUuid("hardware_id")
-            ));
+            hardwares.add(getHardware(row));
         });
 
         return hardwares;
@@ -58,7 +53,8 @@ public class HardwareQueryProvider {
                 row.getInt("price"),
                 (HardwareType) row.getObject("hardwareType"),
                 row.getBoolean("archive"),
-                row.getUuid("hardware_id")
+                row.getUuid("hardware_id"),
+                row.getString("discriminator")
         );
     }
 }
