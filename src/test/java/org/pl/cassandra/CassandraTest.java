@@ -4,26 +4,25 @@ import com.datastax.oss.driver.api.core.CqlIdentifier;
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.cql.SimpleStatement;
 import com.datastax.oss.driver.api.core.type.DataTypes;
-import com.datastax.oss.driver.api.core.type.UserDefinedType;
 import com.datastax.oss.driver.api.core.type.codec.ExtraTypeCodecs;
 import com.datastax.oss.driver.api.querybuilder.SchemaBuilder;
-import com.datastax.oss.driver.api.querybuilder.schema.CreateTypeStart;
-import com.datastax.oss.driver.internal.core.type.UserDefinedTypeBuilder;
 import org.junit.jupiter.api.Test;
+import org.pl.cassandra.converters.HardwareConverter;
+import org.pl.cassandra.converters.HardwareTypeConverter;
 import org.pl.cassandra.daos.HardwareDao;
 import org.pl.cassandra.mappers.HardwareMapper;
 import org.pl.cassandra.mappers.HardwareMapperBuilder;
 import org.pl.cassandra.model.HardwareCassandra;
+import org.pl.exceptions.HardwareException;
 import org.pl.model.Computer;
 import org.pl.model.Condition;
 import org.pl.model.Hardware;
 
-import javax.xml.crypto.Data;
 import java.net.InetSocketAddress;
 import java.util.UUID;
 
-import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.udt;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CassandraTest {
     private static CqlSession session;
@@ -43,7 +42,7 @@ public class CassandraTest {
                 .build();
     }
     @Test
-    void cassandraTest() {
+    void cassandraTest() throws HardwareException {
         initConnection();
         SimpleStatement createHardwares = SchemaBuilder.createTable(CqlIdentifier.fromCql("hardwares"))
                 .ifNotExists()
@@ -58,10 +57,12 @@ public class CassandraTest {
         hardwareMapper = new HardwareMapperBuilder(session).build();
         hardwareDao = hardwareMapper.hardwareDao();
         Computer computer = new Computer(Condition.FINE);
-        HardwareCassandra hardware = new HardwareCassandra(randomUUID, false, 100, computer.toString(), "FINE");
-        assertTrue(hardwareDao.create(hardware));
+        Hardware hardware = new Hardware(randomUUID, 1, computer, false, "computer");
+        assertTrue(hardwareDao.create(HardwareConverter.toRepositoryModel(hardware)));
         assertEquals(hardwareDao.findByUId(randomUUID).getId(), hardware.getId());
         session.close();
+        HardwareCassandra hardwareCassandra = HardwareConverter.toRepositoryModel(hardware);
+        assertEquals(hardware, HardwareConverter.fromRepositoryModel(hardwareCassandra));
+        assertEquals(hardware.getHardwareType(), HardwareTypeConverter.fromRepositoryModel(hardwareCassandra));
     }
-
 }

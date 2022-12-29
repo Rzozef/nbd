@@ -37,39 +37,20 @@ public class HardwareCassandra {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public boolean isArchive() {
         return archive;
-    }
-
-    public void setArchive(boolean archive) {
-        this.archive = archive;
     }
 
     public int getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
     public String getHardwareType() {
         return hardwareType;
-    }
-
-    public void setHardwareType(String hardwareType) {
-        this.hardwareType = hardwareType;
     }
 
     public String getCondition() {
         return condition;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition;
-    }
 }
