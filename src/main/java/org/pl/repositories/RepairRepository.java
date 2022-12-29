@@ -41,7 +41,7 @@ public class RepairRepository extends Repository<Repair>{
         get(ID).setArchive(true);
 
         for (int i = 0; i < getElements().size(); i++) {
-            if (getElements().get(i).getClient() == get(ID).getClient() && getElements().get(i).getID() != ID &&
+            if (getElements().get(i).getClient() == get(ID).getClient() && getElements().get(i).getId() != ID &&
                     !getElements().get(i).isArchive()) {
                 get(ID).getClient().setArchive(false);
                 break;

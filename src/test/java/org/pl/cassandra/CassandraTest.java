@@ -5,9 +5,9 @@ import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.cql.SimpleStatement;
 import com.datastax.oss.driver.api.core.type.DataTypes;
 import com.datastax.oss.driver.api.core.type.UserDefinedType;
+import com.datastax.oss.driver.api.core.type.codec.ExtraTypeCodecs;
 import com.datastax.oss.driver.api.querybuilder.SchemaBuilder;
-import com.datastax.oss.driver.api.querybuilder.schema.CreateKeyspace;
-import com.datastax.oss.driver.api.querybuilder.schema.CreateTable;
+import com.datastax.oss.driver.api.querybuilder.schema.CreateTypeStart;
 import com.datastax.oss.driver.internal.core.type.UserDefinedTypeBuilder;
 import org.junit.jupiter.api.Test;
 import org.pl.cassandra.daos.HardwareDao;
@@ -16,11 +16,12 @@ import org.pl.cassandra.mappers.HardwareMapperBuilder;
 import org.pl.model.Computer;
 import org.pl.model.Condition;
 import org.pl.model.Hardware;
-import org.pl.model.HardwareType;
 
+import javax.xml.crypto.Data;
 import java.net.InetSocketAddress;
 import java.util.UUID;
 
+import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.udt;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CassandraTest {
@@ -35,20 +36,25 @@ public class CassandraTest {
                 .withLocalDatacenter("dc1")
                 .withAuthCredentials("cassandra", "cassandrapassword")
                 .withKeyspace(CqlIdentifier.fromCql("repair_hardware"))
+                .addTypeCodecs(
+                        ExtraTypeCodecs.enumNamesOf(Condition.class) // text <-> enum
+                )
                 .build();
     }
     @Test
     void cassandraTest() {
         initConnection();
-        UserDefinedType hardwareType = new UserDefinedTypeBuilder(CqlIdentifier.fromCql("repair_hardware"), CqlIdentifier.fromCql("hardware_type"))
+        SimpleStatement createType = SchemaBuilder.createType(CqlIdentifier.fromCql("repair_hardware"), CqlIdentifier.fromCql("hardware_type"))
+                .ifNotExists()
                 .withField(CqlIdentifier.fromCql("condition"), DataTypes.TEXT)
                 .build();
+        session.execute(createType);
         SimpleStatement createHardwares = SchemaBuilder.createTable(CqlIdentifier.fromCql("hardwares"))
                 .ifNotExists()
                 .withPartitionKey(CqlIdentifier.fromCql("hardware_id"), DataTypes.UUID)
                 .withColumn(CqlIdentifier.fromCql("is_archive"), DataTypes.BOOLEAN)
                 .withColumn(CqlIdentifier.fromCql("price"), DataTypes.INT)
-                .withColumn(CqlIdentifier.fromCql("hardware_type"), hardwareType)
+                .withColumn(CqlIdentifier.fromCql("hardware_type"), udt(CqlIdentifier.fromCql("hardware_type")))
                 .withColumn(CqlIdentifier.fromCql("discriminator"), DataTypes.TEXT)
                 .build();
         session.execute(createHardwares);
@@ -56,7 +62,7 @@ public class CassandraTest {
         hardwareMapper = new HardwareMapperBuilder(session).build();
         hardwareDao = hardwareMapper.hardwareDao();
         Computer computer = new Computer(Condition.FINE);
-        Hardware hardware = new Hardware(200, computer, false, randomUUID, "computer");
+        Hardware hardware = new Hardware(randomUUID,200, computer, false,  "computer");
         assertTrue(hardwareDao.create(hardware));
         assertEquals(hardwareDao.findByUId(randomUUID), hardware);
         session.close();

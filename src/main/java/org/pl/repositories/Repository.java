@@ -32,7 +32,7 @@ public class Repository<T extends EntityInterface> {
 
     public void archivise(UUID id) throws RepositoryException {
         for (T element : elements) {
-            if (element.getID() == id && !element.isArchive()) {
+            if (element.getId() == id && !element.isArchive()) {
                 element.setArchive(true);
                 return;
             }
@@ -45,7 +45,7 @@ public class Repository<T extends EntityInterface> {
             throw new RepositoryException(RepositoryException.REPOSITORY_GET_EXCEPTION);
         }
         for (T element : elements) {
-            if (element.getID() == id) {
+            if (element.getId() == id) {
                 return element;
             }
         }
@@ -79,7 +79,7 @@ public class Repository<T extends EntityInterface> {
 
     public boolean isArchive(UUID id) throws RepositoryException {
         for (T element : elements) {
-            if (element.getID() == id) {
+            if (element.getId() == id) {
                 return element.isArchive();
             }
         }
@@ -88,7 +88,7 @@ public class Repository<T extends EntityInterface> {
 
     public void unarchive(UUID id) throws RepositoryException {
         for (T element : elements) {
-            if (element.getID() == id) {
+            if (element.getId() == id) {
                 element.setArchive(false);
                 return;
             }

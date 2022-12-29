@@ -19,7 +19,7 @@ public class HardwareService {
         if (price <= 0)
             throw new HardwareException(HardwareException.HARDWARE_PRICE_EXCEPTION);
 
-        Hardware hardware = new Hardware(price, hardwareType, false, UUID.randomUUID(), "");
+        Hardware hardware = new Hardware(UUID.randomUUID(), price, hardwareType, false,  "");
         hardwareRepository.add(hardware);
         return hardware;
     }
@@ -39,7 +39,7 @@ public class HardwareService {
             default -> throw new ServiceException(ServiceException.HARDWARE_SERVICE_INVALID_HARDWARE_EXCEPTION);
         }
 
-        Hardware hardware = new Hardware(price, hardwareType,false, UUID.randomUUID(), "");
+        Hardware hardware = new Hardware(UUID.randomUUID(),price, hardwareType,false, "");
         hardwareRepository.add(hardware);
         return hardware;
     }

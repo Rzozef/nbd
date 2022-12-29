@@ -50,10 +50,10 @@ public class HardwareQueryProvider {
 
     private Hardware getHardware(Row row) {
         return new Hardware(
+                row.getUuid("hardware_id"),
                 row.getInt("price"),
                 (HardwareType) row.getObject("hardwareType"),
                 row.getBoolean("archive"),
-                row.getUuid("hardware_id"),
                 row.getString("discriminator")
         );
     }

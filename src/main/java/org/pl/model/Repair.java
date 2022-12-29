@@ -40,7 +40,7 @@ public class Repair implements EntityInterface {
     }
 
     @Override
-    public UUID getID() {
+    public UUID getId() {
         return id;
     }
 

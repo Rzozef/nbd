@@ -103,7 +103,7 @@ public class Client implements EntityInterface {
     }
 
     @Override
-    public UUID getID() {
+    public UUID getId() {
         return id;
     }
 

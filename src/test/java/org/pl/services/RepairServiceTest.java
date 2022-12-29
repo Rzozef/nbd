@@ -34,8 +34,8 @@ class RepairServiceTest {
 
         computer = new Computer(Condition.DUSTY);
         monitor = new Monitor(Condition.AVERAGE);
-        hardware1 = new Hardware(2000, computer, false, UUID.randomUUID(), "");
-        hardware2 = new Hardware(3000, monitor, false, UUID.randomUUID(), "");
+        hardware1 = new Hardware(UUID.randomUUID(),2000, computer, false, "");
+        hardware2 = new Hardware(UUID.randomUUID(),3000, monitor, false, "");
         repairs = new ArrayList<>();
         repairRepository = new RepairRepository(repairs);
         repairService = new RepairService(repairRepository);
@@ -44,7 +44,7 @@ class RepairServiceTest {
     @Test
     void repairServiceAddPositiveTest() throws RepositoryException, RepairException {
         Repair repair = repairService.add(client1, hardware1);
-        assertNotNull(repairService.get(repair.getID()));
+        assertNotNull(repairService.get(repair.getId()));
     }
 
     @Test
@@ -60,8 +60,8 @@ class RepairServiceTest {
     @Test
     void repairServiceGetInfoTest() throws RepositoryException, RepairException {
         Repair repair = repairService.add(client1, hardware1);
-        String expectedInfo = "Repair{id=" + repair.getID() + ", archive=false, client=Client{id=" + repair.getClient().getID() + ", archive=false, balance=100.0, firstName='Szymon', lastName='Kowalski', personalId='12345678901', phoneNumber='123456789', clientType=org.pl.model.Premium@4fa44017, address=Address{city='Warszawa', number='34', street='Uliczna'}}, hardware=Hardware{id="+ repair.getHardware().getID() + ", archive=false, price=2000, hardwareType=Computer{condition=DUSTY}}}";
-        assertEquals(expectedInfo, repairService.getInfo(repair.getID()));
+        String expectedInfo = "Repair{id=" + repair.getId() + ", archive=false, client=Client{id=" + repair.getClient().getId() + ", archive=false, balance=100.0, firstName='Szymon', lastName='Kowalski', personalId='12345678901', phoneNumber='123456789', clientType=org.pl.model.Premium@4fa44017, address=Address{city='Warszawa', number='34', street='Uliczna'}}, hardware=Hardware{id="+ repair.getHardware().getId() + ", archive=false, price=2000, hardwareType=Computer{condition=DUSTY}}}";
+        assertEquals(expectedInfo, repairService.getInfo(repair.getId()));
     }
 
     @Test
@@ -70,20 +70,20 @@ class RepairServiceTest {
         assertEquals(1, repairService.getPresentSize());
         Repair repair2 = repairService.add(client2, hardware2);
         assertEquals(2, repairService.getPresentSize());
-        repairService.repair(repair1.getID());
+        repairService.repair(repair1.getId());
         assertEquals(1, repairService.getPresentSize());
-        assertTrue(repairService.get(repair1.getID()).isArchive());
-        repairService.repair(repair2.getID());
-        assertTrue(repairService.get(repair2.getID()).isArchive());
+        assertTrue(repairService.get(repair1.getId()).isArchive());
+        repairService.repair(repair2.getId());
+        assertTrue(repairService.get(repair2.getId()).isArchive());
     }
 
     @Test
     void repairServiceRemoveNegativeTest() throws HardwareException, RepositoryException, ClientException, RepairException {
         Repair repair1 = repairService.add(client1, hardware1);
         Repair repair2 = repairService.add(client2, hardware2);
-        repairService.repair(repair1.getID());
+        repairService.repair(repair1.getId());
         assertThrows(RepositoryException.class,
-                ()-> repairService.repair(repair1.getID()));
+                ()-> repairService.repair(repair1.getId()));
     }
 
     @Test
@@ -96,10 +96,10 @@ class RepairServiceTest {
         Repair repair2 = repairService.add(client2, hardware2);
         assertEquals(2, repairService.getPresentSize());
         assertEquals(0, repairService.getArchiveSize());
-        repairService.repair(repair1.getID());
+        repairService.repair(repair1.getId());
         assertEquals(1, repairService.getPresentSize());
         assertEquals(1, repairService.getArchiveSize());
-        repairService.repair(repair2.getID());
+        repairService.repair(repair2.getId());
         assertEquals(0, repairService.getPresentSize());
         assertEquals(2, repairService.getArchiveSize());
     }
@@ -107,9 +107,9 @@ class RepairServiceTest {
     @Test
     void repairServiceRepairTest() throws RepositoryException, RepairException, HardwareException, ClientException {
         Repair repair = repairService.add(client1, hardware1);
-        assertFalse(repairService.get(repair.getID()).isArchive());
-        repairService.repair(repair.getID());
-        assertTrue(repairService.get(repair.getID()).isArchive());
+        assertFalse(repairService.get(repair.getId()).isArchive());
+        repairService.repair(repair.getId());
+        assertTrue(repairService.get(repair.getId()).isArchive());
     }
 
     @Test
@@ -119,11 +119,11 @@ class RepairServiceTest {
         assertFalse(client1.isArchive());
         assertFalse(hardware1.isArchive());
         assertFalse(hardware2.isArchive());
-        repairService.repair(repair1.getID());
+        repairService.repair(repair1.getId());
         assertFalse(client1.isArchive());
         assertTrue(hardware1.isArchive());
         assertFalse(hardware2.isArchive());
-        repairService.repair(repair2.getID());
+        repairService.repair(repair2.getId());
         assertTrue(client1.isArchive());
         assertTrue(hardware1.isArchive());
         assertTrue(hardware2.isArchive());
@@ -134,9 +134,9 @@ class RepairServiceTest {
         Repair repair1 = repairService.add(client1, hardware1);
         Repair repair2 = repairService.add(client1, hardware2);
         assertEquals(100.0, client1.getBalance());
-        repairService.repair(repair2.getID());
+        repairService.repair(repair2.getId());
         assertEquals(-2060, client1.getBalance());
-        repairService.repair(repair1.getID());
+        repairService.repair(repair1.getId());
         assertEquals(-2064.5, client1.getBalance());
     }
 }

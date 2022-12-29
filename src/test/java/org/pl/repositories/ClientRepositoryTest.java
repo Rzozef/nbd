@@ -50,16 +50,16 @@ public class ClientRepositoryTest {
     @Test
     void archiveTest() throws RepositoryException {
         repository.add(client1);
-        repository.archivise(client1.getID());
+        repository.archivise(client1.getId());
         assertTrue(client1.isArchive());
     }
 
     @Test
     void getTest() throws RepositoryException {
-        assertThrows(RepositoryException.class, () -> repository.get(client.getID()));
+        assertThrows(RepositoryException.class, () -> repository.get(client.getId()));
         repository.add(client);
-        assertEquals(client, repository.get(client.getID()));
-        assertThrows(RepositoryException.class, () -> repository.get(client1.getID()));
+        assertEquals(client, repository.get(client.getId()));
+        assertThrows(RepositoryException.class, () -> repository.get(client1.getId()));
     }
 
     @Test
@@ -77,15 +77,15 @@ public class ClientRepositoryTest {
     @Test
     void isArchiveTest() throws RepositoryException {
         repository.add(client);
-        assertFalse(repository.isArchive(client.getID()));
-        assertThrows(RepositoryException.class, () -> repository.isArchive(client1.getID()));
+        assertFalse(repository.isArchive(client.getId()));
+        assertThrows(RepositoryException.class, () -> repository.isArchive(client1.getId()));
     }
 
     @Test
     void unarchiviseTest() throws RepositoryException {
         repository.add(client);
-        repository.unarchive(client.getID());
-        assertFalse(repository.isArchive(client.getID()));
-        assertThrows(RepositoryException.class, () -> repository.unarchive(client1.getID()));
+        repository.unarchive(client.getId());
+        assertFalse(repository.isArchive(client.getId()));
+        assertThrows(RepositoryException.class, () -> repository.unarchive(client1.getId()));
     }
 }

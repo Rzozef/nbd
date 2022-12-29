@@ -31,7 +31,7 @@ class RepairReposioryTest {
 
         client = new Client(clientUUID, 300.0, "John", "Doe", "12345678901",
                 "123-123-123", new Premium(), address);
-        hardware = new Hardware(100,new Computer(DUSTY), false, hardwareUUID, "");
+        hardware = new Hardware(hardwareUUID,100,new Computer(DUSTY), false, "");
         repair = new Repair(repairUUID1, true, client, hardware);
         repair1 = new Repair(repairUUID2, false, client, hardware);
         list = new ArrayList<>();
@@ -56,18 +56,18 @@ class RepairReposioryTest {
     @Test
     void archiveTest() throws RepositoryException {
         repository.add(repair);
-        assertThrows(RepositoryException.class, () -> repository.archivise(repair.getID()));
+        assertThrows(RepositoryException.class, () -> repository.archivise(repair.getId()));
         repository.add(repair1);
-        repository.archivise(repair1.getID());
+        repository.archivise(repair1.getId());
         assertTrue(repair1.isArchive());
     }
 
     @Test
     void getTest() throws RepositoryException {
-        assertThrows(RepositoryException.class, () -> repository.get(repair.getID()));
+        assertThrows(RepositoryException.class, () -> repository.get(repair.getId()));
         repository.add(repair);
-        assertEquals(repair, repository.get(repair.getID()));
-        assertThrows(RepositoryException.class, () -> repository.get(repair1.getID()));
+        assertEquals(repair, repository.get(repair.getId()));
+        assertThrows(RepositoryException.class, () -> repository.get(repair1.getId()));
     }
 
     @Test
@@ -85,15 +85,15 @@ class RepairReposioryTest {
     @Test
     void isArchiveTest() throws RepositoryException {
         repository.add(repair);
-        assertTrue(repository.isArchive(repair.getID()));
-        assertThrows(RepositoryException.class, () -> repository.isArchive(repair1.getID()));
+        assertTrue(repository.isArchive(repair.getId()));
+        assertThrows(RepositoryException.class, () -> repository.isArchive(repair1.getId()));
     }
 
     @Test
     void unarchiviseTest() throws RepositoryException {
         repository.add(repair);
-        repository.unarchive(repair.getID());
-        assertFalse(repository.isArchive(repair.getID()));
-        assertThrows(RepositoryException.class, () -> repository.unarchive(repair1.getID()));
+        repository.unarchive(repair.getId());
+        assertFalse(repository.isArchive(repair.getId()));
+        assertThrows(RepositoryException.class, () -> repository.unarchive(repair1.getId()));
     }
 }

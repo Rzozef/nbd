@@ -25,7 +25,7 @@ public class Hardware implements EntityInterface {
     private String discriminator;
 
 
-    public Hardware( int price, HardwareType hardwareType, boolean archive, UUID id, String discriminator) {
+    public Hardware(UUID id, int price, HardwareType hardwareType, boolean archive, String discriminator) {
         this.id = id;
         this.archive = archive;
         this.price = price;
@@ -57,9 +57,8 @@ public class Hardware implements EntityInterface {
     public boolean isArchive() {
         return archive;
     }
-
     @Override
-    public UUID getID() {
+    public UUID getId() {
         return id;
     }
 

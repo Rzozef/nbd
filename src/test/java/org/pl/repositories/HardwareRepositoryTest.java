@@ -20,9 +20,9 @@ public class HardwareRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        hardware = new Hardware(100, new Computer(DUSTY),true, UUID.randomUUID(), "");
+        hardware = new Hardware(UUID.randomUUID(),100, new Computer(DUSTY),true,  "");
 
-        hardware1 = new Hardware(100, new Computer(DUSTY),false, UUID.randomUUID(), "");
+        hardware1 = new Hardware(UUID.randomUUID(),100, new Computer(DUSTY),false,  "");
         list = new ArrayList<>();
         repository = new HardwareRepository(list);
     }
@@ -45,18 +45,18 @@ public class HardwareRepositoryTest {
     @Test
     void archiviseTest() throws RepositoryException {
         repository.add(hardware);
-        assertThrows(RepositoryException.class, () -> repository.archivise(hardware.getID()));
+        assertThrows(RepositoryException.class, () -> repository.archivise(hardware.getId()));
         repository.add(hardware1);
-        repository.archivise(hardware1.getID());
+        repository.archivise(hardware1.getId());
         assertTrue(hardware1.isArchive());
     }
 
     @Test
     void getTest() throws RepositoryException {
-        assertThrows(RepositoryException.class, () -> repository.get(hardware.getID()));
+        assertThrows(RepositoryException.class, () -> repository.get(hardware.getId()));
         repository.add(hardware);
-        assertEquals(hardware, repository.get(hardware.getID()));
-        assertThrows(RepositoryException.class, () -> repository.get(hardware1.getID()));
+        assertEquals(hardware, repository.get(hardware.getId()));
+        assertThrows(RepositoryException.class, () -> repository.get(hardware1.getId()));
     }
 
     @Test
@@ -74,15 +74,15 @@ public class HardwareRepositoryTest {
     @Test
     void isArchiveTest() throws RepositoryException {
         repository.add(hardware);
-        assertTrue(repository.isArchive(hardware.getID()));
-        assertThrows(RepositoryException.class, () -> repository.isArchive(hardware1.getID()));
+        assertTrue(repository.isArchive(hardware.getId()));
+        assertThrows(RepositoryException.class, () -> repository.isArchive(hardware1.getId()));
     }
 
     @Test
     void unarchiviseTest() throws RepositoryException {
         repository.add(hardware);
-        repository.unarchive(hardware.getID());
-        assertFalse(repository.isArchive(hardware.getID()));
-        assertThrows(RepositoryException.class, () -> repository.unarchive(hardware1.getID()));
+        repository.unarchive(hardware.getId());
+        assertFalse(repository.isArchive(hardware.getId()));
+        assertThrows(RepositoryException.class, () -> repository.unarchive(hardware1.getId()));
     }
 }
