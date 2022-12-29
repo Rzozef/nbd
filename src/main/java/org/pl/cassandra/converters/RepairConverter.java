@@ -8,8 +8,8 @@ import org.pl.exceptions.HardwareException;
 import org.pl.model.Repair;
 
 public class RepairConverter {
-    private static ClientCassandraRepository clientCassandraRepository;
-    private static HardwareCassandraRepository hardwareCassandraRepository;
+    private static ClientCassandraRepository clientCassandraRepository = new ClientCassandraRepository();
+    private static HardwareCassandraRepository hardwareCassandraRepository = new HardwareCassandraRepository();
     public static RepairCassandra toRepositoryModel(Repair repair) {
         return new RepairCassandra(repair.getId(), repair.isArchive(),
                 repair.getClient().getId(), repair.getHardware().getId());

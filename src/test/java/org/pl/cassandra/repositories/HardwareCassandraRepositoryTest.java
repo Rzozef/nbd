@@ -1,8 +1,5 @@
 package org.pl.cassandra.repositories;
 
-import com.datastax.oss.driver.api.core.cql.SimpleStatement;
-import com.datastax.oss.driver.api.querybuilder.SchemaBuilder;
-import com.datastax.oss.driver.api.querybuilder.truncate.Truncate;
 import org.junit.jupiter.api.*;
 import org.pl.cassandra.model.HardwareCassandra;
 
