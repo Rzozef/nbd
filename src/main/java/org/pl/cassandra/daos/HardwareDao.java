@@ -2,7 +2,7 @@ package org.pl.cassandra.daos;
 
 import com.datastax.oss.driver.api.mapper.annotations.*;
 import org.pl.cassandra.model.HardwareCassandra;
-import org.pl.cassandra.repositories.HardwareQueryProvider;
+import org.pl.cassandra.queryProviders.HardwareQueryProvider;
 
 
 import java.util.List;

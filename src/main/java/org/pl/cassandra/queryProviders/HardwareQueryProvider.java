@@ -1,4 +1,4 @@
-package org.pl.cassandra.repositories;
+package org.pl.cassandra.queryProviders;
 
 import com.datastax.oss.driver.api.core.CqlIdentifier;
 import com.datastax.oss.driver.api.core.CqlSession;

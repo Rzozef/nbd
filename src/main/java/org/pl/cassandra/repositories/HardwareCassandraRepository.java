@@ -4,14 +4,11 @@ import com.datastax.oss.driver.api.core.CqlIdentifier;
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.cql.SimpleStatement;
 import com.datastax.oss.driver.api.core.type.DataTypes;
-import com.datastax.oss.driver.api.core.type.codec.ExtraTypeCodecs;
 import com.datastax.oss.driver.api.querybuilder.SchemaBuilder;
-import com.datastax.oss.driver.api.querybuilder.truncate.Truncate;
 import org.pl.cassandra.daos.HardwareDao;
 import org.pl.cassandra.mappers.HardwareMapper;
 import org.pl.cassandra.mappers.HardwareMapperBuilder;
 import org.pl.cassandra.model.HardwareCassandra;
-import org.pl.model.Condition;
 import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.*;
 
 import java.net.InetSocketAddress;
@@ -41,10 +38,6 @@ public class HardwareCassandraRepository implements AutoCloseable {
         session.execute(createHardwares);
         HardwareMapper hardwareMapper = new HardwareMapperBuilder(session).build();
         this.hardwareDao = hardwareMapper.hardwareDao();
-    }
-
-    public CqlSession getSession() {
-        return session;
     }
 
     public boolean create(HardwareCassandra hardwareCassandra) {

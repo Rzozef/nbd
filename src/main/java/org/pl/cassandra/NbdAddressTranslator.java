@@ -1,4 +1,4 @@
-package org.pl.cassandra.repositories;
+package org.pl.cassandra;
 
 import com.datastax.oss.driver.api.core.addresstranslation.AddressTranslator;
 import com.datastax.oss.driver.api.core.context.DriverContext;
