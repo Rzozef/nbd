@@ -22,7 +22,8 @@ public class Hardware implements EntityInterface {
     private int price;
     private HardwareType hardwareType;
 
-    public Hardware(UUID id, boolean archive, int price, HardwareType hardwareType) {
+
+    public Hardware( int price, HardwareType hardwareType, boolean archive, UUID id) {
         this.id = id;
         this.archive = archive;
         this.price = price;

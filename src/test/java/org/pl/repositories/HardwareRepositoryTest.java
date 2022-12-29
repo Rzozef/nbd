@@ -20,9 +20,9 @@ public class HardwareRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        hardware = new Hardware(UUID.randomUUID(), true, 100, new Computer(DUSTY));
+        hardware = new Hardware(100, new Computer(DUSTY),true, UUID.randomUUID());
 
-        hardware1 = new Hardware(UUID.randomUUID(), false, 100, new Computer(DUSTY));
+        hardware1 = new Hardware(100, new Computer(DUSTY),false, UUID.randomUUID());
         list = new ArrayList<>();
         repository = new HardwareRepository(list);
     }

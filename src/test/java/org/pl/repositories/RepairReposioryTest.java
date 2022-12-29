@@ -31,7 +31,7 @@ class RepairReposioryTest {
 
         client = new Client(clientUUID, 300.0, "John", "Doe", "12345678901",
                 "123-123-123", new Premium(), address);
-        hardware = new Hardware(hardwareUUID, false, 100, new Computer(DUSTY));
+        hardware = new Hardware(100,new Computer(DUSTY), false, hardwareUUID);
         repair = new Repair(repairUUID1, true, client, hardware);
         repair1 = new Repair(repairUUID2, false, client, hardware);
         list = new ArrayList<>();

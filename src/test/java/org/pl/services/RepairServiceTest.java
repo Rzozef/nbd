@@ -34,8 +34,8 @@ class RepairServiceTest {
 
         computer = new Computer(Condition.DUSTY);
         monitor = new Monitor(Condition.AVERAGE);
-        hardware1 = new Hardware(UUID.randomUUID(), false, 2000, computer);
-        hardware2 = new Hardware(UUID.randomUUID(), false, 3000, monitor);
+        hardware1 = new Hardware(2000, computer, false, UUID.randomUUID());
+        hardware2 = new Hardware(3000, monitor, false, UUID.randomUUID());
         repairs = new ArrayList<>();
         repairRepository = new RepairRepository(repairs);
         repairService = new RepairService(repairRepository);
