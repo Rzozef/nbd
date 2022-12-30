@@ -61,11 +61,13 @@ public class ClientCassandraRepository implements AutoCloseable {
     }
 
     public void update(ClientCassandra clientCassandra) {
-        clientDao.update(clientCassandra);
+        if (clientCassandra != null)
+            clientDao.update(clientCassandra);
     }
 
     public void delete(ClientCassandra clientCassandra) {
-        clientDao.delete(clientCassandra);
+        if (clientCassandra != null)
+            clientDao.delete(clientCassandra);
     }
 
     public void deleteAll() {

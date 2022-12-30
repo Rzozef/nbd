@@ -19,7 +19,7 @@ public class ClientCassandraRepositoryTest {
 
     @BeforeEach
     void beforaEach() {
-        clientCassandra = new ClientCassandra(clientUUID, false, 300, "Jan", "Kowalski", "12345678901", "123456789", (float)1.0, 3, "basic", "Warsaw", "Zielona", "77");
+        clientCassandra = new ClientCassandra(clientUUID, false, 300, "Jan", "Kowalski", "12345678901", "123456789", (float)1.0, 3, "Basic", "Warsaw", "Zielona", "77");
     }
 
     @Test

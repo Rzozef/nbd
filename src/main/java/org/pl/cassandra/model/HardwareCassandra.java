@@ -53,20 +53,12 @@ public class HardwareCassandra {
         return condition;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public void setArchive(boolean archive) {
         this.archive = archive;
     }
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public void setHardwareType(String hardwareType) {
-        this.hardwareType = hardwareType;
     }
 
     public void setCondition(String condition) {
