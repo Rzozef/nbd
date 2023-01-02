@@ -1,5 +1,7 @@
 package org.pl.cassandra.repositories;
 
+import com.datastax.oss.driver.api.core.cql.SimpleStatement;
+import com.datastax.oss.driver.api.querybuilder.QueryBuilder;
 import org.junit.jupiter.api.*;
 import org.pl.cassandra.model.ClientCassandra;
 import org.pl.cassandra.model.HardwareCassandra;
@@ -50,6 +52,22 @@ public class RepairCassandraRepositoryTest {
     @Test
     void findRepairByUIdNegativeTest() {
         assertNull(repairCassandraRepository.findByUId(repairUUID));
+    }
+
+    @Test
+    void findRepairByClientTest() {
+        assertEquals(repairCassandraRepository.findByClient(clientUUID).size(), 0);
+        assertTrue(repairCassandraRepository.create(repairCassandra));
+        assertEquals(repairCassandraRepository.findByClient(clientUUID).size(), 1);
+        assertEquals(repairCassandraRepository.findByClient(clientUUID).get(0).getClient(), clientUUID);
+    }
+
+    @Test
+    void findRepairByHardwareTest() {
+        assertEquals(repairCassandraRepository.findByHardware(hardwareUUID).size(), 0);
+        assertTrue(repairCassandraRepository.create(repairCassandra));
+        assertEquals(repairCassandraRepository.findByHardware(hardwareUUID).size(), 1);
+        assertEquals(repairCassandraRepository.findByHardware(hardwareUUID).get(0).getHardware(), hardwareUUID);
     }
 
     @Test

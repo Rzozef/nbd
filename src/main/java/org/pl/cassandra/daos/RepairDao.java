@@ -12,12 +12,20 @@ import java.util.UUID;
 @Dao
 public interface RepairDao {
     @StatementAttributes(consistencyLevel = "QUORUM")
-    @Insert(ifNotExists = true)
+    @QueryProvider(providerClass = RepairQueryProvider.class)
     boolean create(RepairCassandra repair);
 
     @StatementAttributes(consistencyLevel = "QUORUM")
     @QueryProvider(providerClass = RepairQueryProvider.class)
     RepairCassandra findByUId(UUID uuid);
+
+    @StatementAttributes(consistencyLevel = "QUORUM")
+    @QueryProvider(providerClass = RepairQueryProvider.class)
+    List<RepairCassandra> findByClient(UUID uuid);
+
+    @StatementAttributes(consistencyLevel = "QUORUM")
+    @QueryProvider(providerClass = RepairQueryProvider.class)
+    List<RepairCassandra> findByHardware(UUID uuid);
 
     @StatementAttributes(consistencyLevel = "QUORUM")
     @QueryProvider(providerClass = RepairQueryProvider.class)

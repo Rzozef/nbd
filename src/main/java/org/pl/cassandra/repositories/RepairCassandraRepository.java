@@ -34,9 +34,24 @@ public class RepairCassandraRepository implements AutoCloseable {
                 .withColumn(CqlIdentifier.fromCql("is_archive"), DataTypes.BOOLEAN)
                 .withColumn(CqlIdentifier.fromCql("client_id"), DataTypes.UUID)
                 .withColumn(CqlIdentifier.fromCql("hardware_id"), DataTypes.UUID)
-                .withColumn(CqlIdentifier.fromCql("condition"), DataTypes.TEXT)
+                .build();
+        SimpleStatement createClientsRepairs = SchemaBuilder.createTable(CqlIdentifier.fromCql("repairs_by_client"))
+                .ifNotExists()
+                .withPartitionKey(CqlIdentifier.fromCql("client_id"), DataTypes.UUID)
+                .withColumn(CqlIdentifier.fromCql("is_archive"), DataTypes.BOOLEAN)
+                .withClusteringColumn(CqlIdentifier.fromCql("repair_id"), DataTypes.UUID)
+                .withColumn(CqlIdentifier.fromCql("hardware_id"), DataTypes.UUID)
+                .build();
+        SimpleStatement createHardwaresRepairs = SchemaBuilder.createTable(CqlIdentifier.fromCql("repairs_by_hardware"))
+                .ifNotExists()
+                .withPartitionKey(CqlIdentifier.fromCql("hardware_id"), DataTypes.UUID)
+                .withColumn(CqlIdentifier.fromCql("is_archive"), DataTypes.BOOLEAN)
+                .withColumn(CqlIdentifier.fromCql("client_id"), DataTypes.UUID)
+                .withClusteringColumn(CqlIdentifier.fromCql("repair_id"), DataTypes.UUID)
                 .build();
         session.execute(createRepairs);
+        session.execute(createClientsRepairs);
+        session.execute(createHardwaresRepairs);
         RepairMapper repairMapper = new RepairMapperBuilder(session).build();
         this.repairDao = repairMapper.repairDao();
     }
@@ -48,6 +63,10 @@ public class RepairCassandraRepository implements AutoCloseable {
     public RepairCassandra findByUId(UUID uuid) {
         return repairDao.findByUId(uuid);
     }
+
+    public List<RepairCassandra> findByClient(UUID uuid) { return repairDao.findByClient(uuid); }
+
+    public List<RepairCassandra> findByHardware(UUID uuid) { return repairDao.findByHardware(uuid); }
 
     public List<RepairCassandra> findAll() {
         return repairDao.findAll();
@@ -63,7 +82,11 @@ public class RepairCassandraRepository implements AutoCloseable {
 
     public void deleteAll() {
         SimpleStatement deleteAll = truncate(CqlIdentifier.fromCql("repairs")).build();
+        SimpleStatement deleteAll1 = truncate(CqlIdentifier.fromCql("repairs_by_client")).build();
+        SimpleStatement deleteAll2 = truncate(CqlIdentifier.fromCql("repairs_by_hardware")).build();
         session.execute(deleteAll);
+        session.execute(deleteAll1);
+        session.execute(deleteAll2);
     }
 
     @Override

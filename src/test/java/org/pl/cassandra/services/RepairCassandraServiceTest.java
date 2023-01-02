@@ -59,6 +59,24 @@ public class RepairCassandraServiceTest {
     }
 
     @Test
+    void findByClientTest() {
+        assertEquals(0, repairCassandraService.findByClient(clientUUID).size());
+        repairCassandraService.create(clientUUID, hardwareUUID);
+        assertEquals(1, repairCassandraService.findByClient(clientUUID).size());
+        repairCassandraService.create(clientUUID, hardwareUUID);
+        assertEquals(2, repairCassandraService.findByClient(clientUUID).size());
+    }
+
+    @Test
+    void findByHardwareTest() {
+        assertEquals(0, repairCassandraService.findByHardware(hardwareUUID).size());
+        repairCassandraService.create(clientUUID, hardwareUUID);
+        assertEquals(1, repairCassandraService.findByHardware(hardwareUUID).size());
+        repairCassandraService.create(clientUUID, hardwareUUID);
+        assertEquals(2, repairCassandraService.findByHardware(hardwareUUID).size());
+    }
+
+    @Test
     void updateTest() {
         RepairCassandra repairCassandra = repairCassandraService.create(clientUUID, hardwareUUID);
         repairCassandra.setArchive(true);

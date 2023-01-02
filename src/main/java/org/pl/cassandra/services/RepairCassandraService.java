@@ -24,6 +24,10 @@ public class RepairCassandraService {
         return repairCassandraRepository.findByUId(uuid);
     }
 
+    public List<RepairCassandra> findByClient(UUID uuid) { return repairCassandraRepository.findByClient(uuid); }
+
+    public List<RepairCassandra> findByHardware(UUID uuid) { return repairCassandraRepository.findByHardware(uuid); }
+
     public List<RepairCassandra> findAll() {
         return repairCassandraRepository.findAll();
     }
