@@ -2,21 +2,30 @@ package org.pl;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.*;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.apache.kafka.common.serialization.UUIDDeserializer;
 import org.apache.kafka.common.serialization.UUIDSerializer;
 import org.junit.jupiter.api.Test;
 import org.pl.model.Repair;
 
-import java.util.Properties;
-import java.util.UUID;
+import java.text.MessageFormat;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
 public class test {
 
     private KafkaProducer producer;
+    private KafkaConsumer consumer;
 
     @Test
-    void initProducer() {
+    void init() {
         Properties producerConfig = new Properties();
         producerConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
                 UUIDSerializer.class.getName());
@@ -29,7 +38,7 @@ public class test {
         producer = new KafkaProducer(producerConfig);
 
 
-        //sendClientAsync
+        //sendRepairAsync
         Callback callback = this::onCompletion;
 
         for (int i = 0; i < 100; i++) {
@@ -40,8 +49,39 @@ public class test {
             ProducerRecord<UUID, String> record = new ProducerRecord<>(
                     "naprawy", entityId, jsonClient);
             producer.send(record, callback);
-            System.out.println(record);
         }
+
+        System.out.println("koniec producenta");
+
+        //consumerInit
+        Properties consumerConfig = new Properties();
+        consumerConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
+                UUIDDeserializer.class.getName());
+        consumerConfig.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
+                StringDeserializer.class.getName());
+        consumerConfig.put(ConsumerConfig.GROUP_ID_CONFIG, "repairconsumer");
+        consumerConfig.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
+                "0.0.0.0:9192, 0.0.0.0:9292, 0.0.0.0:9392");
+        consumer = new KafkaConsumer(consumerConfig);
+        consumer.subscribe(List.of("naprawy"));
+
+        //receive
+        int messagesReceived = 0;
+        Map<Integer, Long> offsets = new HashMap<>();
+
+        Duration timeout = Duration.of(100, ChronoUnit.MILLIS);
+        MessageFormat formatter = new MessageFormat("Temat {0}, partycja {1}, offset {2, number, integer}, klucz {3}, wartość {4}");
+        while (messagesReceived < 100) {
+            ConsumerRecords<UUID, String> records = consumer.poll(timeout);
+            for (ConsumerRecord<UUID, String> record : records) {
+                String result = formatter.format(new Object[]{record.topic(), record.partition(), record.offset(), record.key(), record.value()});
+                System.out.println(result);
+                offsets.put(record.partition(), record.offset());
+                messagesReceived++;
+            }
+        }
+        System.out.println(offsets);
+        consumer.commitAsync();
     }
 
     @Test
