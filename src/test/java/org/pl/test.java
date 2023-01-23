@@ -12,6 +12,7 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.apache.kafka.common.serialization.UUIDDeserializer;
+import org.apache.kafka.common.serialization.UUIDSerializer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.pl.model.Repair;
@@ -29,7 +30,7 @@ public class test {
     public static void init() {
         Properties producerConfig = new Properties();
         producerConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
-                UUID.class.getName());
+                UUIDSerializer.class.getName());
         producerConfig.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
                 StringSerializer.class.getName());
         producerConfig.put(ProducerConfig.CLIENT_ID_CONFIG, "local");
