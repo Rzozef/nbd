@@ -7,8 +7,7 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.apache.kafka.common.serialization.UUIDDeserializer;
@@ -17,6 +16,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.pl.model.Repair;
 
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
 import java.text.MessageFormat;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -61,6 +62,22 @@ public class test {
 
         Duration timeout = Duration.of(100, ChronoUnit.MILLIS);
         MessageFormat formatter = new MessageFormat("Temat {0}, partycja {1}, offset {2, number, integer}, klucz {3}, wartość {4}");
+
+        Callback callback = this::onCompletion;
+        Jsonb jsonb = JsonbBuilder.create();
+        for (int i = 0; i < 100; i++) {
+            Repair repair = Repair.builder()
+                    .entityId(UUID.randomUUID())
+                    .archive(false)
+                    .client(null)
+                    .hardware(null)
+                    .build();
+            String jsonRepair = jsonb.toJson(repair);
+            UUID entityId = repair.getEntityId();
+            ProducerRecord<UUID, String> record = new ProducerRecord<>("naprawy", entityId, jsonRepair);
+            producer.send(record, callback);
+        }
+
         while (messagesReceived < 100) {
             ConsumerRecords<UUID,String> records = consumer.poll(timeout);
             for (ConsumerRecord<UUID, String> record : records) {
@@ -72,5 +89,13 @@ public class test {
         }
         System.out.println(offsets);
         consumer.commitAsync();
+    }
+
+    private void onCompletion(RecordMetadata data, Exception exception) {
+        if (exception == null) {
+            System.out.println(data.offset());
+        } else {
+            System.out.println(exception);
+        }
     }
 }
