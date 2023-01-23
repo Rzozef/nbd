@@ -1,0 +1,66 @@
+{
+    "namespace": "org.pl.model2",
+    "type": "record",
+    "name": "Repair",
+    "fields": [
+        {"name": "entityId", "type": "string"},
+        {"name": "archive", "type": "boolean"},
+        {"name": "client", "type": {
+            "type": "record",
+            "name": "Client",
+            "fields": [
+                {"name": "entityId", "type": "string"},
+                {"name": "archive", "type": "boolean"},
+                {"name": "balance", "type": "double"},
+                {"name": "firstName", "type": "string"},
+                {"name": "lastName", "type": "string"},
+                {"name": "personalId", "type": "string"},
+                {"name": "phoneNumber", "type": "string"},
+                {"name": "repairs", "type": "int"},
+                {"name": "clientType", "type": {
+                    "type": "record",
+                    "name": "ClientType",
+                    "fields": [
+                        {"name": "factor", "type": "float"},
+                        {"name": "maxRepairs", "type": "int"},
+                        {"name": "typeName", "type": "string"}
+                    ]
+                }},
+                {"name": "address", "type": {
+                    "type": "record",
+                    "name": "Address",
+                    "fields": [
+                        {"name": "city", "type": "string"},
+                        {"name": "number", "type": "string"},
+                        {"name": "street", "type": "string"}
+                    ]
+                }}
+            ]
+        }},
+        {"name": "hardware", "type": {
+            "type": "record",
+            "name": "Hardware",
+            "fields": [
+                {"name": "entityId", "type": "string"},
+                {"name": "archive", "type": "boolean"},
+                {"name": "price", "type": "int"},
+                {"name": "hardwareType", "type": {
+                    "type": "record",
+                    "name": "HardwareType",
+                    "fields": [
+                        {"name": "condition", "type": {
+                            "type": "enum", "name": "Condition", "symbols": [
+                                "UNREPAIRABLE",
+                                "VERY_BAD",
+                                "BAD",
+                                "AVERAGE",
+                                "DUSTY",
+                                "FINE"
+                            ]
+                        }}
+                    ]
+                }}
+            ]
+        }}
+    ]
+}
