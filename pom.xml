@@ -68,7 +68,7 @@
               <goal>schema</goal>
             </goals>
             <configuration>
-              <testSourceDirectory>C:\Users\gonzu\OneDrive\Desktop\studia\mkw_sr_1015_08\</testSourceDirectory>
+              <testSourceDirectory>C:\Users\gonzu\OneDrive\Desktop\studia\mkw_sr_1015_08\src\test\avro</testSourceDirectory>
               <testOutputDirectory>C:\Users\gonzu\OneDrive\Desktop\studia\mkw_sr_1015_08\target\generated-test-sources\avro</testOutputDirectory>
               <includes>
                 <include>**/*.avro</include>
