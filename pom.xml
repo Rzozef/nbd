@@ -57,6 +57,47 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.22.2</version>
       </plugin>
+      <plugin>
+        <groupId>org.apache.avro</groupId>
+        <artifactId>avro-maven-plugin</artifactId>
+        <version>1.11.0</version>
+        <executions>
+          <execution>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>schema</goal>
+            </goals>
+            <configuration>
+              <testSourceDirectory>C:\Users\gonzu\OneDrive\Desktop\studia\mkw_sr_1015_08\</testSourceDirectory>
+              <testOutputDirectory>C:\Users\gonzu\OneDrive\Desktop\studia\mkw_sr_1015_08\target\generated-test-sources\avro</testOutputDirectory>
+              <includes>
+                <include>**/*.avro</include>
+              </includes>
+              <testIncludes>
+                <testInclude>**/*.testavro</testInclude>
+              </testIncludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.3.0</version>
+        <executions>
+          <execution>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>add-test-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>C:\Users\gonzu\OneDrive\Desktop\studia\mkw_sr_1015_08\target\generated-sources\avro</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
