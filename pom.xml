@@ -78,8 +78,8 @@
               <goal>schema</goal>
             </goals>
             <configuration>
-              <testSourceDirectory>C:\Users\gonzu\OneDrive\Desktop\studia\mkw_sr_1015_08\src\test\avro</testSourceDirectory>
-              <testOutputDirectory>C:\Users\gonzu\OneDrive\Desktop\studia\mkw_sr_1015_08\target\generated-test-sources\avro</testOutputDirectory>
+              <testSourceDirectory>${project.basedir}\src\test\avro</testSourceDirectory>
+              <testOutputDirectory>${project.build.directory}\generated-test-sources\avro</testOutputDirectory>
               <includes>
                 <include>**/*.avro</include>
               </includes>
@@ -102,7 +102,7 @@
             </goals>
             <configuration>
               <sources>
-                <source>C:\Users\gonzu\OneDrive\Desktop\studia\mkw_sr_1015_08\target\generated-sources\avro</source>
+                <source>${project.build.directory}\generated-sources\avro</source>
               </sources>
             </configuration>
           </execution>
