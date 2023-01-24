@@ -2,6 +2,7 @@ package org.pl.model;
 
 import lombok.*;
 import org.pl.exceptions.HardwareException;
+import org.pl.kafka.producers.RepairProducer;
 
 import java.util.UUID;
 
@@ -20,6 +21,8 @@ public class Repair extends AbstractEntity implements Entity {
         this.archive = archive;
         this.client = client;
         this.hardware = hardware;
+        RepairProducer repairProducer = new RepairProducer("naprawy");
+        repairProducer.send(this);
     }
 
     public double calculateRepairCost() throws HardwareException {

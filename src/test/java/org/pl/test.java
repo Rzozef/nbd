@@ -33,7 +33,7 @@ public class test {
                 StringSerializer.class);
         producerConfig.put(ProducerConfig.CLIENT_ID_CONFIG, "local");
         producerConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "0.0.0.0:9192, 0.0.0.0:9292, 0.0.0.0:9392");
+                "kafka1:9192, kafka2:9292, kafka3:9392");
         producerConfig.put(ProducerConfig.ACKS_CONFIG, "all");
         producer = new KafkaProducer(producerConfig);
 
@@ -61,7 +61,7 @@ public class test {
                 StringDeserializer.class.getName());
         consumerConfig.put(ConsumerConfig.GROUP_ID_CONFIG, "repairconsumer");
         consumerConfig.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "0.0.0.0:9192, 0.0.0.0:9292, 0.0.0.0:9392");
+                "kafka1:9192, kafka2:9292, kafka3:9392");
         consumer = new KafkaConsumer(consumerConfig);
         consumer.subscribe(List.of("naprawy"));
 
@@ -105,5 +105,14 @@ public class test {
         } else {
             System.out.println(exception);
         }
+    }
+    @Test
+    void messageAfterCreatingNewRepairTest() {
+        Repair repair = Repair.builder()
+                .entityId(UUID.randomUUID())
+                .archive(false)
+                .client(null)
+                .hardware(null)
+                .build();
     }
 }
